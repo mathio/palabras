@@ -10,6 +10,7 @@ const deltaX = ref(0)
 const isDragging = ref(false)
 const isFlying = ref(false)
 const flyRight = ref(false)
+const revealed = ref(false)
 
 const THRESHOLD = 80
 
@@ -26,8 +27,13 @@ const cardStyle = computed(() => {
   return { transform: 'translateX(0) rotate(0deg)', transition: 'transform 0.3s ease-out' }
 })
 
-const knowOpacity = computed(() => Math.max(0, Math.min(deltaX.value / THRESHOLD, 1)))
-const dontKnowOpacity = computed(() => Math.max(0, Math.min(-deltaX.value / THRESHOLD, 1)))
+// Only show indicators in question mode
+const knowOpacity = computed(() =>
+  revealed.value ? 0 : Math.max(0, Math.min(deltaX.value / THRESHOLD, 1)),
+)
+const noIdeaOpacity = computed(() =>
+  revealed.value ? 0 : Math.max(0, Math.min(-deltaX.value / THRESHOLD, 1)),
+)
 
 function onPointerDown(e: PointerEvent) {
   if (!props.isTop || isFlying.value) return
@@ -45,17 +51,46 @@ function onPointerMove(e: PointerEvent) {
 function onPointerUp() {
   if (!isDragging.value) return
   isDragging.value = false
-  if (Math.abs(deltaX.value) >= THRESHOLD) {
-    commit(deltaX.value > 0 ? 'know' : 'dont-know')
+
+  if (revealed.value) {
+    // In revealed mode any direction dismisses as dont-know
+    if (Math.abs(deltaX.value) >= THRESHOLD) {
+      flyRight.value = deltaX.value > 0
+      fly('dont-know')
+    } else {
+      deltaX.value = 0
+    }
   } else {
-    deltaX.value = 0
+    if (deltaX.value >= THRESHOLD) {
+      flyRight.value = true
+      fly('know')
+    } else if (deltaX.value <= -THRESHOLD) {
+      // Left swipe → reveal translation instead of flying away
+      deltaX.value = 0
+      revealed.value = true
+    } else {
+      deltaX.value = 0
+    }
   }
 }
 
-function commit(flag: 'know' | 'dont-know') {
-  flyRight.value = flag === 'know'
+function fly(flag: 'know' | 'dont-know') {
   isFlying.value = true
   setTimeout(() => emit('swiped', flag), 350)
+}
+
+function onKnow() {
+  flyRight.value = true
+  fly('know')
+}
+
+function onNoIdea() {
+  if (!revealed.value) {
+    revealed.value = true
+  } else {
+    flyRight.value = false
+    fly('dont-know')
+  }
 }
 </script>
 
@@ -68,22 +103,27 @@ function commit(flag: 'know' | 'dont-know') {
     @pointerup="onPointerUp"
     @pointercancel="onPointerUp"
   >
-    <!-- swipe indicators -->
-    <div class="indicator know" :style="{ opacity: knowOpacity }">KNOW IT</div>
-    <div class="indicator dont-know" :style="{ opacity: dontKnowOpacity }">NO IDEA</div>
-
     <div class="content">
       <div class="level-badge">{{ word.level }}</div>
-      <div class="spanish">{{ word.spanish }}</div>
-      <div class="english">{{ word.english }}</div>
-      <div class="divider" />
+
+      <!-- indicators sit left/right of the word, in the content flow -->
+      <div class="word-row">
+        <div class="indicator know-it" :style="{ opacity: knowOpacity }">KNOW IT</div>
+        <div class="spanish">{{ word.spanish }}</div>
+        <div class="indicator no-idea" :style="{ opacity: noIdeaOpacity }">NO IDEA</div>
+      </div>
+
+      <template v-if="revealed">
+        <div class="english">{{ word.english }}</div>
+        <div class="divider" />
+      </template>
+
       <div class="example">{{ word.example }}</div>
     </div>
 
-    <!-- tap buttons fallback -->
     <div class="actions">
-      <button class="btn-dont" @click.stop="commit('dont-know')">✗ Don't know</button>
-      <button class="btn-know" @click.stop="commit('know')">✓ Know it</button>
+      <button class="btn-dont" @click.stop="onNoIdea">no idea</button>
+      <button class="btn-know" @click.stop="onKnow">know it</button>
     </div>
   </div>
 </template>
@@ -107,41 +147,13 @@ function commit(flag: 'know' | 'dont-know') {
   cursor: grabbing;
 }
 
-.indicator {
-  position: absolute;
-  top: 2rem;
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  padding: 0.4rem 0.9rem;
-  border-radius: 8px;
-  border-width: 3px;
-  border-style: solid;
-  pointer-events: none;
-  transition: opacity 0.05s;
-}
-
-.indicator.know {
-  right: 1.5rem;
-  color: var(--success);
-  border-color: var(--success);
-  transform: rotate(12deg);
-}
-
-.indicator.dont-know {
-  left: 1.5rem;
-  color: var(--danger);
-  border-color: var(--danger);
-  transform: rotate(-12deg);
-}
-
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1.75rem 1rem;
+  padding: 2rem 1.25rem 1rem;
   text-align: center;
   gap: 0.75rem;
 }
@@ -154,6 +166,39 @@ function commit(flag: 'know' | 'dont-know') {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   padding: 0.2rem 0.6rem;
   border-radius: 99px;
+}
+
+.word-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.indicator {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  pointer-events: none;
+  flex-shrink: 0;
+  transition: opacity 0.05s;
+}
+
+.indicator.know-it {
+  color: var(--success);
+  border-color: var(--success);
+  transform: rotate(8deg);
+}
+
+.indicator.no-idea {
+  color: var(--danger);
+  border-color: var(--danger);
+  transform: rotate(-8deg);
 }
 
 .spanish {
