@@ -1,11 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { Word } from '../data/words'
 
-const props = defineProps<{ word: Word; options: Word[] }>()
+const props = defineProps<{
+  word: Word
+  options: Word[]
+  direction: 'es-en' | 'en-es'
+}>()
 const emit = defineEmits<{ done: [result: 'pass' | 'fail'] }>()
 
 const selected = ref<string | null>(null)
+
+const question = computed(() =>
+  props.direction === 'es-en' ? props.word.spanish : props.word.english,
+)
+const directionLabel = computed(() =>
+  props.direction === 'es-en' ? 'ES → EN' : 'EN → ES',
+)
+
+function optionLabel(w: Word) {
+  return props.direction === 'es-en' ? w.english : w.spanish
+}
 
 function pick(option: Word) {
   if (selected.value) return
@@ -25,9 +40,12 @@ function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
 <template>
   <div class="quiz-card">
     <div class="question">
-      <div class="level-badge">{{ word.level }}</div>
-      <div class="spanish">{{ word.spanish }}</div>
-      <div class="example">{{ word.example }}</div>
+      <div class="badges">
+        <div class="level-badge">{{ word.level }}</div>
+        <div class="dir-badge">{{ directionLabel }}</div>
+      </div>
+      <div class="question-word">{{ question }}</div>
+      <div v-if="direction === 'es-en'" class="example">{{ word.example }}</div>
     </div>
 
     <div class="options">
@@ -38,7 +56,7 @@ function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
         :class="stateFor(option)"
         @click="pick(option)"
       >
-        {{ option.english }}
+        {{ optionLabel(option) }}
       </button>
     </div>
   </div>
@@ -63,6 +81,12 @@ function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
   padding: 1rem 0 0.5rem;
 }
 
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .level-badge {
   font-size: 0.7rem;
   font-weight: 700;
@@ -73,7 +97,17 @@ function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
   border-radius: 99px;
 }
 
-.spanish {
+.dir-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: var(--surface2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+}
+
+.question-word {
   font-size: clamp(2rem, 8vw, 2.75rem);
   font-weight: 700;
   color: var(--text);

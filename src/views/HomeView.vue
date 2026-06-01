@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
+import { useProgressStore } from '../stores/progress'
+import { words } from '../data/words'
 
 const router = useRouter()
 const session = useSessionStore()
+const progress = useProgressStore()
 
 onMounted(() => session.startSession())
+
+const learnedCount = computed(() => words.filter(w => progress.isLearned(w.id)).length)
+const isEmpty = computed(() => session.batch.length === 0)
+
+const buttonLabel = computed(() => {
+  if (session.phase === 'results') return 'view results'
+  if (session.phase === 'exposure' && session.exposureIndex > 0) return 'continue session'
+  if (session.phase === 'quiz') return 'continue quiz'
+  return 'start session'
+})
 
 function start() {
   if (session.phase === 'exposure') router.push('/exposure')
@@ -22,18 +35,31 @@ function start() {
       <p class="sub">your daily spanish vocabulary</p>
     </div>
 
-    <div class="card-info">
-      <div class="stat">
-        <span class="stat-num">{{ session.batch.length }}</span>
-        <span class="stat-label">words today</span>
+    <div v-if="isEmpty" class="empty">
+      <div class="empty-icon">✓</div>
+      <div class="empty-title">all done for today</div>
+      <div class="empty-sub">Come back tomorrow for your next batch.</div>
+      <div v-if="learnedCount > 0" class="learned-count">
+        {{ learnedCount }} / {{ words.length }} words learned
       </div>
     </div>
 
-    <div class="footer safe-bottom">
-      <button class="btn-start" @click="start">
-        {{ session.phase === 'results' ? 'View results' : 'Start session' }}
-      </button>
-    </div>
+    <template v-else>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num">{{ session.batch.length }}</span>
+          <span class="stat-label">words today</span>
+        </div>
+        <div v-if="learnedCount > 0" class="stat">
+          <span class="stat-num">{{ learnedCount }}</span>
+          <span class="stat-label">learned</span>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button class="btn-start" @click="start">{{ buttonLabel }}</button>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -72,9 +98,44 @@ function start() {
   letter-spacing: 0.04em;
 }
 
-.card-info {
+.empty {
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: var(--success);
+  margin-bottom: 0.25rem;
+}
+
+.empty-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.empty-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.learned-count {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: var(--surface);
+  padding: 0.3rem 0.8rem;
+  border-radius: 99px;
+}
+
+.stats {
+  display: flex;
+  gap: 2.5rem;
   margin-bottom: 2rem;
 }
 

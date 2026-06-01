@@ -13,10 +13,12 @@ onMounted(() => {
   if (session.phase !== 'quiz') router.replace('/')
 })
 
+const currentItem = computed(() => session.currentQuizWord())
 const currentWord = computed((): Word | null => {
-  const item = session.currentQuizWord()
+  const item = currentItem.value
   return item ? words.find(w => w.id === item.wordId) ?? null : null
 })
+const direction = computed(() => currentItem.value?.quizDirection ?? 'es-en')
 
 const options = computed((): Word[] => {
   const word = currentWord.value
@@ -61,6 +63,7 @@ function onDone(result: 'pass' | 'fail') {
       :key="session.quizIndex"
       :word="currentWord"
       :options="options"
+      :direction="direction"
       @done="onDone"
     />
   </div>

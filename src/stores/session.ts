@@ -7,6 +7,7 @@ export interface SessionWord {
   wordId: string
   exposureFlag: 'know' | 'dont-know' | null
   quizResult: 'pass' | 'fail' | null
+  quizDirection: 'es-en' | 'en-es'
 }
 
 const BATCH_SIZE = 15
@@ -56,7 +57,12 @@ export const useSessionStore = defineStore('session', () => {
       ;[combined[i], combined[j]] = [combined[j], combined[i]]
     }
 
-    return combined.map(w => ({ wordId: w.id, exposureFlag: null, quizResult: null }))
+    return combined.map(w => ({
+      wordId: w.id,
+      exposureFlag: null,
+      quizResult: null,
+      quizDirection: (Math.random() < 0.5 ? 'es-en' : 'en-es') as 'es-en' | 'en-es',
+    }))
   }
 
   function startSession() {
