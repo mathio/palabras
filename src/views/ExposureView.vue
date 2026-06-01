@@ -50,7 +50,6 @@ function onSwiped(flag: 'know' | 'dont-know') {
       />
     </div>
 
-    <div class="hint">swipe right if you know it · left if you don't</div>
   </div>
 </template>
 
@@ -77,10 +76,4 @@ function onSwiped(flag: 'know' | 'dont-know') {
   opacity: 0.5;
 }
 
-.hint {
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  padding: 0.5rem 1rem max(1rem, env(safe-area-inset-bottom));
-}
 </style>
