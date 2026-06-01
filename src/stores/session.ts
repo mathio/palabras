@@ -126,6 +126,7 @@ export const useSessionStore = defineStore('session', () => {
         progress.recordResult(item.wordId, item.quizResult, item.exposureFlag)
       }
     }
+    progress.incrementCompletedBatches()
   }
 
   function currentExposureWord() {

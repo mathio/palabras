@@ -9,6 +9,7 @@ export interface WordProgress {
 }
 
 const STORAGE_KEY = 'palabras-progress'
+const BATCHES_KEY = 'palabras-completed-batches'
 
 function today(): string {
   return new Date().toISOString().slice(0, 10)
@@ -22,6 +23,20 @@ function addDays(date: string, days: number): string {
 
 export const useProgressStore = defineStore('progress', () => {
   const progressMap = ref<Record<string, WordProgress>>(load())
+  const completedBatches = ref<number>(loadBatches())
+
+  function loadBatches(): number {
+    try {
+      return parseInt(localStorage.getItem(BATCHES_KEY) ?? '0', 10) || 0
+    } catch {
+      return 0
+    }
+  }
+
+  function incrementCompletedBatches() {
+    completedBatches.value++
+    localStorage.setItem(BATCHES_KEY, String(completedBatches.value))
+  }
 
   function load(): Record<string, WordProgress> {
     try {
@@ -90,5 +105,5 @@ export const useProgressStore = defineStore('progress', () => {
     return !!progressMap.value[wordId]
   }
 
-  return { progressMap, getProgress, recordResult, isDue, isLearned, isSeen }
+  return { progressMap, completedBatches, getProgress, recordResult, isDue, isLearned, isSeen, incrementCompletedBatches }
 })

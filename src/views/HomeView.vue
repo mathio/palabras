@@ -12,6 +12,7 @@ const progress = useProgressStore()
 onMounted(() => session.startSession())
 
 const learnedCount = computed(() => words.filter(w => progress.isLearned(w.id)).length)
+const completedBatches = computed(() => progress.completedBatches)
 const isEmpty = computed(() => session.batch.length === 0)
 
 const buttonLabel = computed(() => {
@@ -30,6 +31,7 @@ function start() {
 
 <template>
   <div class="home">
+    <div v-if="completedBatches > 0" class="batch-counter">{{ completedBatches }}</div>
     <div class="hero">
       <div class="logo">palabras</div>
       <p class="sub">your daily spanish vocabulary</p>
@@ -71,6 +73,20 @@ function start() {
   align-items: center;
   background: var(--bg);
   padding: max(3rem, env(safe-area-inset-top)) 1.5rem 0;
+  position: relative;
+}
+
+.batch-counter {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  right: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--surface);
+  padding: 0.25rem 0.6rem;
+  border-radius: 99px;
+  letter-spacing: 0.04em;
 }
 
 .hero {
