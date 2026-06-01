@@ -72,13 +72,13 @@ Words with streak ≥ 5 are considered "learned" and resurface rarely (every 30 
 
 ---
 
-## Daily batch selection
+## Batch selection
 
-1. Collect all words where `nextReview <= today` (resurfaced words)
+1. Collect all words where `nextReview <= today` (resurfaced words), lowest streak first
 2. Fill remaining slots with new words (never seen), ordered by level (A0 → A1 → A2)
-3. Target batch size: 10–20 words (configurable constant)
-4. If resurfaced words exceed batch size, prioritize lowest streak
-5. Always make sure at least 50% of the words in batch are new
+3. If still short of batch size, fill with non-learned words soonest due next — enables unlimited sessions per day
+4. Target batch size: 15 words (configurable constant)
+5. At least 50% of the batch must be new words (when available)
 
 ---
 

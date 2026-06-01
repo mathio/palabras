@@ -12,7 +12,9 @@ Each session has three phases:
 2. **Quiz** — all words from the batch as multiple choice. Each card is randomly either ES → EN or EN → ES. Tap an answer for instant feedback; the card auto-advances after 1.2 s.
 3. **Results** — score and list of words to review.
 
-Progress is saved to `localStorage`. Words resurface the next day based on a simple spaced-repetition schedule: pass → interval doubles (2, 4, 8 … days); fail → back tomorrow. Words with 5 consecutive passes are considered learned.
+Progress is saved to `localStorage`. Words resurface based on a simple spaced-repetition schedule: pass → interval doubles (2, 4, 8 … days); fail → back tomorrow. Words with 5 consecutive passes are considered learned.
+
+You can do as many sessions per day as you like. Once due and new words run out, the batch fills with the words soonest coming up for review.
 
 ## Running locally
 

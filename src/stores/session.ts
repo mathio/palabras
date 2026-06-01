@@ -51,6 +51,20 @@ export const useSessionStore = defineStore('session', () => {
 
     const combined = [...selectedDue, ...selectedNew]
 
+    // Fallback: if still short, fill with non-learned words soonest due next
+    // This allows unlimited sessions per day once new words run out
+    if (combined.length < BATCH_SIZE) {
+      const selectedIds = new Set(combined.map(w => w.id))
+      const upcoming = words
+        .filter(w => !progress.isLearned(w.id) && !selectedIds.has(w.id))
+        .sort((a, b) => {
+          const pa = progress.getProgress(a.id).nextReview ?? ''
+          const pb = progress.getProgress(b.id).nextReview ?? ''
+          return pa.localeCompare(pb)
+        })
+      combined.push(...upcoming.slice(0, BATCH_SIZE - combined.length))
+    }
+
     // shuffle
     for (let i = combined.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
