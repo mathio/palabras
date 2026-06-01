@@ -21,11 +21,11 @@ Static TypeScript file (`src/data/words.ts`). Structure:
 
 ```ts
 interface Word {
-  id: string
-  spanish: string
-  english: string
-  level: 'A0' | 'A1' | 'A2'
-  example: string // Spanish sentence using the word
+  id: string;
+  spanish: string;
+  english: string;
+  level: "A0" | "A1" | "A2";
+  example: string; // Spanish sentence using the word
 }
 ```
 
@@ -37,18 +37,18 @@ Words to be populated later. Seed with ~30 placeholder words across levels to de
 
 ```ts
 interface WordProgress {
-  wordId: string
-  streak: number           // consecutive correct quiz answers
-  nextReview: string       // ISO date — when to resurface
-  lastResult: 'pass' | 'fail' | null
+  wordId: string;
+  streak: number; // consecutive correct quiz answers
+  nextReview: string; // ISO date — when to resurface
+  lastResult: "pass" | "fail" | null;
 }
 
 interface SessionRecord {
-  date: string             // YYYY-MM-DD
-  wordIds: string[]
-  exposureFlags: Record<string, 'know' | 'dont-know'>
-  quizResults: Record<string, 'pass' | 'fail'>
-  completed: boolean
+  date: string; // YYYY-MM-DD
+  wordIds: string[];
+  exposureFlags: Record<string, "know" | "dont-know">;
+  quizResults: Record<string, "pass" | "fail">;
+  completed: boolean;
 }
 ```
 
@@ -58,12 +58,13 @@ interface SessionRecord {
 
 After each quiz:
 
-| Result | Streak | Next review |
-|--------|--------|-------------|
-| Pass | +1 | `2 ^ streak` days (1, 2, 4, 8, 16...) |
-| Fail | reset to 0 | 1 day |
+| Result | Streak     | Next review                           |
+| ------ | ---------- | ------------------------------------- |
+| Pass   | +1         | `2 ^ streak` days (1, 2, 4, 8, 16...) |
+| Fail   | reset to 0 | 1 day                                 |
 
 Exposure flag from phase 1 influences initial weight:
+
 - Swiped "don't know" + failed quiz → resurface daily until streak ≥ 1
 - Swiped "know" + failed quiz → normal fail path (1 day)
 
@@ -77,6 +78,7 @@ Words with streak ≥ 5 are considered "learned" and resurface rarely (every 30 
 2. Fill remaining slots with new words (never seen), ordered by level (A0 → A1 → A2)
 3. Target batch size: 10–20 words (configurable constant)
 4. If resurfaced words exceed batch size, prioritize lowest streak
+5. Always make sure at least 50% of the words in batch are new
 
 ---
 
@@ -159,6 +161,7 @@ Use `pointer events` directly — no library needed:
 ## Build phases
 
 ### Phase 1 — scaffold + data
+
 - [ ] Vite + Vue 3 + TypeScript project setup
 - [ ] Pinia, Vue Router installed
 - [ ] `words.ts` with ~30 seed words (A0/A1/A2)
@@ -166,22 +169,26 @@ Use `pointer events` directly — no library needed:
 - [ ] Session store
 
 ### Phase 2 — exposure pass
+
 - [ ] `SwipeCard.vue` with gesture handling
 - [ ] `ExposureView.vue` — card stack, records know/don't-know flags
 - [ ] Progress bar component
 
 ### Phase 3 — quiz pass
+
 - [ ] Distractor selection logic (same-level words, no duplicates)
 - [ ] `QuizCard.vue` — tap to answer, immediate feedback
 - [ ] `QuizView.vue` — iterates through all batch words
 
 ### Phase 4 — results + SRS
+
 - [ ] `ResultsView.vue`
 - [ ] SRS update logic on session complete
 - [ ] Daily batch selection logic
 - [ ] `HomeView.vue` — shows today's word count, start button
 
 ### Phase 5 — polish
+
 - [ ] Smooth swipe animations (spring-like snap-back)
 - [ ] Transition animations between views
 - [ ] Mobile viewport fixes (safe area, no scroll bounce)
