@@ -122,8 +122,13 @@ function onNoIdea() {
     </div>
 
     <div class="actions">
-      <button class="btn-dont" @click.stop="onNoIdea">no idea</button>
-      <button class="btn-know" @click.stop="onKnow">know it</button>
+      <template v-if="revealed">
+        <button class="btn-next" @click.stop="onNoIdea">next</button>
+      </template>
+      <template v-else>
+        <button class="btn-dont" @click.stop="onNoIdea">no idea</button>
+        <button class="btn-know" @click.stop="onKnow">know it</button>
+      </template>
     </div>
   </div>
 </template>
@@ -256,5 +261,11 @@ function onNoIdea() {
 .btn-know {
   background: color-mix(in srgb, var(--success) 15%, transparent);
   color: var(--success);
+}
+
+.btn-next {
+  flex: 1;
+  background: var(--surface2);
+  color: var(--text);
 }
 </style>
