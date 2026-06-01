@@ -26,7 +26,7 @@ function pick(option: Word) {
   if (selected.value) return
   selected.value = option.id
   const result = option.id === props.word.id ? 'pass' : 'fail'
-  setTimeout(() => emit('done', result), 600)
+  setTimeout(() => emit('done', result), result === 'pass' ? 400 : 1200)
 }
 
 function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
