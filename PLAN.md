@@ -189,7 +189,47 @@ Use `pointer events` directly — no library needed:
 
 ### Phase 5 — polish
 
-- [ ] Smooth swipe animations (spring-like snap-back)
-- [ ] Transition animations between views
-- [ ] Mobile viewport fixes (safe area, no scroll bounce)
-- [ ] Empty state (all words learned, nothing due today)
+- [x] Smooth swipe animations (spring-like snap-back)
+- [x] Transition animations between views
+- [x] Mobile viewport fixes (safe area, no scroll bounce)
+- [x] Empty state (all words learned, nothing due today)
+
+---
+
+## Shipped (post-plan)
+
+- 50/50 ES→EN and EN→ES quiz directions
+- Category-aware distractor selection (numbers vs numbers, days vs days, etc.)
+- Unlimited sessions per day (batch fills from soonest-due words)
+- 460+ words across 25 topics, audited against DELE A1/A2 reference lists
+- GitHub Actions deploy to GitHub Pages
+- Completed batch counter (localStorage)
+
+---
+
+## Next steps
+
+### High impact — learning quality
+- **Audio pronunciation** — tap word to hear it via Web Speech API (no backend needed). Essential for a language app.
+- **PWA / installable** — add `manifest.json` + service worker so the app installs to home screen. Already works offline-capable.
+- **Smarter SRS** — replace 2^streak with SM-2 algorithm (Anki's algorithm). Adds ease factor per word; resurfaces at more optimal intervals.
+- **Contextual quiz** — show a sentence with one word blanked, pick the missing word. Tests understanding in context, not just isolation.
+- **Typing mode for A2** — once a word has been seen N times, switch from multiple choice to free-text input. Much stronger retention.
+
+### Motivation & progress
+- **Daily streak counter** — days in a row with at least one completed batch.
+- **Per-level progress bars** — "A0: 100% · A1: 43% · A2: 12%" on home screen.
+- **Word mastery list** — browsable view of all words with status: new / learning / learned.
+- **Session results animation** — confetti or score animation on completion, especially for high scores.
+
+### UX polish
+- **Undo last swipe** — button or shake gesture to undo an accidental swipe during exposure.
+- **Keyboard shortcuts** — arrow keys to swipe, 1–5 to select quiz answer (desktop use).
+- **Light mode** — currently dark only.
+
+### Content
+- **User-added words** — simple form to add custom words/phrases, stored in localStorage.
+- **B1 word list** — next level once A2 is mastered.
+
+### Technical
+- **Cloud sync** — magic-link auth + backend so progress survives device switches and storage clears.
