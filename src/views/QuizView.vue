@@ -26,14 +26,32 @@ const options = computed((): Word[] => {
   return buildOptions(word)
 })
 
+function getCategory(id: string): string {
+  // Normalise subcategories that should be grouped
+  if (id.startsWith('food-')) return 'food'
+  if (id.startsWith('fam')) return 'family'   // fam- and fam2-
+  const m = id.match(/^([a-z]+)/)
+  return m ? m[1] : 'misc'
+}
+
 function buildOptions(word: Word): Word[] {
   const TOTAL = 5
-  // same-level pool first, fall back to other levels
-  const sameLevel = words.filter(w => w.level === word.level && w.id !== word.id)
-  const otherLevel = words.filter(w => w.level !== word.level && w.id !== word.id)
-  const pool = [...shuffle(sameLevel), ...shuffle(otherLevel)]
-  const distractors = pool.slice(0, TOTAL - 1)
-  return shuffle([word, ...distractors])
+  const needed = TOTAL - 1
+  const category = getCategory(word.id)
+
+  // 1. same category (excluding the word itself)
+  const sameCategory = shuffle(words.filter(w => w.id !== word.id && getCategory(w.id) === category))
+
+  // 2. top up with same-level words if category pool runs short
+  const usedIds = new Set([word.id, ...sameCategory.map(w => w.id)])
+  const sameLevel = shuffle(words.filter(w => !usedIds.has(w.id) && w.level === word.level))
+
+  // 3. final fallback: any remaining word
+  const usedIds2 = new Set([...usedIds, ...sameLevel.map(w => w.id)])
+  const rest = shuffle(words.filter(w => !usedIds2.has(w.id)))
+
+  const pool = [...sameCategory, ...sameLevel, ...rest]
+  return shuffle([word, ...pool.slice(0, needed)])
 }
 
 function shuffle<T>(arr: T[]): T[] {
