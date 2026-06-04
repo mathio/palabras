@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
 import { words, type Word } from '../data/words'
 import QuizCard from '../components/QuizCard.vue'
 import ContextualQuizCard from '../components/ContextualQuizCard.vue'
 import ProgressBar from '../components/ProgressBar.vue'
+import CancelConfirm from '../components/CancelConfirm.vue'
 
 const router = useRouter()
 const session = useSessionStore()
@@ -14,11 +15,15 @@ onMounted(() => {
   if (session.phase !== 'quiz') router.replace('/')
 })
 
+const showCancel = ref(false)
+
 function cancel() {
-  if (window.confirm('Stop this session and go home?')) {
-    session.cancelSession()
-    router.replace('/')
-  }
+  showCancel.value = true
+}
+
+function doCancel() {
+  session.cancelSession()
+  router.replace('/')
 }
 
 const currentItem = computed(() => session.currentQuizWord())
@@ -90,6 +95,7 @@ function onDone(result: 'pass' | 'fail') {
       <ProgressBar :current="session.quizIndex + 1" :total="session.batch.length" />
       <button class="icon-btn" @click="cancel" aria-label="cancel session">✕</button>
     </div>
+    <CancelConfirm v-if="showCancel" @confirm="doCancel" @dismiss="showCancel = false" />
     <QuizCard
       v-if="quizMode === 'word' && currentWord"
       :key="session.quizIndex"

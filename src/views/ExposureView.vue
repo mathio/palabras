@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
 import { words } from '../data/words'
 import SwipeCard from '../components/SwipeCard.vue'
 import ProgressBar from '../components/ProgressBar.vue'
+import CancelConfirm from '../components/CancelConfirm.vue'
 
 const router = useRouter()
 const session = useSessionStore()
@@ -24,6 +25,7 @@ const nextWord = computed(() => {
 })
 
 const canUndo = computed(() => session.exposureIndex > 0)
+const showCancel = ref(false)
 
 function onSwiped(flag: 'know' | 'dont-know') {
   const item = session.currentExposureWord()
@@ -39,10 +41,12 @@ function undo() {
 }
 
 function cancel() {
-  if (window.confirm('Stop this session and go home?')) {
-    session.cancelSession()
-    router.replace('/')
-  }
+  showCancel.value = true
+}
+
+function doCancel() {
+  session.cancelSession()
+  router.replace('/')
 }
 </script>
 
@@ -54,6 +58,8 @@ function cancel() {
       <ProgressBar :current="session.exposureIndex + 1" :total="session.batch.length" />
       <button class="icon-btn" @click="cancel" aria-label="cancel session">✕</button>
     </div>
+
+    <CancelConfirm v-if="showCancel" @confirm="doCancel" @dismiss="showCancel = false" />
 
     <div class="stack">
       <div v-if="nextWord" class="card-behind" />
