@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
 import { useProgressStore } from '../stores/progress'
 import { words } from '../data/words'
+import SyncPanel from '../components/SyncPanel.vue'
 
 const router = useRouter()
 const session = useSessionStore()
@@ -30,6 +31,7 @@ function start() {
 
 // Per-level progress panel
 const showStats = ref(false)
+const showSync = ref(false)
 
 const levelStats = computed(() => {
   return (['A0', 'A1', 'A2'] as const).map(level => {
@@ -43,6 +45,15 @@ const levelStats = computed(() => {
 
 <template>
   <div class="home">
+    <button class="profile-btn" aria-label="sync progress" @click="showSync = true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+      </svg>
+    </button>
+
+    <SyncPanel v-if="showSync" @close="showSync = false" />
+
     <button
       v-if="completedBatches > 0"
       class="batch-counter"
@@ -109,6 +120,26 @@ const levelStats = computed(() => {
   background: var(--bg);
   padding: max(3rem, env(safe-area-inset-top)) 1.5rem 0;
   position: relative;
+}
+
+.profile-btn {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text-muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.profile-btn:active {
+  background: var(--surface2);
+  color: var(--text);
 }
 
 .batch-counter {

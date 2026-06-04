@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { compressToBase64, decompressFromBase64 } from 'lz-string'
 
 export interface WordProgress {
   wordId: string
@@ -134,5 +135,37 @@ export const useProgressStore = defineStore('progress', () => {
     return !!progressMap.value[wordId]
   }
 
-  return { progressMap, completedBatches, getProgress, recordResult, isDue, isLearned, isSeen, incrementCompletedBatches }
+  function exportCode(): string {
+    const data = { progress: progressMap.value, batches: completedBatches.value }
+    return compressToBase64(JSON.stringify(data))
+  }
+
+  function importCode(code: string): boolean {
+    try {
+      const raw = decompressFromBase64(code.trim())
+      if (!raw) return false
+      const parsed = JSON.parse(raw)
+      if (!parsed.progress || typeof parsed.progress !== 'object') return false
+      const migrated: Record<string, WordProgress> = {}
+      for (const [id, p] of Object.entries(parsed.progress as Record<string, Partial<WordProgress> & { wordId: string; streak: number; nextReview: string }>)) {
+        migrated[id] = {
+          wordId: p.wordId,
+          streak: p.streak ?? 0,
+          nextReview: p.nextReview ?? today(),
+          lastResult: p.lastResult ?? null,
+          easeFactor: p.easeFactor ?? 2.5,
+          interval: p.interval ?? Math.min(Math.pow(2, p.streak ?? 0), 30),
+        }
+      }
+      progressMap.value = migrated
+      completedBatches.value = parsed.batches ?? 0
+      save()
+      localStorage.setItem(BATCHES_KEY, String(completedBatches.value))
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  return { progressMap, completedBatches, getProgress, recordResult, isDue, isLearned, isSeen, incrementCompletedBatches, exportCode, importCode }
 })
