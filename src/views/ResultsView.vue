@@ -3,12 +3,21 @@ import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
 import { words } from '../data/words'
+import confetti from 'canvas-confetti'
 
 const router = useRouter()
 const session = useSessionStore()
 
 onMounted(() => {
-  if (session.phase !== 'results') router.replace('/')
+  if (session.phase !== 'results') {
+    router.replace('/')
+    return
+  }
+  if (scorePercent.value === 100) {
+    confetti({ particleCount: 160, spread: 80, origin: { y: 0.55 } })
+  } else if (scorePercent.value >= 80) {
+    confetti({ particleCount: 80, spread: 60, origin: { y: 0.55 } })
+  }
 })
 
 const total = computed(() => session.batch.length)
@@ -29,7 +38,7 @@ function done() {
 <template>
   <div class="results">
     <div class="hero">
-      <div class="score-ring">
+      <div class="score-ring" :class="scorePercent === 100 ? 'perfect' : scorePercent >= 80 ? 'great' : ''">
         <span class="score-num">{{ scorePercent }}%</span>
       </div>
       <div class="score-label">{{ passed }} / {{ total }} correct</div>
@@ -45,7 +54,7 @@ function done() {
       </div>
     </div>
 
-    <div v-else class="perfect">
+    <div v-else class="perfect-msg">
       Perfect session — all words nailed!
     </div>
 
@@ -80,12 +89,27 @@ function done() {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: border-color 0.3s;
+}
+
+.score-ring.great {
+  border-color: var(--success);
+}
+
+.score-ring.perfect {
+  border-color: gold;
+  box-shadow: 0 0 24px rgba(255, 215, 0, 0.35);
 }
 
 .score-num {
   font-size: 2rem;
   font-weight: 800;
   color: var(--primary-light);
+}
+
+.score-ring.great .score-num,
+.score-ring.perfect .score-num {
+  color: var(--success);
 }
 
 .score-label {
@@ -132,7 +156,7 @@ function done() {
   font-size: 0.9rem;
 }
 
-.perfect {
+.perfect-msg {
   flex: 1;
   display: flex;
   align-items: center;
