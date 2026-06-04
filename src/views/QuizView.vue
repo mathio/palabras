@@ -85,8 +85,11 @@ function onDone(result: 'pass' | 'fail') {
 
 <template>
   <div class="quiz">
-    <ProgressBar :current="session.quizIndex + 1" :total="session.batch.length" />
-    <button class="cancel-btn" @click="cancel" aria-label="cancel session">✕</button>
+    <div class="top-bar">
+      <span class="icon-btn-placeholder" />
+      <ProgressBar :current="session.quizIndex + 1" :total="session.batch.length" />
+      <button class="icon-btn" @click="cancel" aria-label="cancel session">✕</button>
+    </div>
     <QuizCard
       v-if="quizMode === 'word' && currentWord"
       :key="session.quizIndex"
@@ -113,24 +116,34 @@ function onDone(result: 'pass' | 'fail') {
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  position: relative;
 }
 
-.cancel-btn {
-  position: absolute;
-  top: max(3.25rem, calc(env(safe-area-inset-top) + 2.25rem));
-  right: 1rem;
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: max(0.75rem, env(safe-area-inset-top)) 0.75rem 0;
+  flex-shrink: 0;
+}
+
+.icon-btn {
   font-size: 1.1rem;
   padding: 0.35rem 0.6rem;
   border-radius: 10px;
   background: var(--surface);
   color: var(--text-muted);
-  z-index: 10;
+  flex-shrink: 0;
   transition: background 0.15s, color 0.15s;
 }
 
-.cancel-btn:active {
+.icon-btn:active {
   background: var(--surface2);
   color: var(--text);
+}
+
+.icon-btn-placeholder {
+  display: inline-block;
+  width: calc(1.1rem + 1.2rem);
+  flex-shrink: 0;
 }
 </style>

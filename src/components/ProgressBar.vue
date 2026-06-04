@@ -16,7 +16,7 @@ defineProps<{ current: number; total: number }>()
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem 1.25rem 0;
+  flex: 1;
 }
 
 .track {

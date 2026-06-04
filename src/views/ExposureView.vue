@@ -48,20 +48,15 @@ function cancel() {
 
 <template>
   <div class="exposure">
-    <ProgressBar :current="session.exposureIndex + 1" :total="session.batch.length" />
-
-    <button v-if="canUndo" class="undo-btn" @click="undo" aria-label="undo last swipe">
-      ⎌
-    </button>
-
-    <button class="cancel-btn" @click="cancel" aria-label="cancel session">
-      ✕
-    </button>
+    <div class="top-bar">
+      <button v-if="canUndo" class="icon-btn" @click="undo" aria-label="undo last swipe">⎌</button>
+      <span v-else class="icon-btn-placeholder" />
+      <ProgressBar :current="session.exposureIndex + 1" :total="session.batch.length" />
+      <button class="icon-btn" @click="cancel" aria-label="cancel session">✕</button>
+    </div>
 
     <div class="stack">
-      <!-- next card peeking behind -->
       <div v-if="nextWord" class="card-behind" />
-
       <SwipeCard
         v-if="currentWord"
         :key="session.exposureIndex"
@@ -70,7 +65,6 @@ function cancel() {
         @swiped="onSwiped"
       />
     </div>
-
   </div>
 </template>
 
@@ -80,43 +74,35 @@ function cancel() {
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  position: relative;
 }
 
-.undo-btn {
-  position: absolute;
-  top: max(3.25rem, calc(env(safe-area-inset-top) + 2.25rem));
-  left: 1rem;
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: max(0.75rem, env(safe-area-inset-top)) 0.75rem 0;
+  flex-shrink: 0;
+}
+
+.icon-btn {
   font-size: 1.1rem;
   padding: 0.35rem 0.6rem;
   border-radius: 10px;
   background: var(--surface);
   color: var(--text-muted);
-  z-index: 10;
+  flex-shrink: 0;
   transition: background 0.15s, color 0.15s;
 }
 
-.undo-btn:active {
+.icon-btn:active {
   background: var(--surface2);
   color: var(--text);
 }
 
-.cancel-btn {
-  position: absolute;
-  top: max(3.25rem, calc(env(safe-area-inset-top) + 2.25rem));
-  right: 1rem;
-  font-size: 1.1rem;
-  padding: 0.35rem 0.6rem;
-  border-radius: 10px;
-  background: var(--surface);
-  color: var(--text-muted);
-  z-index: 10;
-  transition: background 0.15s, color 0.15s;
-}
-
-.cancel-btn:active {
-  background: var(--surface2);
-  color: var(--text);
+.icon-btn-placeholder {
+  display: inline-block;
+  width: calc(1.1rem + 1.2rem);  /* same width as icon-btn */
+  flex-shrink: 0;
 }
 
 .stack {
