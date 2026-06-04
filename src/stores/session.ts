@@ -8,6 +8,7 @@ export interface SessionWord {
   exposureFlag: 'know' | 'dont-know' | null
   quizResult: 'pass' | 'fail' | null
   quizDirection: 'es-en' | 'en-es'
+  quizMode: 'word' | 'contextual'
 }
 
 const BATCH_SIZE = 15
@@ -71,12 +72,16 @@ export const useSessionStore = defineStore('session', () => {
       ;[combined[i], combined[j]] = [combined[j], combined[i]]
     }
 
-    return combined.map(w => ({
-      wordId: w.id,
-      exposureFlag: null,
-      quizResult: null,
-      quizDirection: (Math.random() < 0.5 ? 'es-en' : 'en-es') as 'es-en' | 'en-es',
-    }))
+    return combined.map(w => {
+      const streak = progress.getProgress(w.id).streak
+      return {
+        wordId: w.id,
+        exposureFlag: null,
+        quizResult: null,
+        quizDirection: (Math.random() < 0.5 ? 'es-en' : 'en-es') as 'es-en' | 'en-es',
+        quizMode: (streak >= 1 && Math.random() < 0.5 ? 'contextual' : 'word') as 'word' | 'contextual',
+      }
+    })
   }
 
   function startSession() {

@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
 import { words, type Word } from '../data/words'
 import QuizCard from '../components/QuizCard.vue'
+import ContextualQuizCard from '../components/ContextualQuizCard.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 
 const router = useRouter()
@@ -19,6 +20,7 @@ const currentWord = computed((): Word | null => {
   return item ? words.find(w => w.id === item.wordId) ?? null : null
 })
 const direction = computed(() => currentItem.value?.quizDirection ?? 'es-en')
+const quizMode = computed(() => currentItem.value?.quizMode ?? 'word')
 
 const options = computed((): Word[] => {
   const word = currentWord.value
@@ -77,11 +79,18 @@ function onDone(result: 'pass' | 'fail') {
   <div class="quiz">
     <ProgressBar :current="session.quizIndex + 1" :total="session.batch.length" />
     <QuizCard
-      v-if="currentWord"
+      v-if="quizMode === 'word' && currentWord"
       :key="session.quizIndex"
       :word="currentWord"
       :options="options"
       :direction="direction"
+      @done="onDone"
+    />
+    <ContextualQuizCard
+      v-else-if="quizMode === 'contextual' && currentWord"
+      :key="session.quizIndex"
+      :word="currentWord"
+      :options="options"
       @done="onDone"
     />
   </div>
