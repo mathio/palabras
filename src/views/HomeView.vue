@@ -81,6 +81,7 @@ const levelStats = computed(() => {
     <div class="hero">
       <div class="logo">palabras</div>
       <p class="sub">your daily spanish vocabulary</p>
+      <a class="attribution" href="https://www.thiings.co" target="_blank" rel="noopener">icons by thiings.co</a>
     </div>
 
     <div v-if="isEmpty" class="empty">
@@ -285,6 +286,19 @@ const levelStats = computed(() => {
   color: var(--text-muted);
   font-size: 0.9rem;
   letter-spacing: 0.04em;
+}
+
+.attribution {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.45;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  margin-top: 0.25rem;
+}
+
+.attribution:hover {
+  opacity: 0.8;
 }
 
 .empty {

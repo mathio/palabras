@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { Word } from '../data/words'
+import { wordIcons } from '../data/icons'
 
 const props = defineProps<{ word: Word; isTop: boolean }>()
 const emit = defineEmits<{ swiped: [flag: 'know' | 'dont-know'] }>()
+
+const icon = computed(() => wordIcons[props.word.id] ?? null)
 
 const startX = ref(0)
 const deltaX = ref(0)
@@ -106,6 +109,8 @@ function onNoIdea() {
     <div class="content">
       <div class="level-badge">{{ word.level }}</div>
 
+      <img v-if="icon" :src="icon" class="word-icon" alt="" loading="lazy" />
+
       <!-- indicators sit left/right of the word, in the content flow -->
       <div class="word-row">
         <div class="indicator know-it" :style="{ opacity: knowOpacity }">KNOW IT</div>
@@ -171,6 +176,15 @@ function onNoIdea() {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
   padding: 0.2rem 0.6rem;
   border-radius: 99px;
+}
+
+.word-icon {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  border-radius: 16px;
+  pointer-events: none;
+  user-select: none;
 }
 
 .word-row {

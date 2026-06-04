@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue'
 import type { Word } from '../data/words'
+import { wordIcons } from '../data/icons'
 
 const props = defineProps<{
   word: Word
@@ -25,6 +26,7 @@ const directionLabel = computed(() =>
 const correctAnswer = computed(() =>
   props.direction === 'es-en' ? props.word.english : props.word.spanish,
 )
+const icon = computed(() => wordIcons[props.word.id] ?? null)
 
 function optionLabel(w: Word) {
   return props.direction === 'es-en' ? w.english : w.spanish
@@ -71,7 +73,9 @@ onMounted(() => {
         <div class="level-badge">{{ word.level }}</div>
         <div class="dir-badge">{{ directionLabel }}</div>
       </div>
-      <div class="question-word">{{ question }}</div>
+      <div class="question-word">
+        <img v-if="icon && !useTyping" :src="icon" class="inline-icon" alt="" loading="lazy" />{{ question }}
+      </div>
       <div v-if="direction === 'es-en'" class="example">{{ word.example }}</div>
     </div>
 
@@ -154,10 +158,21 @@ onMounted(() => {
 }
 
 .question-word {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: clamp(2rem, 8vw, 2.75rem);
   font-weight: 700;
   color: var(--text);
   line-height: 1.15;
+}
+
+.inline-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .example {
