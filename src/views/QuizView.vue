@@ -16,6 +16,7 @@ onMounted(() => {
 
 function cancel() {
   if (window.confirm('Stop this session and go home?')) {
+    session.cancelSession()
     router.replace('/')
   }
 }
