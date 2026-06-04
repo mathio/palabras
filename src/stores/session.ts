@@ -20,41 +20,43 @@ function today(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
+function shuffleIndices(n: number): number[] {
+  const arr = Array.from({ length: n }, (_, i) => i)
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
+}
+
+// Words where fill-in-blank is semantically ambiguous (any option fits the sentence)
+function isContextualSafe(wordId: string): boolean {
+  return !wordId.startsWith('num-')
+}
+
 export const useSessionStore = defineStore('session', () => {
   const date = ref<string>('')
   const batch = ref<SessionWord[]>([])
   const exposureIndex = ref(0)
   const quizIndex = ref(0)
+  const quizOrder = ref<number[]>([])
   const phase = ref<'exposure' | 'quiz' | 'results' | 'idle'>('idle')
 
   function buildBatch(): SessionWord[] {
     const progress = useProgressStore()
-    // words due for review (seen before, nextReview <= today)
     const due = words
       .filter(w => progress.isSeen(w.id) && !progress.isLearned(w.id) && progress.isDue(w.id))
-      .sort((a, b) => {
-        const sa = progress.getProgress(a.id).streak
-        const sb = progress.getProgress(b.id).streak
-        return sa - sb // lowest streak first
-      })
+      .sort((a, b) => progress.getProgress(a.id).streak - progress.getProgress(b.id).streak)
 
-    // unseen new words, ordered A0 → A1 → A2
     const levelOrder = { A0: 0, A1: 1, A2: 2 }
     const newWords = words
       .filter(w => !progress.isSeen(w.id))
       .sort((a, b) => levelOrder[a.level] - levelOrder[b.level])
 
     const minNew = Math.ceil(BATCH_SIZE * MIN_NEW_RATIO)
-    const maxDue = BATCH_SIZE - minNew
+    const selectedDue = due.slice(0, BATCH_SIZE - minNew)
+    const combined = [...selectedDue, ...newWords.slice(0, BATCH_SIZE - selectedDue.length)]
 
-    const selectedDue = due.slice(0, maxDue)
-    const remainingSlots = BATCH_SIZE - selectedDue.length
-    const selectedNew = newWords.slice(0, remainingSlots)
-
-    const combined = [...selectedDue, ...selectedNew]
-
-    // Fallback: if still short, fill with non-learned words soonest due next
-    // This allows unlimited sessions per day once new words run out
     if (combined.length < BATCH_SIZE) {
       const selectedIds = new Set(combined.map(w => w.id))
       const upcoming = words
@@ -67,7 +69,6 @@ export const useSessionStore = defineStore('session', () => {
       combined.push(...upcoming.slice(0, BATCH_SIZE - combined.length))
     }
 
-    // shuffle
     for (let i = combined.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[combined[i], combined[j]] = [combined[j], combined[i]]
@@ -75,12 +76,13 @@ export const useSessionStore = defineStore('session', () => {
 
     return combined.map(w => {
       const streak = progress.getProgress(w.id).streak
+      const contextual = streak >= 1 && isContextualSafe(w.id) && Math.random() < 0.7
       return {
         wordId: w.id,
         exposureFlag: null,
         quizResult: null,
         quizDirection: (Math.random() < 0.5 ? 'es-en' : 'en-es') as 'es-en' | 'en-es',
-        quizMode: (streak >= 1 && Math.random() < 0.5 ? 'contextual' : 'word') as 'word' | 'contextual',
+        quizMode: (contextual ? 'contextual' : 'word') as 'word' | 'contextual',
         quizInputMode: (streak >= 2 ? 'type' : 'choice') as 'choice' | 'type',
       }
     })
@@ -93,12 +95,14 @@ export const useSessionStore = defineStore('session', () => {
       batch.value = saved.batch
       exposureIndex.value = saved.exposureIndex
       quizIndex.value = saved.quizIndex
+      quizOrder.value = saved.quizOrder ?? Array.from({ length: saved.batch.length }, (_, i) => i)
       phase.value = saved.phase
     } else {
       date.value = today()
       batch.value = buildBatch()
       exposureIndex.value = 0
       quizIndex.value = 0
+      quizOrder.value = []
       phase.value = 'exposure'
       persist()
     }
@@ -111,6 +115,7 @@ export const useSessionStore = defineStore('session', () => {
     if (exposureIndex.value >= batch.value.length) {
       phase.value = 'quiz'
       quizIndex.value = 0
+      quizOrder.value = shuffleIndices(batch.value.length)
     }
     persist()
   }
@@ -141,7 +146,8 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   function currentQuizWord() {
-    return batch.value[quizIndex.value] ?? null
+    const idx = quizOrder.value[quizIndex.value] ?? quizIndex.value
+    return batch.value[idx] ?? null
   }
 
   function failedWords() {
@@ -157,12 +163,12 @@ export const useSessionStore = defineStore('session', () => {
     persist()
   }
 
-  // persistence helpers
   interface SavedSession {
     date: string
     batch: SessionWord[]
     exposureIndex: number
     quizIndex: number
+    quizOrder: number[]
     phase: 'exposure' | 'quiz' | 'results' | 'idle'
   }
 
@@ -180,14 +186,14 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   function persist() {
-    const data: SavedSession = {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
       date: date.value,
       batch: batch.value,
       exposureIndex: exposureIndex.value,
       quizIndex: quizIndex.value,
+      quizOrder: quizOrder.value,
       phase: phase.value,
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    }))
   }
 
   return {
