@@ -14,6 +14,13 @@ onMounted(() => {
   if (session.phase !== 'quiz') router.replace('/')
 })
 
+function cancel() {
+  if (window.confirm('Cancel this session? Progress so far won\'t be saved.')) {
+    session.cancelSession()
+    router.replace('/')
+  }
+}
+
 const currentItem = computed(() => session.currentQuizWord())
 const currentWord = computed((): Word | null => {
   const item = currentItem.value
@@ -79,6 +86,7 @@ function onDone(result: 'pass' | 'fail') {
 <template>
   <div class="quiz">
     <ProgressBar :current="session.quizIndex + 1" :total="session.batch.length" />
+    <button class="cancel-btn" @click="cancel" aria-label="cancel session">✕</button>
     <QuizCard
       v-if="quizMode === 'word' && currentWord"
       :key="session.quizIndex"
@@ -105,5 +113,24 @@ function onDone(result: 'pass' | 'fail') {
   display: flex;
   flex-direction: column;
   background: var(--bg);
+  position: relative;
+}
+
+.cancel-btn {
+  position: absolute;
+  top: max(3.25rem, calc(env(safe-area-inset-top) + 2.25rem));
+  right: 1rem;
+  font-size: 1.1rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-muted);
+  z-index: 10;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cancel-btn:active {
+  background: var(--surface2);
+  color: var(--text);
 }
 </style>
