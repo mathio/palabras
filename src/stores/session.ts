@@ -148,6 +148,15 @@ export const useSessionStore = defineStore('session', () => {
     return batch.value.filter(b => b.quizResult === 'fail')
   }
 
+  function undoExposure() {
+    if (exposureIndex.value <= 0) return
+    exposureIndex.value--
+    const item = batch.value[exposureIndex.value]
+    if (item) item.exposureFlag = null
+    phase.value = 'exposure'
+    persist()
+  }
+
   // persistence helpers
   interface SavedSession {
     date: string
@@ -190,6 +199,7 @@ export const useSessionStore = defineStore('session', () => {
     startSession,
     recordExposure,
     recordQuiz,
+    undoExposure,
     currentExposureWord,
     currentQuizWord,
     failedWords,

@@ -23,6 +23,8 @@ const nextWord = computed(() => {
   return item ? words.find(w => w.id === item.wordId) ?? null : null
 })
 
+const canUndo = computed(() => session.exposureIndex > 0)
+
 function onSwiped(flag: 'know' | 'dont-know') {
   const item = session.currentExposureWord()
   if (!item) return
@@ -31,11 +33,19 @@ function onSwiped(flag: 'know' | 'dont-know') {
     router.push('/quiz')
   }
 }
+
+function undo() {
+  session.undoExposure()
+}
 </script>
 
 <template>
   <div class="exposure">
     <ProgressBar :current="session.exposureIndex + 1" :total="session.batch.length" />
+
+    <button v-if="canUndo" class="undo-btn" @click="undo" aria-label="undo last swipe">
+      ⎌
+    </button>
 
     <div class="stack">
       <!-- next card peeking behind -->
@@ -59,6 +69,25 @@ function onSwiped(flag: 'know' | 'dont-know') {
   display: flex;
   flex-direction: column;
   background: var(--bg);
+  position: relative;
+}
+
+.undo-btn {
+  position: absolute;
+  top: max(3.25rem, calc(env(safe-area-inset-top) + 2.25rem));
+  left: 1rem;
+  font-size: 1.1rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-muted);
+  z-index: 10;
+  transition: background 0.15s, color 0.15s;
+}
+
+.undo-btn:active {
+  background: var(--surface2);
+  color: var(--text);
 }
 
 .stack {
@@ -75,5 +104,4 @@ function onSwiped(flag: 'know' | 'dont-know') {
   transform: scale(0.95) translateY(10px);
   opacity: 0.5;
 }
-
 </style>
