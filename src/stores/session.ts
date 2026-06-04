@@ -29,9 +29,26 @@ function shuffleIndices(n: number): number[] {
   return arr
 }
 
-// Words where fill-in-blank is semantically ambiguous (any option fits the sentence)
+// Categories where fill-in-blank is semantically ambiguous:
+// any word from the same category fits the sentence, so the context gives no signal.
+const CONTEXTUAL_UNSAFE: string[] = [
+  'num-',    // numbers: "Tengo ___ años" fits any number
+  'dow-',    // days: "El ___ tengo clase" fits any day
+  'month-',  // months: "En ___ hace calor" fits multiple months
+  'color-',  // colours: "La camisa es ___" fits any colour
+  'desc-',   // adjectives: "Es muy ___" fits most adjectives
+  'freq-',   // frequency: "___ como pizza" fits always/sometimes/never
+  'time-',   // time phrases: "Son las ___" fits any hour
+  'temp-',   // temporal: "Nos vemos ___" fits hoy/mañana/luego etc.
+  'quest-',  // question words: "¿___ te llamas?" is not fill-in-blank
+  'wea-',    // weather: "Hace ___" fits any weather expression
+  'tener-',  // tener phrases: "Tengo ___" fits multiple states
+  'intro-',  // intro phrases: mostly multi-word expressions
+  'a0-',     // basic A0 words: mixed bag, most sentences are generic
+]
+
 function isContextualSafe(wordId: string): boolean {
-  return !wordId.startsWith('num-')
+  return !CONTEXTUAL_UNSAFE.some(p => wordId.startsWith(p))
 }
 
 export const useSessionStore = defineStore('session', () => {
