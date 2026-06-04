@@ -15,8 +15,7 @@ onMounted(() => {
 })
 
 function cancel() {
-  if (window.confirm('Cancel this session? Progress so far won\'t be saved.')) {
-    session.cancelSession()
+  if (window.confirm('Stop this session and go home?')) {
     router.replace('/')
   }
 }

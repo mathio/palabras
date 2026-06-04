@@ -178,16 +178,6 @@ export const useSessionStore = defineStore('session', () => {
     return batch.value.filter(b => b.quizResult === 'fail')
   }
 
-  function cancelSession() {
-    batch.value = []
-    exposureIndex.value = 0
-    quizIndex.value = 0
-    quizOrder.value = []
-    phase.value = 'idle'
-    date.value = ''
-    localStorage.removeItem(STORAGE_KEY)
-  }
-
   function undoExposure() {
     if (exposureIndex.value <= 0) return
     exposureIndex.value--
@@ -237,7 +227,6 @@ export const useSessionStore = defineStore('session', () => {
     quizIndex,
     phase,
     startSession,
-    cancelSession,
     recordExposure,
     recordQuiz,
     undoExposure,
