@@ -1,20 +1,29 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import type { Word } from '../data/words'
 
 const props = defineProps<{
   word: Word
   options: Word[]
+  useTyping?: boolean
 }>()
 const emit = defineEmits<{ done: [result: 'pass' | 'fail'] }>()
 
 const selected = ref<string | null>(null)
+const typed = ref('')
+const submitted = ref(false)
+const typedResult = ref<'pass' | 'fail' | null>(null)
+const inputEl = ref<HTMLInputElement | null>(null)
 
 const blanked = computed(() => {
   const escaped = props.word.spanish.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const result = props.word.example.replace(new RegExp(escaped, 'gi'), '___')
   return { text: result, hasBlank: result !== props.word.example }
 })
+
+function normalize(s: string) {
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim()
+}
 
 function pick(option: Word) {
   if (selected.value) return
@@ -23,12 +32,27 @@ function pick(option: Word) {
   setTimeout(() => emit('done', result), result === 'pass' ? 400 : 1200)
 }
 
+function submitTyped() {
+  if (submitted.value) {
+    emit('done', typedResult.value!)
+    return
+  }
+  const pass = normalize(typed.value) === normalize(props.word.spanish)
+  typedResult.value = pass ? 'pass' : 'fail'
+  submitted.value = true
+  setTimeout(() => emit('done', typedResult.value!), pass ? 400 : 1200)
+}
+
 function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
   if (!selected.value) return 'idle'
   if (option.id === props.word.id) return 'correct'
   if (option.id === selected.value) return 'wrong'
   return 'neutral'
 }
+
+onMounted(() => {
+  if (props.useTyping) nextTick(() => inputEl.value?.focus())
+})
 </script>
 
 <template>
@@ -42,7 +66,7 @@ function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
       <div v-if="!blanked.hasBlank" class="hint">{{ word.english }}</div>
     </div>
 
-    <div class="options">
+    <div v-if="!useTyping" class="options">
       <button
         v-for="option in options"
         :key="option.id"
@@ -51,6 +75,25 @@ function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
         @click="pick(option)"
       >
         {{ option.spanish }}
+      </button>
+    </div>
+
+    <div v-else class="typing-area">
+      <input
+        ref="inputEl"
+        v-model="typed"
+        class="type-input"
+        :class="submitted ? (typedResult === 'pass' ? 'correct' : 'wrong') : ''"
+        type="text"
+        placeholder="escribe en español…"
+        :disabled="submitted"
+        @keydown.enter="submitTyped"
+      />
+      <div v-if="submitted && typedResult === 'fail'" class="correct-answer">
+        {{ word.spanish }}
+      </div>
+      <button class="btn-check" :class="submitted ? typedResult : ''" @click="submitTyped">
+        {{ submitted ? (typedResult === 'pass' ? 'correct ✓' : 'wrong ✗') : 'check' }}
       </button>
     </div>
   </div>
@@ -152,5 +195,71 @@ function stateFor(option: Word): 'correct' | 'wrong' | 'neutral' | 'idle' {
 
 .option.neutral {
   opacity: 0.4;
+}
+
+.typing-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.type-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--surface2);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.type-input:focus {
+  border-color: var(--primary);
+}
+
+.type-input.correct {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.type-input.wrong {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.correct-answer {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--success);
+}
+
+.btn-check {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--primary);
+  color: #fff;
+  transition: transform 0.1s, opacity 0.1s;
+}
+
+.btn-check:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+.btn-check.pass {
+  background: color-mix(in srgb, var(--success) 30%, transparent);
+  color: var(--success);
+}
+
+.btn-check.fail {
+  background: color-mix(in srgb, var(--danger) 30%, transparent);
+  color: var(--danger);
 }
 </style>

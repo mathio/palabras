@@ -21,6 +21,7 @@ const currentWord = computed((): Word | null => {
 })
 const direction = computed(() => currentItem.value?.quizDirection ?? 'es-en')
 const quizMode = computed(() => currentItem.value?.quizMode ?? 'word')
+const useTyping = computed(() => (currentItem.value?.quizInputMode ?? 'choice') === 'type')
 
 const options = computed((): Word[] => {
   const word = currentWord.value
@@ -84,6 +85,7 @@ function onDone(result: 'pass' | 'fail') {
       :word="currentWord"
       :options="options"
       :direction="direction"
+      :use-typing="useTyping"
       @done="onDone"
     />
     <ContextualQuizCard
@@ -91,6 +93,7 @@ function onDone(result: 'pass' | 'fail') {
       :key="session.quizIndex"
       :word="currentWord"
       :options="options"
+      :use-typing="useTyping"
       @done="onDone"
     />
   </div>

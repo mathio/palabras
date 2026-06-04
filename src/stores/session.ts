@@ -9,6 +9,7 @@ export interface SessionWord {
   quizResult: 'pass' | 'fail' | null
   quizDirection: 'es-en' | 'en-es'
   quizMode: 'word' | 'contextual'
+  quizInputMode: 'choice' | 'type'
 }
 
 const BATCH_SIZE = 15
@@ -80,6 +81,7 @@ export const useSessionStore = defineStore('session', () => {
         quizResult: null,
         quizDirection: (Math.random() < 0.5 ? 'es-en' : 'en-es') as 'es-en' | 'en-es',
         quizMode: (streak >= 1 && Math.random() < 0.5 ? 'contextual' : 'word') as 'word' | 'contextual',
+        quizInputMode: (streak >= 2 ? 'type' : 'choice') as 'choice' | 'type',
       }
     })
   }
