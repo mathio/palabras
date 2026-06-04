@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
 import { useProgressStore } from '../stores/progress'
@@ -27,11 +27,46 @@ function start() {
   else if (session.phase === 'quiz') router.push('/quiz')
   else if (session.phase === 'results') router.push('/results')
 }
+
+// Per-level progress panel
+const showStats = ref(false)
+
+const levelStats = computed(() => {
+  return (['A0', 'A1', 'A2'] as const).map(level => {
+    const levelWords = words.filter(w => w.level === level)
+    const seen = levelWords.filter(w => progress.isSeen(w.id)).length
+    const learned = levelWords.filter(w => progress.isLearned(w.id)).length
+    return { level, total: levelWords.length, seen, learned, pct: Math.round((seen / levelWords.length) * 100) }
+  })
+})
 </script>
 
 <template>
   <div class="home">
-    <div v-if="completedBatches > 0" class="batch-counter">{{ completedBatches }}</div>
+    <button
+      v-if="completedBatches > 0"
+      class="batch-counter"
+      @click="showStats = !showStats"
+    >{{ completedBatches }}</button>
+
+    <div v-if="showStats" class="stats-panel" @click.self="showStats = false">
+      <div class="stats-card">
+        <div class="stats-title">progress by level</div>
+        <div class="level-rows">
+          <div v-for="s in levelStats" :key="s.level" class="level-row">
+            <div class="level-label">{{ s.level }}</div>
+            <div class="bar-wrap">
+              <div class="bar-fill" :style="{ width: s.pct + '%' }" />
+            </div>
+            <div class="level-pct">{{ s.pct }}%</div>
+            <div class="level-detail">{{ s.seen }}/{{ s.total }}</div>
+          </div>
+        </div>
+        <div class="stats-sub">{{ learnedCount }} / {{ words.length }} total learned</div>
+        <button class="stats-close" @click="showStats = false">close</button>
+      </div>
+    </div>
+
     <div class="hero">
       <div class="logo">palabras</div>
       <p class="sub">your daily spanish vocabulary</p>
@@ -87,6 +122,113 @@ function start() {
   padding: 0.25rem 0.6rem;
   border-radius: 99px;
   letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.batch-counter:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+/* Stats overlay */
+.stats-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.stats-card {
+  background: var(--surface);
+  border-radius: 20px 20px 16px 16px;
+  padding: 1.5rem 1.5rem 1rem;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stats-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.level-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.level-row {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2.5rem 3.5rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.level-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--primary-light);
+}
+
+.bar-wrap {
+  height: 8px;
+  background: var(--surface2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 99px;
+  transition: width 0.4s ease-out;
+  min-width: 2px;
+}
+
+.level-pct {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: right;
+}
+
+.level-detail {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.stats-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.stats-close {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--surface2);
+  color: var(--text);
+  transition: opacity 0.1s;
+}
+
+.stats-close:active {
+  opacity: 0.7;
 }
 
 .hero {
