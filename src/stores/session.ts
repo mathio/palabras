@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { words } from '../data/words'
+import { words, type Word } from '../data/words'
 import { useProgressStore } from './progress'
 
 export interface SessionWord {
@@ -27,6 +27,13 @@ function shuffleIndices(n: number): number[] {
     ;[arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
+}
+
+// True only when the Spanish base form appears literally in the example sentence,
+// meaning a blank can be shown. Conjugated verbs (buscar→busco) fail this check.
+function canBlank(word: Word): boolean {
+  const escaped = word.spanish.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return new RegExp(escaped, 'gi').test(word.example)
 }
 
 // Categories where fill-in-blank is semantically ambiguous:
@@ -93,7 +100,7 @@ export const useSessionStore = defineStore('session', () => {
 
     return combined.map(w => {
       const streak = progress.getProgress(w.id).streak
-      const contextual = streak >= 1 && isContextualSafe(w.id) && Math.random() < 0.7
+      const contextual = streak >= 1 && isContextualSafe(w.id) && canBlank(w) && Math.random() < 0.7
       return {
         wordId: w.id,
         exposureFlag: null,

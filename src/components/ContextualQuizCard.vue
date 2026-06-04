@@ -63,7 +63,6 @@ onMounted(() => {
         <div class="dir-badge">CONTEXT</div>
       </div>
       <div class="sentence">{{ blanked.text }}</div>
-      <div v-if="!blanked.hasBlank" class="hint">{{ word.english }}</div>
     </div>
 
     <div v-if="!useTyping" class="options">
@@ -149,12 +148,6 @@ onMounted(() => {
   font-weight: 600;
   color: var(--text);
   line-height: 1.5;
-}
-
-.hint {
-  font-size: clamp(0.85rem, 3vw, 1rem);
-  color: var(--text-muted);
-  font-style: italic;
 }
 
 .options {
