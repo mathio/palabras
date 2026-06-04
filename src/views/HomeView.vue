@@ -5,12 +5,19 @@ import { useSessionStore } from '../stores/session'
 import { useProgressStore } from '../stores/progress'
 import { words } from '../data/words'
 import SyncPanel from '../components/SyncPanel.vue'
+import { wordIcons } from '../data/icons'
 
 const router = useRouter()
 const session = useSessionStore()
 const progress = useProgressStore()
 
-onMounted(() => session.startSession())
+onMounted(() => {
+  session.startSession()
+  for (const item of session.batch) {
+    const url = wordIcons[item.wordId]
+    if (url) new Image().src = url
+  }
+})
 
 const learnedCount = computed(() => words.filter(w => progress.isLearned(w.id)).length)
 const completedBatches = computed(() => progress.completedBatches)
