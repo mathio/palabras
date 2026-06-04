@@ -6,6 +6,8 @@ export interface WordProgress {
   streak: number
   nextReview: string // ISO date YYYY-MM-DD
   lastResult: 'pass' | 'fail' | null
+  easeFactor: number // SM-2, default 2.5
+  interval: number   // SM-2, days between reviews
 }
 
 const STORAGE_KEY = 'palabras-progress'
@@ -41,7 +43,20 @@ export const useProgressStore = defineStore('progress', () => {
   function load(): Record<string, WordProgress> {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
-      return raw ? JSON.parse(raw) : {}
+      if (!raw) return {}
+      const data = JSON.parse(raw) as Record<string, Partial<WordProgress> & { wordId: string; streak: number; nextReview: string }>
+      const result: Record<string, WordProgress> = {}
+      for (const [id, p] of Object.entries(data)) {
+        result[id] = {
+          wordId: p.wordId,
+          streak: p.streak ?? 0,
+          nextReview: p.nextReview ?? today(),
+          lastResult: p.lastResult ?? null,
+          easeFactor: p.easeFactor ?? 2.5,
+          interval: p.interval ?? Math.min(Math.pow(2, p.streak ?? 0), 30),
+        }
+      }
+      return result
     } catch {
       return {}
     }
@@ -57,6 +72,8 @@ export const useProgressStore = defineStore('progress', () => {
       streak: 0,
       nextReview: today(),
       lastResult: null,
+      easeFactor: 2.5,
+      interval: 0,
     }
   }
 
@@ -65,27 +82,39 @@ export const useProgressStore = defineStore('progress', () => {
     result: 'pass' | 'fail',
     exposureFlag: 'know' | 'dont-know',
   ) {
-    const current = getProgress(wordId)
-    let streak: number
-    let nextReview: string
+    const cur = getProgress(wordId)
+    // SM-2 quality: 4 = easy correct, 3 = hard correct, 1 = fail
+    const quality = result === 'fail' ? 1 : exposureFlag === 'dont-know' ? 3 : 4
 
-    if (result === 'pass') {
-      streak = current.streak + 1
-      // 2^streak days: 2, 4, 8, 16... capped at 30
-      const days = Math.min(Math.pow(2, streak), 30)
-      nextReview = addDays(today(), days)
+    let streak: number
+    let easeFactor: number
+    let interval: number
+
+    if (quality >= 3) {
+      streak = cur.streak + 1
+      if (cur.streak === 0) {
+        interval = 1
+      } else if (cur.streak === 1) {
+        interval = 6
+      } else {
+        interval = Math.round(cur.interval * cur.easeFactor)
+      }
+      interval = Math.min(interval, 90)
+      easeFactor = cur.easeFactor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)
+      easeFactor = Math.max(1.3, easeFactor)
     } else {
       streak = 0
-      // "don't know" + fail → resurface daily until first pass
-      const days = exposureFlag === 'dont-know' ? 1 : 1
-      nextReview = addDays(today(), days)
+      interval = 1
+      easeFactor = cur.easeFactor
     }
 
     progressMap.value[wordId] = {
       wordId,
       streak,
-      nextReview,
+      nextReview: addDays(today(), interval),
       lastResult: result,
+      easeFactor,
+      interval,
     }
     save()
   }
