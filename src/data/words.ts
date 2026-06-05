@@ -981,4 +981,69 @@ export const words: Word[] = [
 
   // ─── RELATIONSHIPS (additions) ───────────────────────────────────────────────
   { id: 'rel-013', spanish: 'la sorpresa', english: 'the surprise', level: 'A2', example: 'Le organizamos una fiesta sorpresa por su cumpleaños.' },
+
+  // ─── NUMBERS (addition) ──────────────────────────────────────────────────────
+  { id: 'num-000', spanish: 'cero', english: 'zero', level: 'A0', example: 'Mi número de teléfono empieza con cero.' },
+
+  // ─── GREETINGS (additions) ───────────────────────────────────────────────────
+  { id: 'intro-019', spanish: '¿qué tal?', english: "how's it going?", level: 'A0', example: '¿Qué tal? — Bien, gracias.' },
+  { id: 'intro-020', spanish: 'lo siento', english: "I'm sorry", level: 'A0', example: 'Lo siento mucho, no era mi intención.' },
+  { id: 'intro-021', spanish: 'perdón / perdona', english: 'excuse me / sorry', level: 'A0', example: 'Perdona, ¿sabes dónde está la estación?' },
+  { id: 'intro-022', spanish: 'de nada', english: "you're welcome / not at all", level: 'A0', example: 'Gracias. — De nada.' },
+
+  // ─── PEOPLE (basic) ──────────────────────────────────────────────────────────
+  { id: 'a0-011', spanish: 'el hombre', english: 'the man', level: 'A0', example: 'Ese hombre lleva un abrigo azul.' },
+  { id: 'a0-012', spanish: 'la mujer', english: 'the woman', level: 'A0', example: 'La mujer del sombrero es mi profesora.' },
+  { id: 'a0-013', spanish: 'la persona', english: 'the person', level: 'A0', example: 'Es una persona muy amable y trabajadora.' },
+  { id: 'a1-011', spanish: 'la gente', english: 'the people', level: 'A1', example: 'Hay mucha gente en la plaza hoy.' },
+
+  // ─── HOME (additions) ────────────────────────────────────────────────────────
+  { id: 'home-035', spanish: 'la mesa', english: 'the table', level: 'A0', example: 'Pon los platos en la mesa, por favor.' },
+  { id: 'home-036', spanish: 'la silla', english: 'the chair', level: 'A0', example: 'Siéntate en esa silla.' },
+  { id: 'home-037', spanish: 'la llave', english: 'the key', level: 'A1', example: 'He olvidado la llave de casa.' },
+
+  // ─── RESTAURANT / DINING (additions) ─────────────────────────────────────────
+  { id: 'rest-015', spanish: 'el plato', english: 'the plate / dish', level: 'A1', example: 'Este plato está sucio, ¿me trae otro?' },
+  { id: 'rest-016', spanish: 'el vaso', english: 'the glass', level: 'A1', example: 'Quiero un vaso de agua, por favor.' },
+  { id: 'rest-017', spanish: 'la botella', english: 'the bottle', level: 'A1', example: 'Pedimos una botella de vino tinto.' },
+
+  // ─── FOOD (additions) ────────────────────────────────────────────────────────
+  { id: 'food-d30', spanish: 'la comida', english: 'the meal / food', level: 'A1', example: 'La comida española es muy variada y sabrosa.' },
+  { id: 'food-d31', spanish: 'el desayuno', english: 'breakfast', level: 'A1', example: 'El desayuno típico español es café con leche y tostada.' },
+  { id: 'food-d32', spanish: 'la cena', english: 'dinner', level: 'A1', example: 'La cena en España es muy tarde, a las nueve o las diez.' },
+
+  // ─── DESCRIPTIONS (addition) ─────────────────────────────────────────────────
+  { id: 'desc-070', spanish: 'nuevo / nueva', english: 'new', level: 'A0', example: 'Tengo un trabajo nuevo y estoy muy contento.' },
+
+  // ─── TIME UNITS ───────────────────────────────────────────────────────────────
+  { id: 'time-012', spanish: 'el día', english: 'the day', level: 'A0', example: 'Hay veinticuatro horas en un día.' },
+  { id: 'time-013', spanish: 'la semana', english: 'the week', level: 'A0', example: 'La semana tiene siete días.' },
+  { id: 'time-014', spanish: 'el mes', english: 'the month', level: 'A0', example: 'El mes de agosto tiene treinta y un días.' },
+  { id: 'time-015', spanish: 'el año', english: 'the year', level: 'A0', example: 'El año tiene doce meses.' },
+  { id: 'temp-017', spanish: 'la fecha', english: 'the date', level: 'A1', example: '¿Cuál es la fecha de hoy? — Es el quince de marzo.' },
+
+  // ─── SHOPPING (addition) ─────────────────────────────────────────────────────
+  { id: 'shop-011', spanish: 'el precio', english: 'the price', level: 'A1', example: '¿Cuál es el precio de este jersey?' },
+
+  // ─── PLACES (additions) ──────────────────────────────────────────────────────
+  { id: 'pl-016', spanish: 'la plaza', english: 'the square / plaza', level: 'A1', example: 'Quedamos en la plaza mayor a las seis.' },
+  { id: 'pl-017', spanish: 'la oficina', english: 'the office', level: 'A1', example: 'Trabajo en una oficina en el centro de la ciudad.' },
+
+  // ─── WEATHER (addition) ──────────────────────────────────────────────────────
+  { id: 'wea-011', spanish: 'la lluvia', english: 'the rain', level: 'A1', example: 'La lluvia de hoy ha refrescado el ambiente.' },
+
+  // ─── COMMUNICATION ───────────────────────────────────────────────────────────
+  { id: 'a1-012', spanish: 'el teléfono', english: 'the phone / telephone', level: 'A1', example: '¿Cuál es tu número de teléfono?' },
+
+  // ─── NATIONALITIES ───────────────────────────────────────────────────────────
+  { id: 'nac-001', spanish: 'español / española', english: 'Spanish', level: 'A1', example: 'El flamenco es un baile español muy famoso.' },
+  { id: 'nac-002', spanish: 'inglés / inglesa', english: 'English / British', level: 'A1', example: 'Mi compañero de trabajo es inglés, de Londres.' },
+  { id: 'nac-003', spanish: 'francés / francesa', english: 'French', level: 'A1', example: 'La torre Eiffel es el monumento francés más conocido.' },
+  { id: 'nac-004', spanish: 'alemán / alemana', english: 'German', level: 'A1', example: 'El coche alemán es famoso por su calidad.' },
+  { id: 'nac-005', spanish: 'italiano / italiana', english: 'Italian', level: 'A1', example: 'La cocina italiana es deliciosa.' },
+  { id: 'nac-006', spanish: 'americano / americana', english: 'American', level: 'A1', example: 'Muchas películas americanas son muy populares.' },
+  { id: 'nac-007', spanish: 'eslovaco / eslovaca', english: 'Slovak', level: 'A1', example: 'Soy eslovaco, de Bratislava.' },
+  { id: 'nac-008', spanish: 'chino / china', english: 'Chinese', level: 'A1', example: 'El restaurante chino del barrio está muy bueno.' },
+  { id: 'nac-009', spanish: 'portugués / portuguesa', english: 'Portuguese', level: 'A1', example: 'El fado es música portuguesa muy emotiva.' },
+  { id: 'nac-010', spanish: 'mexicano / mexicana', english: 'Mexican', level: 'A1', example: 'La comida mexicana es muy picante y sabrosa.' },
 ]
