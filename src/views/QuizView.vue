@@ -2,7 +2,8 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
-import { words, type Word } from '../data/words'
+import { useLanguageStore } from '../stores/language'
+import type { Word } from '../data/words'
 import QuizCard from '../components/QuizCard.vue'
 import ContextualQuizCard from '../components/ContextualQuizCard.vue'
 import ProgressBar from '../components/ProgressBar.vue'
@@ -10,6 +11,7 @@ import CancelConfirm from '../components/CancelConfirm.vue'
 
 const router = useRouter()
 const session = useSessionStore()
+const lang = useLanguageStore()
 
 onMounted(() => {
   if (session.phase !== 'quiz') router.replace('/')
@@ -29,9 +31,9 @@ function doCancel() {
 const currentItem = computed(() => session.currentQuizWord())
 const currentWord = computed((): Word | null => {
   const item = currentItem.value
-  return item ? words.find(w => w.id === item.wordId) ?? null : null
+  return item ? lang.activePair.words.find(w => w.id === item.wordId) ?? null : null
 })
-const direction = computed(() => currentItem.value?.quizDirection ?? 'es-en')
+const direction = computed(() => currentItem.value?.quizDirection ?? lang.activePairId)
 const quizMode = computed(() => currentItem.value?.quizMode ?? 'word')
 const useTyping = computed(() => (currentItem.value?.quizInputMode ?? 'choice') === 'type')
 
@@ -53,17 +55,13 @@ function buildOptions(word: Word): Word[] {
   const TOTAL = 5
   const needed = TOTAL - 1
   const category = getCategory(word.id)
+  const pairWords = lang.activePair.words
 
-  // 1. same category (excluding the word itself)
-  const sameCategory = shuffle(words.filter(w => w.id !== word.id && getCategory(w.id) === category))
-
-  // 2. top up with same-level words if category pool runs short
+  const sameCategory = shuffle(pairWords.filter(w => w.id !== word.id && getCategory(w.id) === category))
   const usedIds = new Set([word.id, ...sameCategory.map(w => w.id)])
-  const sameLevel = shuffle(words.filter(w => !usedIds.has(w.id) && w.level === word.level))
-
-  // 3. final fallback: any remaining word
+  const sameLevel = shuffle(pairWords.filter(w => !usedIds.has(w.id) && w.level === word.level))
   const usedIds2 = new Set([...usedIds, ...sameLevel.map(w => w.id)])
-  const rest = shuffle(words.filter(w => !usedIds2.has(w.id)))
+  const rest = shuffle(pairWords.filter(w => !usedIds2.has(w.id)))
 
   const pool = [...sameCategory, ...sameLevel, ...rest]
   return shuffle([word, ...pool.slice(0, needed)])

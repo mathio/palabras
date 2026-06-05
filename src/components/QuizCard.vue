@@ -5,7 +5,7 @@ import type { Word } from '../data/words'
 const props = defineProps<{
   word: Word
   options: Word[]
-  direction: 'es-en' | 'en-es'
+  direction: string
   useTyping?: boolean
 }>()
 const emit = defineEmits<{ done: [result: 'pass' | 'fail'] }>()
@@ -16,18 +16,24 @@ const submitted = ref(false)
 const typedResult = ref<'pass' | 'fail' | null>(null)
 const inputEl = ref<HTMLInputElement | null>(null)
 
+const isWordToEnglish = computed(() => {
+  const [, tgt] = props.direction.split('-')
+  return tgt === 'en'
+})
+
 const question = computed(() =>
-  props.direction === 'es-en' ? props.word.spanish : props.word.english,
+  isWordToEnglish.value ? props.word.word : props.word.translation,
 )
-const directionLabel = computed(() =>
-  props.direction === 'es-en' ? 'ES → EN' : 'EN → ES',
-)
+const directionLabel = computed(() => {
+  const [src, tgt] = props.direction.split('-')
+  return `${src.toUpperCase()} → ${tgt.toUpperCase()}`
+})
 const correctAnswer = computed(() =>
-  props.direction === 'es-en' ? props.word.english : props.word.spanish,
+  isWordToEnglish.value ? props.word.translation : props.word.word,
 )
 
 function optionLabel(w: Word) {
-  return props.direction === 'es-en' ? w.english : w.spanish
+  return isWordToEnglish.value ? w.translation : w.word
 }
 
 function normalize(s: string) {
@@ -72,7 +78,7 @@ onMounted(() => {
         <div class="dir-badge">{{ directionLabel }}</div>
       </div>
       <div class="question-word">{{ question }}</div>
-      <div v-if="direction === 'es-en'" class="example">{{ word.example }}</div>
+      <div v-if="isWordToEnglish" class="example">{{ word.example }}</div>
     </div>
 
     <div v-if="!useTyping" class="options">
@@ -94,7 +100,7 @@ onMounted(() => {
         class="type-input"
         :class="submitted ? (typedResult === 'pass' ? 'correct' : 'wrong') : ''"
         type="text"
-        :placeholder="direction === 'es-en' ? 'type in english…' : 'escribe en español…'"
+        :placeholder="isWordToEnglish ? 'type in English…' : 'type the word…'"
         :disabled="submitted"
         @keydown.enter="submitTyped"
       />

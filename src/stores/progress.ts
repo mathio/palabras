@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { compressToBase64, decompressFromBase64 } from 'lz-string'
+import { useLanguageStore } from './language'
 
 export interface WordProgress {
   wordId: string
@@ -11,8 +12,8 @@ export interface WordProgress {
   interval: number   // SM-2, days between reviews
 }
 
-const STORAGE_KEY = 'palabras-progress'
-const BATCHES_KEY = 'palabras-completed-batches'
+function progressKey(pairId: string) { return `palabras-progress-${pairId}` }
+function batchesKey(pairId: string) { return `palabras-completed-batches-${pairId}` }
 
 function today(): string {
   return new Date().toISOString().slice(0, 10)
@@ -24,47 +25,74 @@ function addDays(date: string, days: number): string {
   return d.toISOString().slice(0, 10)
 }
 
-export const useProgressStore = defineStore('progress', () => {
-  const progressMap = ref<Record<string, WordProgress>>(load())
-  const completedBatches = ref<number>(loadBatches())
+function migrateStorage() {
+  const old = localStorage.getItem('palabras-progress')
+  if (old && !localStorage.getItem('palabras-progress-es-en')) {
+    localStorage.setItem('palabras-progress-es-en', old)
+    localStorage.removeItem('palabras-progress')
+  }
+  const oldBatches = localStorage.getItem('palabras-completed-batches')
+  if (oldBatches && !localStorage.getItem('palabras-completed-batches-es-en')) {
+    localStorage.setItem('palabras-completed-batches-es-en', oldBatches)
+    localStorage.removeItem('palabras-completed-batches')
+  }
+  localStorage.removeItem('palabras-session')
+}
 
-  function loadBatches(): number {
-    try {
-      return parseInt(localStorage.getItem(BATCHES_KEY) ?? '0', 10) || 0
-    } catch {
-      return 0
+function loadBatchesFor(pairId: string): number {
+  try {
+    return parseInt(localStorage.getItem(batchesKey(pairId)) ?? '0', 10) || 0
+  } catch {
+    return 0
+  }
+}
+
+function loadProgressFor(pairId: string): Record<string, WordProgress> {
+  try {
+    const raw = localStorage.getItem(progressKey(pairId))
+    if (!raw) return {}
+    const data = JSON.parse(raw) as Record<string, Partial<WordProgress> & { wordId: string; streak: number; nextReview: string }>
+    const result: Record<string, WordProgress> = {}
+    for (const [id, p] of Object.entries(data)) {
+      result[id] = {
+        wordId: p.wordId,
+        streak: p.streak ?? 0,
+        nextReview: p.nextReview ?? today(),
+        lastResult: p.lastResult ?? null,
+        easeFactor: p.easeFactor ?? 2.5,
+        interval: p.interval ?? Math.min(Math.pow(2, p.streak ?? 0), 30),
+      }
     }
+    return result
+  } catch {
+    return {}
+  }
+}
+
+migrateStorage()
+
+export const useProgressStore = defineStore('progress', () => {
+  const lang = useLanguageStore()
+
+  const progressMap = ref<Record<string, WordProgress>>(loadProgressFor(lang.activePairId))
+  const completedBatches = ref<number>(loadBatchesFor(lang.activePairId))
+
+  watch(() => lang.activePairId, (newId) => {
+    progressMap.value = loadProgressFor(newId)
+    completedBatches.value = loadBatchesFor(newId)
+  })
+
+  function completedBatchesForPair(pairId: string): number {
+    return loadBatchesFor(pairId)
   }
 
   function incrementCompletedBatches() {
     completedBatches.value++
-    localStorage.setItem(BATCHES_KEY, String(completedBatches.value))
-  }
-
-  function load(): Record<string, WordProgress> {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      if (!raw) return {}
-      const data = JSON.parse(raw) as Record<string, Partial<WordProgress> & { wordId: string; streak: number; nextReview: string }>
-      const result: Record<string, WordProgress> = {}
-      for (const [id, p] of Object.entries(data)) {
-        result[id] = {
-          wordId: p.wordId,
-          streak: p.streak ?? 0,
-          nextReview: p.nextReview ?? today(),
-          lastResult: p.lastResult ?? null,
-          easeFactor: p.easeFactor ?? 2.5,
-          interval: p.interval ?? Math.min(Math.pow(2, p.streak ?? 0), 30),
-        }
-      }
-      return result
-    } catch {
-      return {}
-    }
+    localStorage.setItem(batchesKey(lang.activePairId), String(completedBatches.value))
   }
 
   function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progressMap.value))
+    localStorage.setItem(progressKey(lang.activePairId), JSON.stringify(progressMap.value))
   }
 
   function getProgress(wordId: string): WordProgress {
@@ -84,7 +112,6 @@ export const useProgressStore = defineStore('progress', () => {
     exposureFlag: 'know' | 'dont-know',
   ) {
     const cur = getProgress(wordId)
-    // SM-2 quality: 4 = easy correct, 3 = hard correct, 1 = fail
     const quality = result === 'fail' ? 1 : exposureFlag === 'dont-know' ? 3 : 4
 
     let streak: number
@@ -160,12 +187,12 @@ export const useProgressStore = defineStore('progress', () => {
       progressMap.value = migrated
       completedBatches.value = parsed.batches ?? 0
       save()
-      localStorage.setItem(BATCHES_KEY, String(completedBatches.value))
+      localStorage.setItem(batchesKey(lang.activePairId), String(completedBatches.value))
       return true
     } catch {
       return false
     }
   }
 
-  return { progressMap, completedBatches, getProgress, recordResult, isDue, isLearned, isSeen, incrementCompletedBatches, exportCode, importCode }
+  return { progressMap, completedBatches, completedBatchesForPair, getProgress, recordResult, isDue, isLearned, isSeen, incrementCompletedBatches, exportCode, importCode }
 })

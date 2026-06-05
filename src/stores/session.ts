@@ -1,20 +1,20 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { words, type Word } from '../data/words'
+import { ref, watch } from 'vue'
+import type { Word } from '../data/words'
 import { useProgressStore } from './progress'
+import { useLanguageStore } from './language'
 
 export interface SessionWord {
   wordId: string
   exposureFlag: 'know' | 'dont-know' | null
   quizResult: 'pass' | 'fail' | null
-  quizDirection: 'es-en' | 'en-es'
+  quizDirection: string // e.g. 'es-en', 'en-es', 'sk-en', 'en-sk'
   quizMode: 'word' | 'contextual'
   quizInputMode: 'choice' | 'type'
 }
 
 const BATCH_SIZE = 15
 const MIN_NEW_RATIO = 0.5
-const STORAGE_KEY = 'palabras-session'
 
 function today(): string {
   return new Date().toISOString().slice(0, 10)
@@ -29,36 +29,25 @@ function shuffleIndices(n: number): number[] {
   return arr
 }
 
-// True only when the Spanish base form appears literally in the example sentence,
-// meaning a blank can be shown. Conjugated verbs (buscar→busco) fail this check.
 function canBlank(word: Word): boolean {
-  const escaped = word.spanish.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const escaped = word.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   return new RegExp(escaped, 'gi').test(word.example)
 }
 
-// Categories where fill-in-blank is semantically ambiguous:
-// any word from the same category fits the sentence, so the context gives no signal.
 const CONTEXTUAL_UNSAFE: string[] = [
-  'num-',    // numbers: "Tengo ___ años" fits any number
-  'dow-',    // days: "El ___ tengo clase" fits any day
-  'month-',  // months: "En ___ hace calor" fits multiple months
-  'color-',  // colours: "La camisa es ___" fits any colour
-  'desc-',   // adjectives: "Es muy ___" fits most adjectives
-  'freq-',   // frequency: "___ como pizza" fits always/sometimes/never
-  'time-',   // time phrases: "Son las ___" fits any hour
-  'temp-',   // temporal: "Nos vemos ___" fits hoy/mañana/luego etc.
-  'quest-',  // question words: "¿___ te llamas?" is not fill-in-blank
-  'wea-',    // weather: "Hace ___" fits any weather expression
-  'tener-',  // tener phrases: "Tengo ___" fits multiple states
-  'intro-',  // intro phrases: mostly multi-word expressions
-  'a0-',     // basic A0 words: mixed bag, most sentences are generic
+  'num-', 'dow-', 'month-', 'color-', 'desc-', 'freq-',
+  'time-', 'temp-', 'quest-', 'wea-', 'tener-', 'intro-', 'a0-',
 ]
 
 function isContextualSafe(wordId: string): boolean {
   return !CONTEXTUAL_UNSAFE.some(p => wordId.startsWith(p))
 }
 
+function sessionKey(pairId: string) { return `palabras-session-${pairId}` }
+
 export const useSessionStore = defineStore('session', () => {
+  const lang = useLanguageStore()
+
   const date = ref<string>('')
   const batch = ref<SessionWord[]>([])
   const exposureIndex = ref(0)
@@ -66,14 +55,26 @@ export const useSessionStore = defineStore('session', () => {
   const quizOrder = ref<number[]>([])
   const phase = ref<'exposure' | 'quiz' | 'results' | 'idle'>('idle')
 
+  watch(() => lang.activePairId, () => {
+    batch.value = []
+    exposureIndex.value = 0
+    quizIndex.value = 0
+    quizOrder.value = []
+    phase.value = 'idle'
+    date.value = ''
+    startSession()
+  })
+
   function buildBatch(): SessionWord[] {
     const progress = useProgressStore()
-    const due = words
+    const pairWords = lang.activePair.words
+
+    const due = pairWords
       .filter(w => progress.isSeen(w.id) && !progress.isLearned(w.id) && progress.isDue(w.id))
       .sort((a, b) => progress.getProgress(a.id).streak - progress.getProgress(b.id).streak)
 
     const levelOrder = { A0: 0, A1: 1, A2: 2 }
-    const newWords = words
+    const newWords = pairWords
       .filter(w => !progress.isSeen(w.id))
       .sort((a, b) => levelOrder[a.level] - levelOrder[b.level])
 
@@ -83,7 +84,7 @@ export const useSessionStore = defineStore('session', () => {
 
     if (combined.length < BATCH_SIZE) {
       const selectedIds = new Set(combined.map(w => w.id))
-      const upcoming = words
+      const upcoming = pairWords
         .filter(w => !progress.isLearned(w.id) && !selectedIds.has(w.id))
         .sort((a, b) => {
           const pa = progress.getProgress(a.id).nextReview ?? ''
@@ -98,6 +99,11 @@ export const useSessionStore = defineStore('session', () => {
       ;[combined[i], combined[j]] = [combined[j], combined[i]]
     }
 
+    const pairId = lang.activePairId
+    const [src, tgt] = pairId.split('-')
+    const fwd = pairId           // e.g. 'es-en', 'en-sk'
+    const rev = `${tgt}-${src}`  // e.g. 'en-es', 'sk-en'
+
     return combined.map(w => {
       const streak = progress.getProgress(w.id).streak
       const contextual = streak >= 1 && isContextualSafe(w.id) && canBlank(w) && Math.random() < 0.7
@@ -105,7 +111,7 @@ export const useSessionStore = defineStore('session', () => {
         wordId: w.id,
         exposureFlag: null,
         quizResult: null,
-        quizDirection: (Math.random() < 0.5 ? 'es-en' : 'en-es') as 'es-en' | 'en-es',
+        quizDirection: Math.random() < 0.5 ? fwd : rev,
         quizMode: (contextual ? 'contextual' : 'word') as 'word' | 'contextual',
         quizInputMode: (streak >= 2 ? 'type' : 'choice') as 'choice' | 'type',
       }
@@ -185,8 +191,7 @@ export const useSessionStore = defineStore('session', () => {
     quizOrder.value = []
     phase.value = 'idle'
     date.value = ''
-    localStorage.removeItem(STORAGE_KEY)
-    // palabras-progress (word streaks) and palabras-completed-batches are untouched
+    localStorage.removeItem(sessionKey(lang.activePairId))
   }
 
   function undoExposure() {
@@ -213,7 +218,7 @@ export const useSessionStore = defineStore('session', () => {
 
   function loadSaved(): SavedSession | null {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
+      const raw = localStorage.getItem(sessionKey(lang.activePairId))
       return raw ? JSON.parse(raw) : null
     } catch {
       return null
@@ -221,7 +226,7 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   function persist() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    localStorage.setItem(sessionKey(lang.activePairId), JSON.stringify({
       date: date.value,
       batch: batch.value,
       exposureIndex: exposureIndex.value,

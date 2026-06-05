@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useProgressStore } from '../stores/progress'
-
+import { useLanguageStore } from '../stores/language'
 const emit = defineEmits<{ close: [] }>()
 const progress = useProgressStore()
+const lang = useLanguageStore()
 
 const copied = ref(false)
 const pasteValue = ref('')
 const importState = ref<'idle' | 'success' | 'error'>('idle')
+
+function selectPair(id: string) {
+  if (id === lang.activePairId) return
+  lang.setPair(id)
+  emit('close')
+}
+
+function pairSessions(pairId: string): number {
+  return progress.completedBatchesForPair(pairId)
+}
 
 function copyCode() {
   const code = progress.exportCode()
@@ -33,7 +44,25 @@ function restore() {
 <template>
   <div class="overlay" @click.self="emit('close')">
     <div class="panel">
-      <div class="panel-title">sync progress</div>
+      <div class="panel-title">language</div>
+
+      <div class="pairs">
+        <button
+          v-for="pair in lang.pairs"
+          :key="pair.id"
+          class="pair-btn"
+          :class="{ active: pair.id === lang.activePairId }"
+          @click="selectPair(pair.id)"
+        >
+          <span class="pair-flags">{{ pair.sourceFlag }}→{{ pair.targetFlag }}</span>
+          <span class="pair-name">{{ pair.sourceName }}</span>
+          <span class="pair-count" :class="{ new: pairSessions(pair.id) === 0 }">
+            {{ pairSessions(pair.id) === 0 ? 'new' : pairSessions(pair.id) }}
+          </span>
+        </button>
+      </div>
+
+      <div class="divider"><span>sync progress</span></div>
 
       <div class="section">
         <div class="section-label">export</div>
@@ -102,6 +131,60 @@ function restore() {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.pairs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pair-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: var(--bg);
+  border: 2px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+  text-align: left;
+}
+
+.pair-btn.active {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--bg));
+}
+
+.pair-btn:not(.active):active {
+  background: var(--surface2);
+}
+
+.pair-flags {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.pair-name {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pair-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--surface2);
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+}
+
+.pair-count.new {
+  color: var(--primary-light);
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
 }
 
 .section {

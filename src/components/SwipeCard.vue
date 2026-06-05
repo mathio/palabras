@@ -114,12 +114,12 @@ function onNoIdea() {
       <!-- indicators sit left/right of the word, in the content flow -->
       <div class="word-row">
         <div class="indicator know-it" :style="{ opacity: knowOpacity }">KNOW IT</div>
-        <div class="spanish">{{ word.spanish }}</div>
+        <div class="spanish">{{ word.word }}</div>
         <div class="indicator no-idea" :style="{ opacity: noIdeaOpacity }">NO IDEA</div>
       </div>
 
       <template v-if="revealed">
-        <div class="english">{{ word.english }}</div>
+        <div class="translation">{{ word.translation }}</div>
         <div class="divider" />
       </template>
 
@@ -227,7 +227,7 @@ function onNoIdea() {
   line-height: 1.15;
 }
 
-.english {
+.translation {
   font-size: clamp(1.1rem, 4vw, 1.4rem);
   color: var(--primary-light);
   font-weight: 500;

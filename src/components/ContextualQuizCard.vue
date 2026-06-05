@@ -16,7 +16,7 @@ const typedResult = ref<'pass' | 'fail' | null>(null)
 const inputEl = ref<HTMLInputElement | null>(null)
 
 const blanked = computed(() => {
-  const escaped = props.word.spanish.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const escaped = props.word.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   const result = props.word.example.replace(new RegExp(escaped, 'gi'), '___')
   return { text: result, hasBlank: result !== props.word.example }
 })
@@ -37,7 +37,7 @@ function submitTyped() {
     emit('done', typedResult.value!)
     return
   }
-  const pass = normalize(typed.value) === normalize(props.word.spanish)
+  const pass = normalize(typed.value) === normalize(props.word.word)
   typedResult.value = pass ? 'pass' : 'fail'
   submitted.value = true
   setTimeout(() => emit('done', typedResult.value!), pass ? 400 : 1200)
@@ -73,7 +73,7 @@ onMounted(() => {
         :class="stateFor(option)"
         @click="pick(option)"
       >
-        {{ option.spanish }}
+        {{ option.word }}
       </button>
     </div>
 
@@ -84,12 +84,12 @@ onMounted(() => {
         class="type-input"
         :class="submitted ? (typedResult === 'pass' ? 'correct' : 'wrong') : ''"
         type="text"
-        placeholder="escribe en español…"
+        placeholder="type the word…"
         :disabled="submitted"
         @keydown.enter="submitTyped"
       />
       <div v-if="submitted && typedResult === 'fail'" class="correct-answer">
-        {{ word.spanish }}
+        {{ word.word }}
       </div>
       <button class="btn-check" :class="submitted ? typedResult : ''" @click="submitTyped">
         {{ submitted ? (typedResult === 'pass' ? 'correct ✓' : 'wrong ✗') : 'check' }}

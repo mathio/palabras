@@ -2,11 +2,12 @@
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
-import { words } from '../data/words'
+import { useLanguageStore } from '../stores/language'
 import confetti from 'canvas-confetti'
 
 const router = useRouter()
 const session = useSessionStore()
+const lang = useLanguageStore()
 
 onMounted(() => {
   if (session.phase !== 'results') {
@@ -24,9 +25,10 @@ const total = computed(() => session.batch.length)
 const passed = computed(() => session.batch.filter(b => b.quizResult === 'pass').length)
 const failed = computed(() => session.failedWords())
 
-const failedWords = computed(() =>
-  failed.value.map(item => words.find(w => w.id === item.wordId)).filter(Boolean),
-)
+const failedWords = computed(() => {
+  const pairWords = lang.activePair.words
+  return failed.value.map(item => pairWords.find(w => w.id === item.wordId)).filter(Boolean)
+})
 
 const scorePercent = computed(() => Math.round((passed.value / total.value) * 100))
 
@@ -48,8 +50,8 @@ function done() {
       <div class="missed-title">review these</div>
       <div class="missed-list">
         <div v-for="word in failedWords" :key="word!.id" class="missed-item">
-          <span class="missed-spanish">{{ word!.spanish }}</span>
-          <span class="missed-english">{{ word!.english }}</span>
+          <span class="missed-spanish">{{ word!.word }}</span>
+          <span class="missed-translation">{{ word!.translation }}</span>
         </div>
       </div>
     </div>
@@ -151,7 +153,7 @@ function done() {
   color: var(--text);
 }
 
-.missed-english {
+.missed-translation {
   color: var(--text-muted);
   font-size: 0.9rem;
 }

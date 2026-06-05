@@ -3,13 +3,14 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
 import { useProgressStore } from '../stores/progress'
-import { words } from '../data/words'
+import { useLanguageStore } from '../stores/language'
 import SyncPanel from '../components/SyncPanel.vue'
 import { wordIcons } from '../data/icons'
 
 const router = useRouter()
 const session = useSessionStore()
 const progress = useProgressStore()
+const lang = useLanguageStore()
 
 onMounted(() => {
   session.startSession()
@@ -19,7 +20,7 @@ onMounted(() => {
   }
 })
 
-const learnedCount = computed(() => words.filter(w => progress.isLearned(w.id)).length)
+const learnedCount = computed(() => lang.activePair.words.filter(w => progress.isLearned(w.id)).length)
 const completedBatches = computed(() => progress.completedBatches)
 const isEmpty = computed(() => session.batch.length === 0)
 
@@ -41,8 +42,9 @@ const showStats = ref(false)
 const showSync = ref(false)
 
 const levelStats = computed(() => {
+  const pairWords = lang.activePair.words
   return (['A0', 'A1', 'A2'] as const).map(level => {
-    const levelWords = words.filter(w => w.level === level)
+    const levelWords = pairWords.filter(w => w.level === level)
     const seen = levelWords.filter(w => progress.isSeen(w.id)).length
     const learned = levelWords.filter(w => progress.isLearned(w.id)).length
     return { level, total: levelWords.length, seen, learned, pct: Math.round((seen / levelWords.length) * 100) }
@@ -80,14 +82,14 @@ const levelStats = computed(() => {
             <div class="level-detail">{{ s.seen }}/{{ s.total }}</div>
           </div>
         </div>
-        <div class="stats-sub">{{ learnedCount }} / {{ words.length }} total learned</div>
+        <div class="stats-sub">{{ learnedCount }} / {{ lang.activePair.words.length }} total learned</div>
         <button class="stats-close" @click="showStats = false">close</button>
       </div>
     </div>
 
     <div class="hero">
       <div class="logo">palabras</div>
-      <p class="sub">your daily spanish vocabulary</p>
+      <p class="sub">learn {{ lang.activePair.sourceName.toLowerCase() }}</p>
       <a class="attribution" href="https://www.thiings.co" target="_blank" rel="noopener">icons by thiings.co</a>
     </div>
 
@@ -96,7 +98,7 @@ const levelStats = computed(() => {
       <div class="empty-title">all done for today</div>
       <div class="empty-sub">Come back tomorrow for your next batch.</div>
       <div v-if="learnedCount > 0" class="learned-count">
-        {{ learnedCount }} / {{ words.length }} words learned
+        {{ learnedCount }} / {{ lang.activePair.words.length }} words learned
       </div>
     </div>
 

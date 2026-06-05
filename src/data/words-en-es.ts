@@ -1,0 +1,1083 @@
+export type Level = 'A0' | 'A1' | 'A2'
+
+export interface Word {
+  id: string
+  word: string
+  translation: string
+  level: Level
+  example: string
+}
+
+// When adding new words, icons must also be added manually:
+// 1. Download icon PNG from https://www.thiings.co/
+// 2. Resize: sips -z 256 256 icon.png --out public/icons/<word-id>.png
+// 3. Add entry to src/data/icons.ts: '<word-id>': `${base}icons/<word-id>.png`
+// See scripts/download-icons.sh for automated fetching by slug name.
+export const words: Word[] = [
+
+  // ─── BASICS ──────────────────────────────────────────────────────────────────
+  { id: 'a0-001', word: 'hola', translation: 'hello', level: 'A0', example: 'Hola, ¿cómo estás?' },
+  { id: 'a0-002', word: 'adiós', translation: 'goodbye', level: 'A0', example: 'Adiós, hasta mañana.' },
+  { id: 'a0-003', word: 'gracias', translation: 'thank you', level: 'A0', example: 'Gracias por tu ayuda.' },
+  { id: 'a0-004', word: 'por favor', translation: 'please', level: 'A0', example: 'Un café, por favor.' },
+  { id: 'a0-005', word: 'sí', translation: 'yes', level: 'A0', example: 'Sí, entiendo.' },
+  { id: 'a0-006', word: 'no', translation: 'no', level: 'A0', example: 'No, no quiero.' },
+  { id: 'a0-007', word: 'agua', translation: 'water', level: 'A0', example: 'Quiero un vaso de agua.' },
+  { id: 'a0-008', word: 'casa', translation: 'house', level: 'A0', example: 'Mi casa es pequeña.' },
+  { id: 'a0-009', word: 'perro', translation: 'dog', level: 'A0', example: 'El perro juega en el jardín.' },
+  { id: 'a0-010', word: 'gato', translation: 'cat', level: 'A0', example: 'El gato duerme en el sofá.' },
+  { id: 'a1-001', word: 'comer', translation: 'to eat', level: 'A1', example: 'Me gusta comer pizza.' },
+  { id: 'a1-002', word: 'beber', translation: 'to drink', level: 'A1', example: 'Ella quiere beber jugo.' },
+  { id: 'a1-003', word: 'hablar', translation: 'to speak', level: 'A1', example: 'Puedo hablar español un poco.' },
+  { id: 'a1-004', word: 'trabajar', translation: 'to work', level: 'A1', example: 'Él trabaja en una oficina.' },
+  { id: 'a1-005', word: 'ciudad', translation: 'city', level: 'A1', example: 'Vivo en una ciudad grande.' },
+  { id: 'a1-006', word: 'libro', translation: 'book', level: 'A1', example: 'Estoy leyendo un libro interesante.' },
+  { id: 'a1-007', word: 'tiempo', translation: 'time / weather', level: 'A1', example: 'No tengo tiempo hoy.' },
+  { id: 'a1-008', word: 'dinero', translation: 'money', level: 'A1', example: 'No tengo mucho dinero.' },
+  { id: 'a1-009', word: 'amigo', translation: 'friend', level: 'A1', example: 'Mi amigo vive en Madrid.' },
+  { id: 'a1-010', word: 'escuela', translation: 'school', level: 'A1', example: 'Los niños van a la escuela.' },
+  { id: 'a2-001', word: 'conseguir', translation: 'to get / to obtain', level: 'A2', example: 'Necesito conseguir un trabajo nuevo.' },
+  { id: 'a2-002', word: 'olvidar', translation: 'to forget', level: 'A1', example: 'Siempre olvido mi paraguas.' },
+  { id: 'a2-003', word: 'recuerdo', translation: 'memory / souvenir', level: 'A2', example: 'Tengo un buen recuerdo de ese viaje.' },
+  { id: 'a2-004', word: 'reunión', translation: 'meeting', level: 'A2', example: 'Tengo una reunión importante mañana.' },
+  { id: 'a2-005', word: 'alquilar', translation: 'to rent', level: 'A2', example: 'Queremos alquilar un apartamento.' },
+  { id: 'a2-006', word: 'vecino', translation: 'neighbour', level: 'A1', example: 'Mi vecino es muy simpático.' },
+  { id: 'a2-007', word: 'extrañar', translation: 'to miss (someone)', level: 'A2', example: 'Extraño mucho a mi familia.' },
+  { id: 'a2-008', word: 'mejorar', translation: 'to improve', level: 'A2', example: 'Quiero mejorar mi español.' },
+  { id: 'a2-009', word: 'ambiente', translation: 'atmosphere / environment', level: 'A2', example: 'El restaurante tiene un ambiente agradable.' },
+  { id: 'a2-010', word: 'quejarse', translation: 'to complain', level: 'A2', example: 'No me gusta quejarse de todo.' },
+
+  // ─── NUMBERS ─────────────────────────────────────────────────────────────────
+  { id: 'num-001', word: 'uno', translation: 'one', level: 'A0', example: 'Tengo un hermano.' },
+  { id: 'num-002', word: 'dos', translation: 'two', level: 'A0', example: 'Quiero dos cafés, por favor.' },
+  { id: 'num-003', word: 'tres', translation: 'three', level: 'A0', example: 'Hay tres sillas en la cocina.' },
+  { id: 'num-004', word: 'cuatro', translation: 'four', level: 'A0', example: 'El gato tiene cuatro patas.' },
+  { id: 'num-005', word: 'cinco', translation: 'five', level: 'A0', example: 'Son las cinco de la tarde.' },
+  { id: 'num-006', word: 'seis', translation: 'six', level: 'A0', example: 'Hay seis personas en la familia.' },
+  { id: 'num-007', word: 'siete', translation: 'seven', level: 'A0', example: 'La semana tiene siete días.' },
+  { id: 'num-008', word: 'ocho', translation: 'eight', level: 'A0', example: 'Trabajo ocho horas al día.' },
+  { id: 'num-009', word: 'nueve', translation: 'nine', level: 'A0', example: 'El tren sale a las nueve.' },
+  { id: 'num-010', word: 'diez', translation: 'ten', level: 'A0', example: 'Tengo diez euros.' },
+  { id: 'num-011', word: 'once', translation: 'eleven', level: 'A1', example: 'Son las once de la noche.' },
+  { id: 'num-012', word: 'doce', translation: 'twelve', level: 'A1', example: 'El año tiene doce meses.' },
+  { id: 'num-013', word: 'trece', translation: 'thirteen', level: 'A1', example: 'Vivo en el número trece.' },
+  { id: 'num-014', word: 'catorce', translation: 'fourteen', level: 'A1', example: 'Tengo catorce primos.' },
+  { id: 'num-015', word: 'quince', translation: 'fifteen', level: 'A1', example: 'El curso dura quince días.' },
+  { id: 'num-016', word: 'dieciséis', translation: 'sixteen', level: 'A1', example: 'Mi hermana tiene dieciséis años.' },
+  { id: 'num-017', word: 'diecisiete', translation: 'seventeen', level: 'A1', example: 'Hay diecisiete alumnos en clase.' },
+  { id: 'num-018', word: 'dieciocho', translation: 'eighteen', level: 'A1', example: 'Puedo votar a los dieciocho años.' },
+  { id: 'num-019', word: 'diecinueve', translation: 'nineteen', level: 'A1', example: 'El autobús sale a las diecinueve horas.' },
+  { id: 'num-020', word: 'veinte', translation: 'twenty', level: 'A1', example: 'Cuesta veinte euros.' },
+  { id: 'num-021', word: 'veintiuno', translation: 'twenty-one', level: 'A1', example: 'Mi cumpleaños es el veintiuno de marzo.' },
+  { id: 'num-022', word: 'veintidós', translation: 'twenty-two', level: 'A1', example: 'Vivo en el piso veintidós.' },
+  { id: 'num-023', word: 'veintitrés', translation: 'twenty-three', level: 'A1', example: 'Tengo veintitrés años.' },
+  { id: 'num-024', word: 'veinticuatro', translation: 'twenty-four', level: 'A1', example: 'Un día tiene veinticuatro horas.' },
+  { id: 'num-025', word: 'veinticinco', translation: 'twenty-five', level: 'A1', example: 'Hay veinticinco estudiantes.' },
+  { id: 'num-026', word: 'veintiséis', translation: 'twenty-six', level: 'A1', example: 'Tengo veintiséis primos.' },
+  { id: 'num-027', word: 'veintisiete', translation: 'twenty-seven', level: 'A1', example: 'El concierto es el veintisiete.' },
+  { id: 'num-028', word: 'veintiocho', translation: 'twenty-eight', level: 'A1', example: 'Febrero tiene veintiocho días.' },
+  { id: 'num-029', word: 'veintinueve', translation: 'twenty-nine', level: 'A1', example: 'Son las veintinueve menos una.' },
+  { id: 'num-030', word: 'treinta', translation: 'thirty', level: 'A1', example: 'Tengo treinta años.' },
+  { id: 'num-031', word: 'treinta y uno', translation: 'thirty-one', level: 'A1', example: 'Diciembre tiene treinta y un días.' },
+  { id: 'num-042', word: 'cuarenta y dos', translation: 'forty-two', level: 'A1', example: 'Mi padre tiene cuarenta y dos años.' },
+  { id: 'num-053', word: 'cincuenta y tres', translation: 'fifty-three', level: 'A1', example: 'El piso cuesta cincuenta y tres mil euros.' },
+  { id: 'num-066', word: 'sesenta y seis', translation: 'sixty-six', level: 'A1', example: 'Mi abuela tiene sesenta y seis años.' },
+  { id: 'num-075', word: 'setenta y cinco', translation: 'seventy-five', level: 'A1', example: 'El billete cuesta setenta y cinco euros.' },
+  { id: 'num-086', word: 'ochenta y seis', translation: 'eighty-six', level: 'A1', example: 'El abuelo tiene ochenta y seis años.' },
+  { id: 'num-097', word: 'noventa y siete', translation: 'ninety-seven', level: 'A1', example: 'El examen es en noventa y siete días.' },
+  { id: 'num-100', word: 'cien', translation: 'one hundred', level: 'A1', example: 'Cuesta cien euros.' },
+  { id: 'num-101', word: 'ciento uno', translation: 'one hundred and one', level: 'A1', example: 'Hay ciento un dálmatas en la película.' },
+  { id: 'num-1000', word: 'mil', translation: 'one thousand', level: 'A2', example: 'El coche cuesta diez mil euros.' },
+  { id: 'num-20000', word: 'veinte mil', translation: 'twenty thousand', level: 'A2', example: 'El apartamento cuesta veinte mil euros.' },
+  { id: 'num-300000', word: 'trescientos mil', translation: 'three hundred thousand', level: 'A2', example: 'La casa cuesta trescientos mil euros.' },
+  { id: 'num-1000000', word: 'un millón', translation: 'one million', level: 'A2', example: 'Ganó un millón en la lotería.' },
+
+  // ─── INTRODUCTION ─────────────────────────────────────────────────────────────
+  { id: 'intro-001', word: 'me llamo', translation: 'my name is', level: 'A0', example: 'Me llamo Ana. ¿Y tú?' },
+  { id: 'intro-002', word: 'soy de', translation: "I'm from", level: 'A0', example: 'Soy de España. ¿De dónde eres tú?' },
+  { id: 'intro-003', word: 'vivo en', translation: 'I live in', level: 'A0', example: 'Vivo en Madrid desde hace dos años.' },
+  { id: 'intro-004', word: 'tengo ... años', translation: "I'm ... years old", level: 'A0', example: 'Tengo veinticinco años.' },
+  { id: 'intro-005', word: 'soy estudiante', translation: "I'm a student", level: 'A1', example: 'Soy estudiante de medicina en la universidad.' },
+  { id: 'intro-006', word: 'trabajo de', translation: 'I work as', level: 'A1', example: 'Trabajo de profesor en un colegio.' },
+  { id: 'intro-007', word: 'mucho gusto', translation: 'nice to meet you', level: 'A0', example: 'Mucho gusto. Soy Carlos.' },
+  { id: 'intro-008', word: 'encantado / encantada', translation: 'pleased to meet you', level: 'A0', example: 'Encantado de conocerte.' },
+  { id: 'intro-009', word: '¿de dónde eres?', translation: 'where are you from?', level: 'A0', example: '¿De dónde eres? — Soy de México.' },
+  { id: 'intro-010', word: '¿a qué te dedicas?', translation: 'what do you do (for work)?', level: 'A1', example: '¿A qué te dedicas? — Soy enfermera.' },
+
+  // ─── TENGO PHRASES ────────────────────────────────────────────────────────────
+  { id: 'tener-001', word: 'tengo calor', translation: "I'm hot", level: 'A1', example: 'Tengo mucho calor. ¿Puedo abrir la ventana?' },
+  { id: 'tener-002', word: 'tengo frío', translation: "I'm cold", level: 'A1', example: 'Tengo frío. ¿Dónde está mi abrigo?' },
+  { id: 'tener-003', word: 'tengo sed', translation: "I'm thirsty", level: 'A1', example: 'Tengo sed. ¿Hay agua?' },
+  { id: 'tener-004', word: 'tengo hambre', translation: "I'm hungry", level: 'A1', example: 'Tengo hambre. ¿Qué hay para comer?' },
+  { id: 'tener-005', word: 'tengo sueño', translation: "I'm sleepy", level: 'A1', example: 'Tengo sueño. Me voy a la cama.' },
+  { id: 'tener-006', word: 'tengo prisa', translation: "I'm in a hurry", level: 'A1', example: 'Tengo prisa. El tren sale en cinco minutos.' },
+  { id: 'tener-007', word: 'tengo razón', translation: "I'm right", level: 'A2', example: 'Creo que tengo razón sobre esto.' },
+  { id: 'tener-008', word: 'tengo un coche', translation: 'I have a car', level: 'A1', example: 'Tengo un coche nuevo. Es rojo.' },
+  { id: 'tener-009', word: 'tengo suerte', translation: "I'm lucky", level: 'A1', example: '¡Tengo suerte! Encontré trabajo.' },
+  { id: 'tener-010', word: 'tengo miedo', translation: "I'm scared", level: 'A1', example: 'Tengo miedo de las arañas.' },
+
+  // ─── ACTIVITIES / VERBS ───────────────────────────────────────────────────────
+  { id: 'verb-001', word: 'escribir', translation: 'to write', level: 'A1', example: 'Voy a escribir una carta a mi abuela.' },
+  { id: 'verb-002', word: 'escuchar', translation: 'to listen', level: 'A1', example: 'Me gusta escuchar música por la mañana.' },
+  { id: 'verb-003', word: 'mirar', translation: 'to look at / to watch', level: 'A1', example: 'Miramos la televisión después de cenar.' },
+  { id: 'verb-004', word: 'leer', translation: 'to read', level: 'A1', example: 'Leo el periódico todos los días.' },
+  { id: 'verb-005', word: 'abrir', translation: 'to open', level: 'A1', example: 'Por favor, abre la ventana.' },
+  { id: 'verb-006', word: 'buscar', translation: 'to look for', level: 'A1', example: 'Busco mis llaves por todas partes.' },
+  { id: 'verb-007', word: 'completar', translation: 'to complete', level: 'A1', example: 'Tienes que completar el ejercicio.' },
+  { id: 'verb-008', word: 'comprender', translation: 'to understand', level: 'A1', example: 'No comprendo esta palabra. ¿Me ayudas?' },
+  { id: 'verb-009', word: 'borrar', translation: 'to erase / to delete', level: 'A1', example: 'Borra esa frase y escríbela de nuevo.' },
+  { id: 'verb-010', word: 'tirar', translation: 'to throw / to pull', level: 'A1', example: 'Tira la pelota aquí.' },
+  { id: 'verb-011', word: 'meter', translation: 'to put in / to insert', level: 'A1', example: 'Mete los libros en la mochila.' },
+  { id: 'verb-012', word: 'repetir', translation: 'to repeat', level: 'A1', example: 'Por favor, repite la pregunta.' },
+  { id: 'verb-013', word: 'contestar', translation: 'to answer', level: 'A1', example: 'Contesta las preguntas del examen.' },
+  { id: 'verb-014', word: 'preguntar', translation: 'to ask', level: 'A1', example: 'Puedes preguntar si no entiendes.' },
+  { id: 'verb-015', word: 'cerrar', translation: 'to close', level: 'A1', example: 'Cierra la puerta, por favor.' },
+
+  // ─── CLASSROOM ────────────────────────────────────────────────────────────────
+  { id: 'class-001', word: 'la clase', translation: 'the class / classroom', level: 'A0', example: 'La clase empieza a las nueve.' },
+  { id: 'class-002', word: 'el profesor / la profesora', translation: 'the teacher', level: 'A0', example: 'El profesor explica la gramática.' },
+  { id: 'class-003', word: 'la pizarra', translation: 'the board / blackboard', level: 'A1', example: 'El profesor escribe en la pizarra.' },
+  { id: 'class-004', word: 'el cuaderno', translation: 'the notebook', level: 'A1', example: 'Escribe la respuesta en el cuaderno.' },
+  { id: 'class-005', word: 'el bolígrafo', translation: 'the pen', level: 'A1', example: '¿Tienes un bolígrafo? He olvidado el mío.' },
+  { id: 'class-006', word: 'el lápiz', translation: 'the pencil', level: 'A0', example: 'Dibuja con el lápiz, no con el bolígrafo.' },
+  { id: 'class-007', word: 'la goma', translation: 'the eraser', level: 'A1', example: '¿Me prestas la goma?' },
+  { id: 'class-008', word: 'la mochila', translation: 'the backpack', level: 'A1', example: 'Guarda el libro en la mochila.' },
+  { id: 'class-009', word: 'la hoja', translation: 'the sheet of paper', level: 'A1', example: 'Escribe tus respuestas en la hoja.' },
+  { id: 'class-010', word: 'el ejercicio', translation: 'the exercise', level: 'A1', example: 'Haz el ejercicio número tres.' },
+
+  // ─── COLORS ──────────────────────────────────────────────────────────────────
+  { id: 'color-001', word: 'rojo / roja', translation: 'red', level: 'A0', example: 'El tomate es rojo.' },
+  { id: 'color-002', word: 'azul', translation: 'blue', level: 'A0', example: 'El cielo es azul.' },
+  { id: 'color-003', word: 'verde', translation: 'green', level: 'A0', example: 'La hierba es verde.' },
+  { id: 'color-004', word: 'amarillo / amarilla', translation: 'yellow', level: 'A0', example: 'El sol es amarillo.' },
+  { id: 'color-005', word: 'blanco / blanca', translation: 'white', level: 'A0', example: 'La nieve es blanca.' },
+  { id: 'color-006', word: 'negro / negra', translation: 'black', level: 'A0', example: 'El café es negro.' },
+  { id: 'color-007', word: 'naranja', translation: 'orange', level: 'A1', example: 'Me gusta el zumo de naranja.' },
+  { id: 'color-008', word: 'rosa', translation: 'pink', level: 'A1', example: 'Lleva una camisa rosa.' },
+  { id: 'color-009', word: 'morado / morada', translation: 'purple', level: 'A1', example: 'Las uvas son moradas.' },
+  { id: 'color-010', word: 'gris', translation: 'grey', level: 'A1', example: 'El cielo está gris hoy.' },
+  { id: 'color-011', word: 'marrón', translation: 'brown', level: 'A1', example: 'Tiene el pelo marrón.' },
+
+  // ─── CASA ─────────────────────────────────────────────────────────────────────
+  { id: 'home-001', word: 'el sofá', translation: 'the sofa', level: 'A1', example: 'Me siento en el sofá para ver la tele.' },
+  { id: 'home-002', word: 'la lavadora', translation: 'the washing machine', level: 'A1', example: 'Pongo la lavadora los sábados.' },
+  { id: 'home-003', word: 'la cama', translation: 'the bed', level: 'A0', example: 'Me acuesto en la cama a las once.' },
+  { id: 'home-004', word: 'el lavabo', translation: 'the washbasin / sink', level: 'A1', example: 'Me lavo las manos en el lavabo.' },
+  { id: 'home-005', word: 'la bañera', translation: 'the bathtub', level: 'A1', example: 'Me gusta darme un baño en la bañera.' },
+  { id: 'home-006', word: 'el sillón', translation: 'the armchair', level: 'A1', example: 'Mi abuelo siempre lee en el sillón.' },
+  { id: 'home-007', word: 'la mesilla de noche', translation: 'the bedside table', level: 'A2', example: 'Dejo el teléfono en la mesilla de noche.' },
+  { id: 'home-008', word: 'el inodoro', translation: 'the toilet', level: 'A1', example: 'El inodoro está en el baño.' },
+  { id: 'home-009', word: 'la almohada', translation: 'the pillow', level: 'A1', example: 'Necesito una almohada más suave.' },
+  { id: 'home-010', word: 'la pila', translation: 'the kitchen sink', level: 'A2', example: 'Lavo los platos en la pila.' },
+  { id: 'home-011', word: 'el frigorífico', translation: 'the fridge', level: 'A1', example: 'Guarda la leche en el frigorífico.' },
+  { id: 'home-012', word: 'la estantería', translation: 'the bookshelf', level: 'A1', example: 'Tengo muchos libros en la estantería.' },
+  { id: 'home-013', word: 'la ventana', translation: 'the window', level: 'A0', example: 'Abre la ventana, hace calor.' },
+  { id: 'home-014', word: 'la puerta', translation: 'the door', level: 'A0', example: 'Cierra la puerta, por favor.' },
+  { id: 'home-015', word: 'la cocina', translation: 'the kitchen', level: 'A1', example: 'Cocino en la cocina todos los días.' },
+  { id: 'home-016', word: 'el baño', translation: 'the bathroom', level: 'A1', example: 'El baño está al final del pasillo.' },
+  { id: 'home-017', word: 'el dormitorio', translation: 'the bedroom', level: 'A1', example: 'Mi dormitorio es pequeño pero cómodo.' },
+  { id: 'home-018', word: 'el salón', translation: 'the living room', level: 'A1', example: 'Vemos la tele en el salón.' },
+
+  // ─── DESCRIPTIONS ─────────────────────────────────────────────────────────────
+  { id: 'desc-001', word: 'joven', translation: 'young', level: 'A1', example: 'Es un profesor muy joven.' },
+  { id: 'desc-002', word: 'delgado / delgada', translation: 'thin / slim', level: 'A1', example: 'Es muy delgada porque hace mucho deporte.' },
+  { id: 'desc-003', word: 'rubio / rubia', translation: 'blond', level: 'A1', example: 'Mi hermana es rubia y tiene los ojos azules.' },
+  { id: 'desc-004', word: 'simpático / simpática', translation: 'nice / friendly', level: 'A1', example: 'El vecino es muy simpático.' },
+  { id: 'desc-005', word: 'callado / callada', translation: 'quiet / reserved', level: 'A1', example: 'Es muy callada en clase.' },
+  { id: 'desc-006', word: 'hablador / habladora', translation: 'talkative', level: 'A1', example: 'Mi primo es muy hablador, habla sin parar.' },
+  { id: 'desc-007', word: 'tonto / tonta', translation: 'silly / dumb', level: 'A1', example: 'No seas tonto, eso es peligroso.' },
+  { id: 'desc-008', word: 'inteligente', translation: 'intelligent', level: 'A1', example: 'Es muy inteligente y saca buenas notas.' },
+  { id: 'desc-009', word: 'aburrido / aburrida', translation: 'boring / bored', level: 'A1', example: 'La película es muy aburrida.' },
+  { id: 'desc-010', word: 'interesante', translation: 'interesting', level: 'A1', example: 'El libro es muy interesante.' },
+  { id: 'desc-011', word: 'serio / seria', translation: 'serious', level: 'A1', example: 'Mi jefe es muy serio, nunca sonríe.' },
+  { id: 'desc-012', word: 'gracioso / graciosa', translation: 'funny', level: 'A1', example: 'Mi amigo es muy gracioso, siempre me hace reír.' },
+  { id: 'desc-013', word: 'vago / vaga', translation: 'lazy', level: 'A1', example: 'Es un poco vago, no le gusta estudiar.' },
+  { id: 'desc-014', word: 'trabajador / trabajadora', translation: 'hardworking', level: 'A1', example: 'Es muy trabajadora y siempre llega puntual.' },
+  { id: 'desc-015', word: 'moreno / morena', translation: 'dark-haired / dark-skinned', level: 'A1', example: 'Tiene el pelo moreno y los ojos marrones.' },
+  { id: 'desc-016', word: 'fuerte', translation: 'strong', level: 'A1', example: 'Es muy fuerte porque va al gimnasio.' },
+  { id: 'desc-017', word: 'gordo / gorda', translation: 'fat', level: 'A1', example: 'El gato es un poco gordo.' },
+  { id: 'desc-018', word: 'grande', translation: 'big / large', level: 'A0', example: 'Madrid es una ciudad muy grande.' },
+  { id: 'desc-019', word: 'pequeño / pequeña', translation: 'small / little', level: 'A0', example: 'Vivo en un apartamento pequeño.' },
+  { id: 'desc-020', word: 'alto / alta', translation: 'tall', level: 'A1', example: 'Mi hermano es muy alto, mide dos metros.' },
+  { id: 'desc-021', word: 'bajo / baja', translation: 'short', level: 'A1', example: 'Soy la más baja de la familia.' },
+  { id: 'desc-022', word: 'tiene los ojos oscuros', translation: 'has dark eyes', level: 'A2', example: 'Tiene los ojos oscuros y el pelo rizado.' },
+  { id: 'desc-023', word: 'tiene los ojos verdes', translation: 'has green eyes', level: 'A2', example: 'Tiene los ojos verdes, como su madre.' },
+  { id: 'desc-024', word: 'tiene el pelo liso', translation: 'has straight hair', level: 'A2', example: 'Tiene el pelo liso y largo.' },
+  { id: 'desc-025', word: 'tiene el pelo rizado', translation: 'has curly hair', level: 'A2', example: 'Tiene el pelo rizado y corto.' },
+  { id: 'desc-026', word: 'tiene el pelo largo', translation: 'has long hair', level: 'A2', example: 'Tiene el pelo largo y rubio.' },
+  { id: 'desc-027', word: 'tiene el pelo corto', translation: 'has short hair', level: 'A2', example: 'Se cortó el pelo. Ahora tiene el pelo corto.' },
+  { id: 'desc-028', word: 'antipático / antipática', translation: 'unfriendly / unpleasant', level: 'A1', example: 'El nuevo jefe es bastante antipático.' },
+  { id: 'desc-029', word: 'viejo / vieja', translation: 'old', level: 'A1', example: 'Este edificio es muy viejo.' },
+
+  // ─── FAMILY ───────────────────────────────────────────────────────────────────
+  { id: 'fam-001', word: 'la madre', translation: 'the mother', level: 'A1', example: 'Mi madre trabaja en un hospital.' },
+  { id: 'fam-002', word: 'el padre', translation: 'the father', level: 'A1', example: 'Mi padre cocina muy bien.' },
+  { id: 'fam-003', word: 'el hermano', translation: 'the brother', level: 'A1', example: 'Tengo un hermano mayor.' },
+  { id: 'fam-004', word: 'la hermana', translation: 'the sister', level: 'A1', example: 'Mi hermana vive en Barcelona.' },
+  { id: 'fam-005', word: 'el hijo', translation: 'the son', level: 'A1', example: 'Tienen dos hijos y una hija.' },
+  { id: 'fam-006', word: 'la hija', translation: 'the daughter', level: 'A1', example: 'Su hija estudia medicina.' },
+  { id: 'fam-007', word: 'el abuelo', translation: 'the grandfather', level: 'A1', example: 'Mi abuelo tiene ochenta años.' },
+  { id: 'fam-008', word: 'la abuela', translation: 'the grandmother', level: 'A1', example: 'La abuela hace una paella increíble.' },
+  { id: 'fam-009', word: 'el tío', translation: 'the uncle', level: 'A1', example: 'Mi tío vive en Sevilla.' },
+  { id: 'fam-010', word: 'la tía', translation: 'the aunt', level: 'A1', example: 'Mi tía es profesora de inglés.' },
+  { id: 'fam-011', word: 'el primo / la prima', translation: 'the cousin', level: 'A1', example: 'Tengo cinco primos.' },
+  { id: 'fam-012', word: 'el niño / la niña', translation: 'the child / boy / girl', level: 'A1', example: 'Los niños juegan en el parque.' },
+  { id: 'fam-013', word: 'los padres', translation: 'the parents', level: 'A1', example: 'Mis padres viven en Valencia.' },
+  { id: 'fam-014', word: 'casado / casada', translation: 'married', level: 'A1', example: 'Están casados desde hace diez años.' },
+  { id: 'fam-015', word: 'soltero / soltera', translation: 'single', level: 'A1', example: 'Todavía soy soltero.' },
+
+  // ─── CLOTHES ─────────────────────────────────────────────────────────────────
+  { id: 'cloth-001', word: 'la falda', translation: 'the skirt', level: 'A1', example: 'Lleva una falda azul.' },
+  { id: 'cloth-002', word: 'los pantalones', translation: 'the trousers / pants', level: 'A1', example: 'Estos pantalones son demasiado grandes.' },
+  { id: 'cloth-003', word: 'las gafas', translation: 'the glasses', level: 'A1', example: 'Necesito gafas para leer.' },
+  { id: 'cloth-004', word: 'las gafas de sol', translation: 'the sunglasses', level: 'A1', example: 'No olvides las gafas de sol en la playa.' },
+  { id: 'cloth-005', word: 'el vestido', translation: 'the dress', level: 'A1', example: 'Lleva un vestido rojo para la fiesta.' },
+  { id: 'cloth-006', word: 'la chaqueta', translation: 'the jacket', level: 'A1', example: 'Coge la chaqueta, que hace frío.' },
+  { id: 'cloth-007', word: 'las sandalias', translation: 'the sandals', level: 'A1', example: 'En verano llevo sandalias.' },
+  { id: 'cloth-008', word: 'el cinturón', translation: 'the belt', level: 'A1', example: 'Necesito un cinturón para estos pantalones.' },
+  { id: 'cloth-009', word: 'el bikini', translation: 'the bikini', level: 'A1', example: 'Se pone el bikini para ir a la playa.' },
+  { id: 'cloth-010', word: 'los calcetines', translation: 'the socks', level: 'A1', example: 'No encuentro mis calcetines.' },
+  { id: 'cloth-011', word: 'los calzoncillos', translation: 'the underpants / boxers', level: 'A1', example: 'Necesito comprar calzoncillos nuevos.' },
+  { id: 'cloth-012', word: 'la camisa', translation: 'the shirt', level: 'A1', example: 'Lleva una camisa blanca y corbata.' },
+  { id: 'cloth-013', word: 'la camiseta', translation: 'the t-shirt', level: 'A1', example: 'En casa siempre llevo camiseta.' },
+  { id: 'cloth-014', word: 'los zapatos', translation: 'the shoes', level: 'A1', example: 'Estos zapatos me hacen daño.' },
+  { id: 'cloth-015', word: 'el abrigo', translation: 'the coat', level: 'A1', example: 'Ponte el abrigo, que nieva.' },
+  { id: 'cloth-016', word: 'el jersey', translation: 'the jumper / sweater', level: 'A1', example: 'Llevo un jersey de lana en invierno.' },
+
+  // ─── PUBLIC TRANSPORT ─────────────────────────────────────────────────────────
+  { id: 'trans-001', word: 'el autobús', translation: 'the bus', level: 'A1', example: 'Cojo el autobús para ir al trabajo.' },
+  { id: 'trans-002', word: 'el metro', translation: 'the metro / subway', level: 'A1', example: 'El metro es más rápido que el autobús.' },
+  { id: 'trans-003', word: 'el tren', translation: 'the train', level: 'A1', example: 'Voy a Barcelona en tren.' },
+  { id: 'trans-004', word: 'el taxi', translation: 'the taxi', level: 'A1', example: 'Cojo un taxi cuando llueve.' },
+  { id: 'trans-005', word: 'el avión', translation: 'the plane', level: 'A1', example: 'Voy a Londres en avión.' },
+  { id: 'trans-006', word: 'el barco', translation: 'the boat / ship', level: 'A1', example: 'Viajamos a la isla en barco.' },
+  { id: 'trans-007', word: 'la bicicleta', translation: 'the bicycle', level: 'A1', example: 'Voy al trabajo en bicicleta.' },
+  { id: 'trans-008', word: 'el billete', translation: 'the ticket', level: 'A1', example: 'Compro el billete de tren por internet.' },
+  { id: 'trans-009', word: 'la estación', translation: 'the station', level: 'A1', example: 'La estación de tren está cerca del centro.' },
+  { id: 'trans-010', word: 'la parada', translation: 'the stop (bus/metro)', level: 'A1', example: 'La parada del autobús está a dos minutos.' },
+
+  // ─── RESTAURANT / BAR ─────────────────────────────────────────────────────────
+  { id: 'rest-001', word: 'la carta', translation: 'the menu', level: 'A1', example: '¿Me trae la carta, por favor?' },
+  { id: 'rest-002', word: 'pedir', translation: 'to order', level: 'A1', example: 'Quiero pedir una ensalada y un agua.' },
+  { id: 'rest-003', word: 'pagar', translation: 'to pay', level: 'A1', example: '¿Dónde se paga? — En la caja.' },
+  { id: 'rest-004', word: 'la cuenta', translation: 'the bill', level: 'A1', example: 'La cuenta, por favor.' },
+  { id: 'rest-005', word: 'el camarero / la camarera', translation: 'the waiter / waitress', level: 'A1', example: 'El camarero nos trae el café.' },
+  { id: 'rest-006', word: 'barato / barata', translation: 'cheap', level: 'A1', example: 'Este restaurante es muy barato y bueno.' },
+  { id: 'rest-007', word: 'caro / cara', translation: 'expensive', level: 'A1', example: 'El menú es demasiado caro para mí.' },
+  { id: 'rest-008', word: 'el tenedor', translation: 'the fork', level: 'A1', example: 'Falta un tenedor en la mesa.' },
+  { id: 'rest-009', word: 'el cuchillo', translation: 'the knife', level: 'A1', example: 'Este cuchillo no corta bien.' },
+  { id: 'rest-010', word: 'la cuchara', translation: 'the spoon', level: 'A1', example: 'Necesito una cuchara para la sopa.' },
+  { id: 'rest-011', word: 'la servilleta', translation: 'the napkin', level: 'A1', example: 'Por favor, ¿me da una servilleta?' },
+  { id: 'rest-012', word: 'la propina', translation: 'the tip', level: 'A2', example: 'Dejamos una propina porque el servicio fue excelente.' },
+  { id: 'rest-013', word: 'el menú del día', translation: "the set menu / today's menu", level: 'A1', example: 'El menú del día cuesta doce euros.' },
+  { id: 'rest-014', word: 'reservar una mesa', translation: 'to book a table', level: 'A2', example: 'Quiero reservar una mesa para dos personas.' },
+
+  // ─── DAILY ACTIVITIES ─────────────────────────────────────────────────────────
+  { id: 'day-001', word: 'levantarse', translation: 'to get up', level: 'A1', example: 'Me levanto a las siete de la mañana.' },
+  { id: 'day-002', word: 'ducharse', translation: 'to have a shower', level: 'A1', example: 'Me ducho después de hacer deporte.' },
+  { id: 'day-003', word: 'desayunar', translation: 'to have breakfast', level: 'A1', example: 'Desayuno café con leche y tostadas.' },
+  { id: 'day-004', word: 'cenar', translation: 'to have dinner', level: 'A1', example: 'Cenamos en familia a las nueve.' },
+  { id: 'day-005', word: 'acostarse', translation: 'to go to bed', level: 'A1', example: 'Me acuesto tarde los fines de semana.' },
+  { id: 'day-006', word: 'salir', translation: 'to go out', level: 'A1', example: 'Salgo con mis amigos los viernes.' },
+  { id: 'day-007', word: 'quedar con alguien', translation: 'to meet up with someone', level: 'A2', example: 'Quedamos con los amigos en el bar.' },
+  { id: 'day-008', word: 'hacer deporte', translation: 'to do sport / exercise', level: 'A1', example: 'Hago deporte tres veces a la semana.' },
+  { id: 'day-009', word: 'cocinar', translation: 'to cook', level: 'A1', example: 'Me gusta cocinar los domingos.' },
+  { id: 'day-010', word: 'limpiar', translation: 'to clean', level: 'A1', example: 'Limpio la casa los sábados por la mañana.' },
+
+  // ─── TIME / CLOCK ─────────────────────────────────────────────────────────────
+  { id: 'time-001', word: '¿qué hora es?', translation: 'what time is it?', level: 'A1', example: '¿Qué hora es? — Son las tres.' },
+  { id: 'time-002', word: 'por la mañana', translation: 'in the morning', level: 'A1', example: 'Trabajo por la mañana y estudio por la tarde.' },
+  { id: 'time-003', word: 'por la tarde', translation: 'in the afternoon / evening', level: 'A1', example: 'Por la tarde voy al gimnasio.' },
+  { id: 'time-004', word: 'por la noche', translation: 'at night', level: 'A1', example: 'Por la noche leo antes de dormir.' },
+  { id: 'time-005', word: 'el mediodía', translation: 'midday / noon', level: 'A1', example: 'Como a mediodía con mis compañeros.' },
+  { id: 'time-006', word: 'la medianoche', translation: 'midnight', level: 'A1', example: 'La fiesta termina a medianoche.' },
+  { id: 'time-007', word: 'la hora', translation: 'the hour / the time', level: 'A1', example: 'El vuelo dura dos horas.' },
+  { id: 'time-008', word: 'el minuto', translation: 'the minute', level: 'A1', example: 'Espera un minuto, por favor.' },
+  { id: 'time-009', word: 'y media', translation: 'half past', level: 'A1', example: 'Son las tres y media.' },
+  { id: 'time-010', word: 'y cuarto', translation: 'quarter past', level: 'A1', example: 'Son las dos y cuarto.' },
+  { id: 'time-011', word: 'menos cuarto', translation: 'quarter to', level: 'A1', example: 'Son las cinco menos cuarto.' },
+
+  // ─── MONTHS ──────────────────────────────────────────────────────────────────
+  { id: 'month-01', word: 'enero', translation: 'January', level: 'A1', example: 'En enero hace mucho frío.' },
+  { id: 'month-02', word: 'febrero', translation: 'February', level: 'A1', example: 'Febrero es el mes más corto del año.' },
+  { id: 'month-03', word: 'marzo', translation: 'March', level: 'A1', example: 'En marzo empieza la primavera.' },
+  { id: 'month-04', word: 'abril', translation: 'April', level: 'A1', example: 'En abril llueve mucho.' },
+  { id: 'month-05', word: 'mayo', translation: 'May', level: 'A1', example: 'Las flores florecen en mayo.' },
+  { id: 'month-06', word: 'junio', translation: 'June', level: 'A1', example: 'En junio terminan las clases.' },
+  { id: 'month-07', word: 'julio', translation: 'July', level: 'A1', example: 'En julio vamos de vacaciones.' },
+  { id: 'month-08', word: 'agosto', translation: 'August', level: 'A1', example: 'Agosto es el mes más caluroso.' },
+  { id: 'month-09', word: 'septiembre', translation: 'September', level: 'A1', example: 'En septiembre empiezan las clases.' },
+  { id: 'month-10', word: 'octubre', translation: 'October', level: 'A1', example: 'En octubre empieza el otoño.' },
+  { id: 'month-11', word: 'noviembre', translation: 'November', level: 'A1', example: 'En noviembre hace frío y llueve.' },
+  { id: 'month-12', word: 'diciembre', translation: 'December', level: 'A1', example: 'En diciembre celebramos la Navidad.' },
+
+  // ─── DAYS OF THE WEEK ─────────────────────────────────────────────────────────
+  { id: 'dow-1', word: 'el lunes', translation: 'Monday', level: 'A0', example: 'El lunes tengo clase de español.' },
+  { id: 'dow-2', word: 'el martes', translation: 'Tuesday', level: 'A0', example: 'El martes voy al gimnasio.' },
+  { id: 'dow-3', word: 'el miércoles', translation: 'Wednesday', level: 'A0', example: 'El miércoles quedamos para comer.' },
+  { id: 'dow-4', word: 'el jueves', translation: 'Thursday', level: 'A0', example: 'El jueves hay una reunión en el trabajo.' },
+  { id: 'dow-5', word: 'el viernes', translation: 'Friday', level: 'A0', example: 'El viernes salimos a cenar.' },
+  { id: 'dow-6', word: 'el sábado', translation: 'Saturday', level: 'A0', example: 'El sábado limpio la casa.' },
+  { id: 'dow-7', word: 'el domingo', translation: 'Sunday', level: 'A0', example: 'El domingo descansamos en familia.' },
+
+  // ─── WEATHER ─────────────────────────────────────────────────────────────────
+  { id: 'wea-001', word: 'llueve', translation: "it's raining", level: 'A1', example: 'Llueve mucho en el norte de España.' },
+  { id: 'wea-002', word: 'hace sol', translation: "it's sunny", level: 'A1', example: 'Hace sol. Vamos a la playa.' },
+  { id: 'wea-003', word: 'hace frío', translation: "it's cold", level: 'A1', example: 'Hace mucho frío en diciembre.' },
+  { id: 'wea-004', word: 'hace calor', translation: "it's hot", level: 'A1', example: 'En agosto hace mucho calor.' },
+  { id: 'wea-005', word: 'nieva', translation: "it's snowing", level: 'A1', example: 'Nieva en las montañas en invierno.' },
+  { id: 'wea-006', word: 'está nublado', translation: "it's cloudy", level: 'A1', example: 'Está nublado pero no llueve.' },
+  { id: 'wea-007', word: 'hace viento', translation: "it's windy", level: 'A1', example: 'Hace mucho viento hoy.' },
+  { id: 'wea-008', word: 'la temperatura', translation: 'the temperature', level: 'A2', example: 'La temperatura máxima hoy es de treinta grados.' },
+  { id: 'wea-009', word: 'el paraguas', translation: 'the umbrella', level: 'A1', example: 'Coge el paraguas, que llueve.' },
+
+  // ─── TEMPORAL EXPRESSIONS ─────────────────────────────────────────────────────
+  { id: 'temp-001', word: 'hoy', translation: 'today', level: 'A0', example: 'Hoy tengo clase de español.' },
+  { id: 'temp-002', word: 'mañana', translation: 'tomorrow', level: 'A0', example: 'Mañana voy al médico.' },
+  { id: 'temp-003', word: 'ayer', translation: 'yesterday', level: 'A0', example: 'Ayer fui al cine con mis amigos.' },
+  { id: 'temp-004', word: 'ahora', translation: 'now', level: 'A0', example: 'Ahora estoy en casa.' },
+  { id: 'temp-005', word: 'luego', translation: 'later / then', level: 'A1', example: 'Ahora trabajo y luego como.' },
+  { id: 'temp-006', word: 'antes', translation: 'before', level: 'A1', example: 'Antes de comer me lavo las manos.' },
+  { id: 'temp-007', word: 'después', translation: 'after / afterwards', level: 'A1', example: 'Después de cenar veo la tele.' },
+  { id: 'temp-008', word: 'esta semana', translation: 'this week', level: 'A1', example: 'Esta semana tengo mucho trabajo.' },
+  { id: 'temp-009', word: 'el fin de semana', translation: 'the weekend', level: 'A1', example: 'El fin de semana voy al campo.' },
+  { id: 'temp-010', word: 'el año pasado', translation: 'last year', level: 'A2', example: 'El año pasado viajé a México.' },
+  { id: 'temp-011', word: 'el próximo mes', translation: 'next month', level: 'A2', example: 'El próximo mes empiezo un nuevo trabajo.' },
+  { id: 'temp-012', word: 'de vez en cuando', translation: 'from time to time', level: 'A1', example: 'De vez en cuando como fuera.' },
+
+  // ─── FOOD: MEATS ─────────────────────────────────────────────────────────────
+  { id: 'food-m01', word: 'el pollo', translation: 'chicken', level: 'A1', example: 'Me gusta el pollo a la plancha.' },
+  { id: 'food-m02', word: 'la carne', translation: 'meat', level: 'A1', example: 'No como carne, soy vegetariana.' },
+  { id: 'food-m03', word: 'el pescado', translation: 'fish', level: 'A1', example: 'Comemos pescado los viernes.' },
+  { id: 'food-m04', word: 'el jamón', translation: 'ham', level: 'A1', example: 'El jamón ibérico es típico de España.' },
+  { id: 'food-m05', word: 'la ternera', translation: 'beef / veal', level: 'A2', example: 'El filete de ternera está muy bueno.' },
+  { id: 'food-m06', word: 'el cerdo', translation: 'pork', level: 'A2', example: 'El cerdo es la carne más consumida en España.' },
+
+  // ─── FOOD: VEGETABLES ────────────────────────────────────────────────────────
+  { id: 'food-v01', word: 'el tomate', translation: 'tomato', level: 'A0', example: 'La ensalada lleva tomate y lechuga.' },
+  { id: 'food-v02', word: 'la cebolla', translation: 'onion', level: 'A1', example: 'Sofríe la cebolla antes de añadir los tomates.' },
+  { id: 'food-v03', word: 'la lechuga', translation: 'lettuce', level: 'A1', example: 'La ensalada lleva lechuga y tomate.' },
+  { id: 'food-v04', word: 'la patata', translation: 'potato', level: 'A1', example: 'La tortilla española lleva huevo y patata.' },
+  { id: 'food-v05', word: 'la zanahoria', translation: 'carrot', level: 'A1', example: 'La zanahoria es buena para la vista.' },
+  { id: 'food-v06', word: 'el pimiento', translation: 'pepper (vegetable)', level: 'A1', example: 'Me gustan los pimientos rojos asados.' },
+  { id: 'food-v07', word: 'el ajo', translation: 'garlic', level: 'A1', example: 'El gazpacho lleva ajo, tomate y pepino.' },
+  { id: 'food-v08', word: 'la espinaca', translation: 'spinach', level: 'A2', example: 'Las espinacas son muy saludables.' },
+
+  // ─── FOOD: FRUIT ─────────────────────────────────────────────────────────────
+  { id: 'food-f01', word: 'la manzana', translation: 'apple', level: 'A0', example: 'Como una manzana todos los días.' },
+  { id: 'food-f02', word: 'la naranja', translation: 'orange', level: 'A0', example: 'Me gusta el zumo de naranja por la mañana.' },
+  { id: 'food-f03', word: 'el plátano', translation: 'banana', level: 'A0', example: 'Los plátanos de Canarias son muy dulces.' },
+  { id: 'food-f04', word: 'la fresa', translation: 'strawberry', level: 'A1', example: 'Las fresas con nata son deliciosas.' },
+  { id: 'food-f05', word: 'la uva', translation: 'grape', level: 'A1', example: 'En Nochevieja comemos doce uvas.' },
+  { id: 'food-f06', word: 'el limón', translation: 'lemon', level: 'A1', example: 'Añado limón al agua.' },
+  { id: 'food-f07', word: 'el melón', translation: 'melon', level: 'A1', example: 'En verano comemos jamón con melón.' },
+
+  // ─── FOOD: DISHES & DRINKS ───────────────────────────────────────────────────
+  { id: 'food-d01', word: 'la paella', translation: 'paella', level: 'A1', example: 'La paella valenciana es mi plato favorito.' },
+  { id: 'food-d02', word: 'la tortilla', translation: 'Spanish omelette', level: 'A1', example: 'La tortilla española lleva patata y huevo.' },
+  { id: 'food-d03', word: 'el bocadillo', translation: 'sandwich (baguette)', level: 'A1', example: 'Como un bocadillo de jamón para comer.' },
+  { id: 'food-d04', word: 'la ensalada', translation: 'salad', level: 'A1', example: 'Pido una ensalada mixta.' },
+  { id: 'food-d05', word: 'la sopa', translation: 'soup', level: 'A1', example: 'En invierno me gusta tomar sopa.' },
+  { id: 'food-d06', word: 'el café', translation: 'coffee', level: 'A0', example: 'Tomo un café con leche por las mañanas.' },
+  { id: 'food-d07', word: 'la leche', translation: 'milk', level: 'A0', example: 'El niño bebe leche antes de dormir.' },
+  { id: 'food-d08', word: 'el zumo', translation: 'juice', level: 'A1', example: 'Quiero un zumo de naranja, por favor.' },
+  { id: 'food-d09', word: 'la cerveza', translation: 'beer', level: 'A1', example: 'Tomamos una cerveza en el bar.' },
+  { id: 'food-d10', word: 'el vino', translation: 'wine', level: 'A1', example: 'Pedimos una botella de vino tinto.' },
+  { id: 'food-d11', word: 'el pan', translation: 'bread', level: 'A0', example: 'En España comemos mucho pan.' },
+  { id: 'food-d12', word: 'el queso', translation: 'cheese', level: 'A1', example: 'Me gusta el queso manchego.' },
+  { id: 'food-d13', word: 'el huevo', translation: 'egg', level: 'A1', example: 'Los huevos fritos son fáciles de hacer.' },
+
+  // ─── FREQUENCY ───────────────────────────────────────────────────────────────
+  { id: 'freq-001', word: 'siempre', translation: 'always', level: 'A1', example: 'Siempre desayuno antes de salir.' },
+  { id: 'freq-002', word: 'casi siempre', translation: 'almost always', level: 'A1', example: 'Casi siempre como en casa.' },
+  { id: 'freq-003', word: 'a menudo', translation: 'often', level: 'A1', example: 'A menudo voy al cine los fines de semana.' },
+  { id: 'freq-004', word: 'a veces', translation: 'sometimes', level: 'A1', example: 'A veces como en el restaurante.' },
+  { id: 'freq-005', word: 'casi nunca', translation: 'almost never', level: 'A1', example: 'Casi nunca como carne.' },
+  { id: 'freq-006', word: 'nunca', translation: 'never', level: 'A1', example: 'Nunca bebo alcohol.' },
+
+  // ─── QUESTION WORDS ───────────────────────────────────────────────────────────
+  { id: 'quest-001', word: '¿quién?', translation: 'who?', level: 'A0', example: '¿Quién es esa chica?' },
+  { id: 'quest-002', word: '¿cuándo?', translation: 'when?', level: 'A0', example: '¿Cuándo es tu cumpleaños?' },
+  { id: 'quest-003', word: '¿cómo?', translation: 'how?', level: 'A0', example: '¿Cómo estás?' },
+  { id: 'quest-004', word: '¿qué?', translation: 'what?', level: 'A0', example: '¿Qué quieres comer?' },
+  { id: 'quest-005', word: '¿dónde?', translation: 'where?', level: 'A0', example: '¿Dónde está el baño?' },
+  { id: 'quest-006', word: '¿por qué?', translation: 'why?', level: 'A1', example: '¿Por qué estudias español?' },
+  { id: 'quest-007', word: '¿cuánto / cuántos?', translation: 'how much / how many?', level: 'A1', example: '¿Cuánto cuesta? ¿Cuántos años tienes?' },
+  { id: 'quest-008', word: '¿cuál?', translation: 'which?', level: 'A1', example: '¿Cuál es tu color favorito?' },
+
+  // ─── ANIMALS ─────────────────────────────────────────────────────────────────
+  { id: 'anim-001', word: 'la vaca', translation: 'cow', level: 'A0', example: 'La vaca da leche.' },
+  { id: 'anim-002', word: 'el caballo', translation: 'horse', level: 'A0', example: 'El caballo corre muy rápido.' },
+  { id: 'anim-003', word: 'el pájaro', translation: 'bird', level: 'A0', example: 'El pájaro canta por la mañana.' },
+  { id: 'anim-004', word: 'el pez', translation: 'fish', level: 'A0', example: 'Tengo un pez en una pecera.' },
+  { id: 'anim-005', word: 'el conejo', translation: 'rabbit', level: 'A1', example: 'Mi hija tiene un conejo de mascota.' },
+  { id: 'anim-006', word: 'el oso', translation: 'bear', level: 'A1', example: 'El oso pardo vive en los bosques.' },
+
+  // ─── LOCATIONS ───────────────────────────────────────────────────────────────
+  { id: 'loc-001', word: 'aquí', translation: 'here', level: 'A0', example: 'Ven aquí, por favor.' },
+  { id: 'loc-002', word: 'allí', translation: 'there', level: 'A0', example: 'El banco está allí, al fondo.' },
+  { id: 'loc-003', word: 'cerca', translation: 'near / close', level: 'A1', example: 'La farmacia está muy cerca.' },
+  { id: 'loc-004', word: 'lejos', translation: 'far', level: 'A1', example: 'La playa está un poco lejos.' },
+  { id: 'loc-005', word: 'a la derecha', translation: 'on the right', level: 'A1', example: 'El banco está a la derecha.' },
+  { id: 'loc-006', word: 'a la izquierda', translation: 'on the left', level: 'A1', example: 'Gira a la izquierda en el semáforo.' },
+  { id: 'loc-007', word: 'todo recto', translation: 'straight ahead', level: 'A1', example: 'Sigue todo recto hasta el final.' },
+  { id: 'loc-008', word: 'delante de', translation: 'in front of', level: 'A1', example: 'El coche está aparcado delante del banco.' },
+  { id: 'loc-009', word: 'detrás de', translation: 'behind', level: 'A1', example: 'El jardín está detrás de la casa.' },
+  { id: 'loc-010', word: 'encima de', translation: 'on top of', level: 'A1', example: 'Las llaves están encima de la mesa.' },
+  { id: 'loc-011', word: 'debajo de', translation: 'under / below', level: 'A1', example: 'El gato está debajo de la silla.' },
+  { id: 'loc-012', word: 'al lado de', translation: 'next to', level: 'A1', example: 'El supermercado está al lado del banco.' },
+
+  // ─── TRAVEL ──────────────────────────────────────────────────────────────────
+  { id: 'trav-001', word: 'el pasaporte', translation: 'the passport', level: 'A1', example: 'No olvides el pasaporte.' },
+  { id: 'trav-002', word: 'el hotel', translation: 'the hotel', level: 'A1', example: 'He reservado un hotel en el centro.' },
+  { id: 'trav-003', word: 'la maleta', translation: 'the suitcase', level: 'A1', example: 'Hago la maleta la noche antes.' },
+  { id: 'trav-004', word: 'reservar', translation: 'to book / to reserve', level: 'A1', example: 'Quiero reservar una habitación para dos noches.' },
+  { id: 'trav-005', word: 'el vuelo', translation: 'the flight', level: 'A1', example: 'El vuelo dura tres horas.' },
+  { id: 'trav-006', word: 'las vacaciones', translation: 'the holidays', level: 'A1', example: 'En julio me voy de vacaciones.' },
+  { id: 'trav-007', word: 'viajar', translation: 'to travel', level: 'A1', example: 'Me encanta viajar a países nuevos.' },
+  { id: 'trav-008', word: 'el aeropuerto', translation: 'the airport', level: 'A1', example: 'El aeropuerto está a veinte kilómetros.' },
+  { id: 'trav-009', word: 'la habitación', translation: 'the room', level: 'A1', example: 'La habitación tiene vistas al mar.' },
+  { id: 'trav-010', word: 'el turista', translation: 'the tourist', level: 'A1', example: 'Hay muchos turistas en verano.' },
+
+  // ─── SPORTS ──────────────────────────────────────────────────────────────────
+  { id: 'sport-001', word: 'el fútbol', translation: 'football / soccer', level: 'A1', example: 'El fútbol es el deporte más popular en España.' },
+  { id: 'sport-002', word: 'el tenis', translation: 'tennis', level: 'A1', example: 'Juego al tenis los sábados.' },
+  { id: 'sport-003', word: 'la natación', translation: 'swimming', level: 'A1', example: 'La natación es muy buena para la espalda.' },
+  { id: 'sport-004', word: 'correr', translation: 'to run', level: 'A1', example: 'Corro treinta minutos cada mañana.' },
+  { id: 'sport-005', word: 'el baloncesto', translation: 'basketball', level: 'A1', example: 'España tiene un gran equipo de baloncesto.' },
+  { id: 'sport-006', word: 'nadar', translation: 'to swim', level: 'A1', example: 'Nado en la piscina tres veces a la semana.' },
+  { id: 'sport-007', word: 'jugar', translation: 'to play', level: 'A1', example: 'Los niños juegan en el parque.' },
+  { id: 'sport-008', word: 'el deporte', translation: 'sport', level: 'A1', example: 'Hago mucho deporte en verano.' },
+  { id: 'sport-009', word: 'ganar', translation: 'to win', level: 'A1', example: 'España ganó el Mundial en 2010.' },
+  { id: 'sport-010', word: 'perder', translation: 'to lose', level: 'A1', example: 'No me gusta perder.' },
+  { id: 'sport-011', word: 'el partido', translation: 'the match / game', level: 'A1', example: 'Esta noche hay un partido de fútbol.' },
+  { id: 'sport-012', word: 'el gimnasio', translation: 'the gym', level: 'A1', example: 'Voy al gimnasio cuatro veces a la semana.' },
+  { id: 'sport-013', word: 'esquiar', translation: 'to ski', level: 'A2', example: 'Esquiamos en los Pirineos en enero.' },
+  { id: 'sport-014', word: 'el ciclismo', translation: 'cycling', level: 'A2', example: 'El ciclismo es popular en España.' },
+
+  // ─── ESSENTIAL VERBS (A0/A1) — missing from DELE A1 core ─────────────────────
+  { id: 'ev-001', word: 'ser', translation: 'to be (permanent)', level: 'A0', example: 'Soy estudiante. Soy de España.' },
+  { id: 'ev-002', word: 'estar', translation: 'to be (temporary/location)', level: 'A0', example: 'Estoy en casa. Estoy cansado.' },
+  { id: 'ev-003', word: 'tener', translation: 'to have', level: 'A0', example: 'Tengo dos hermanos y un perro.' },
+  { id: 'ev-004', word: 'ir', translation: 'to go', level: 'A0', example: 'Voy al trabajo en metro.' },
+  { id: 'ev-005', word: 'poder', translation: 'to be able to / can', level: 'A1', example: 'No puedo ir mañana, lo siento.' },
+  { id: 'ev-006', word: 'querer', translation: 'to want / to love', level: 'A1', example: 'Quiero aprender español.' },
+  { id: 'ev-007', word: 'hacer', translation: 'to do / to make', level: 'A1', example: 'Hago los deberes por la tarde.' },
+  { id: 'ev-008', word: 'venir', translation: 'to come', level: 'A1', example: '¿Vienes mañana a la fiesta?' },
+  { id: 'ev-009', word: 'saber', translation: 'to know (fact/how to)', level: 'A1', example: 'No sé dónde está la estación.' },
+  { id: 'ev-010', word: 'poner', translation: 'to put / to place', level: 'A1', example: 'Pon los libros en la mesa.' },
+  { id: 'ev-011', word: 'llevar', translation: 'to carry / to wear / to take', level: 'A1', example: 'Llevo el abrigo porque hace frío.' },
+  { id: 'ev-012', word: 'llamarse', translation: 'to be called', level: 'A0', example: 'Me llamo Ana. ¿Y tú, cómo te llamas?' },
+  { id: 'ev-013', word: 'gustar', translation: 'to like', level: 'A0', example: 'Me gusta el chocolate.' },
+  { id: 'ev-014', word: 'necesitar', translation: 'to need', level: 'A1', example: 'Necesito un médico.' },
+  { id: 'ev-015', word: 'vivir', translation: 'to live', level: 'A0', example: 'Vivo en Madrid con mi familia.' },
+
+  // ─── BODY PARTS ───────────────────────────────────────────────────────────────
+  { id: 'body-001', word: 'la cabeza', translation: 'the head', level: 'A1', example: 'Me duele la cabeza.' },
+  { id: 'body-002', word: 'el ojo', translation: 'the eye', level: 'A1', example: 'Tiene los ojos azules.' },
+  { id: 'body-003', word: 'la nariz', translation: 'the nose', level: 'A1', example: 'Me duele la nariz. Tengo un resfriado.' },
+  { id: 'body-004', word: 'la boca', translation: 'the mouth', level: 'A1', example: 'Abre la boca, por favor.' },
+  { id: 'body-005', word: 'la oreja', translation: 'the ear', level: 'A1', example: 'Habla más alto, no oigo bien de esta oreja.' },
+  { id: 'body-006', word: 'el pelo', translation: 'the hair', level: 'A1', example: 'Tiene el pelo largo y rizado.' },
+  { id: 'body-007', word: 'el brazo', translation: 'the arm', level: 'A1', example: 'Me he hecho daño en el brazo.' },
+  { id: 'body-008', word: 'la mano', translation: 'the hand', level: 'A1', example: 'Lávate las manos antes de comer.' },
+  { id: 'body-009', word: 'la pierna', translation: 'the leg', level: 'A1', example: 'Me duele la pierna después de correr.' },
+  { id: 'body-010', word: 'el pie', translation: 'the foot', level: 'A1', example: 'Estos zapatos me hacen daño en el pie.' },
+  { id: 'body-011', word: 'la espalda', translation: 'the back', level: 'A1', example: 'Tengo dolor de espalda por estar sentado.' },
+  { id: 'body-012', word: 'el estómago', translation: 'the stomach', level: 'A1', example: 'Me duele el estómago.' },
+  { id: 'body-013', word: 'el cuello', translation: 'the neck', level: 'A1', example: 'Tengo dolor de cuello.' },
+  { id: 'body-014', word: 'la garganta', translation: 'the throat', level: 'A1', example: 'Me duele la garganta. Creo que tengo anginas.' },
+
+  // ─── HEALTH ───────────────────────────────────────────────────────────────────
+  { id: 'health-001', word: 'el médico / la médica', translation: 'the doctor', level: 'A1', example: 'Voy al médico porque me encuentro mal.' },
+  { id: 'health-002', word: 'la farmacia', translation: 'the pharmacy', level: 'A1', example: 'Compro las pastillas en la farmacia.' },
+  { id: 'health-003', word: 'el resfriado', translation: 'the cold (illness)', level: 'A1', example: 'Tengo un resfriado y me duele la cabeza.' },
+  { id: 'health-004', word: 'la fiebre', translation: 'the fever', level: 'A1', example: 'Tengo fiebre. Son treinta y ocho grados.' },
+  { id: 'health-005', word: 'el dolor de cabeza', translation: 'the headache', level: 'A1', example: 'Tengo dolor de cabeza. ¿Tienes aspirina?' },
+  { id: 'health-006', word: 'la pastilla', translation: 'the pill / tablet', level: 'A1', example: 'Toma una pastilla cada ocho horas.' },
+  { id: 'health-007', word: 'la receta', translation: 'the prescription', level: 'A2', example: 'El médico me da una receta para los antibióticos.' },
+  { id: 'health-008', word: 'la cita médica', translation: "the doctor's appointment", level: 'A2', example: 'Tengo una cita médica el jueves.' },
+  { id: 'health-009', word: 'estar enfermo / enferma', translation: 'to be ill / sick', level: 'A1', example: 'Estoy enfermo y no puedo ir al trabajo.' },
+  { id: 'health-010', word: 'encontrarse mal', translation: 'to feel unwell', level: 'A1', example: 'Me encuentro mal, creo que tengo fiebre.' },
+  { id: 'health-011', word: 'la tos', translation: 'the cough', level: 'A1', example: 'Tengo tos y dolor de garganta.' },
+  { id: 'health-012', word: 'el hospital', translation: 'the hospital', level: 'A1', example: 'Fue al hospital de urgencias.' },
+
+  // ─── EMOTIONS & FEELINGS ──────────────────────────────────────────────────────
+  { id: 'emo-001', word: 'contento / contenta', translation: 'happy / pleased', level: 'A1', example: 'Estoy muy contento con mi nuevo trabajo.' },
+  { id: 'emo-002', word: 'triste', translation: 'sad', level: 'A1', example: 'Estoy triste porque mi amigo se va.' },
+  { id: 'emo-003', word: 'enfadado / enfadada', translation: 'angry', level: 'A1', example: 'Está enfadada porque llegué tarde.' },
+  { id: 'emo-004', word: 'nervioso / nerviosa', translation: 'nervous', level: 'A1', example: 'Estoy nervioso antes del examen.' },
+  { id: 'emo-005', word: 'cansado / cansada', translation: 'tired', level: 'A1', example: 'Estoy muy cansada después del trabajo.' },
+  { id: 'emo-006', word: 'preocupado / preocupada', translation: 'worried', level: 'A1', example: 'Estoy preocupado por los resultados.' },
+  { id: 'emo-007', word: 'sorprendido / sorprendida', translation: 'surprised', level: 'A2', example: 'Estoy sorprendida, no esperaba este regalo.' },
+  { id: 'emo-008', word: 'emocionado / emocionada', translation: 'excited', level: 'A2', example: 'Estoy muy emocionado por las vacaciones.' },
+  { id: 'emo-009', word: 'aburrido / aburrida', translation: 'bored', level: 'A1', example: 'Estoy aburrido, no hay nada que hacer.' },
+  { id: 'emo-010', word: 'feliz', translation: 'happy', level: 'A1', example: 'Soy muy feliz con mi vida.' },
+
+  // ─── EXTENDED FAMILY (A2 per DELE) ───────────────────────────────────────────
+  { id: 'fam2-001', word: 'el suegro / la suegra', translation: 'father-in-law / mother-in-law', level: 'A2', example: 'Me llevo bien con mi suegra.' },
+  { id: 'fam2-002', word: 'el cuñado / la cuñada', translation: 'brother-in-law / sister-in-law', level: 'A2', example: 'Mi cuñado trabaja en Londres.' },
+  { id: 'fam2-003', word: 'el yerno', translation: 'the son-in-law', level: 'A2', example: 'El yerno de mis padres es médico.' },
+  { id: 'fam2-004', word: 'la nuera', translation: 'the daughter-in-law', level: 'A2', example: 'La nuera de mi madre es muy simpática.' },
+  { id: 'fam2-005', word: 'el nieto / la nieta', translation: 'the grandson / granddaughter', level: 'A2', example: 'Mis abuelos tienen cinco nietos.' },
+  { id: 'fam2-006', word: 'el novio / la novia', translation: 'the boyfriend / girlfriend', level: 'A1', example: 'Mi novia es de Argentina.' },
+  { id: 'fam2-007', word: 'el esposo / la esposa', translation: 'the husband / wife', level: 'A1', example: 'Mi esposa trabaja en un banco.' },
+  { id: 'fam2-008', word: 'la pareja', translation: 'the partner / couple', level: 'A2', example: 'Vivo con mi pareja desde hace dos años.' },
+  { id: 'fam2-009', word: 'divorciado / divorciada', translation: 'divorced', level: 'A2', example: 'Mis padres están divorciados.' },
+  { id: 'fam2-010', word: 'viudo / viuda', translation: 'widower / widow', level: 'A2', example: 'Mi abuela es viuda desde hace diez años.' },
+
+  // ─── WORK & EMPLOYMENT (A2 per DELE) ─────────────────────────────────────────
+  { id: 'work-001', word: 'el trabajo', translation: 'the job / work', level: 'A1', example: 'Busco trabajo en Madrid.' },
+  { id: 'work-002', word: 'el jefe / la jefa', translation: 'the boss', level: 'A2', example: 'Mi jefa es muy exigente.' },
+  { id: 'work-003', word: 'el sueldo', translation: 'the salary', level: 'A2', example: 'El sueldo no es muy alto pero el trabajo es interesante.' },
+  { id: 'work-004', word: 'el contrato', translation: 'the contract', level: 'A2', example: 'Tengo un contrato temporal de seis meses.' },
+  { id: 'work-005', word: 'la entrevista de trabajo', translation: 'the job interview', level: 'A2', example: 'Mañana tengo una entrevista de trabajo.' },
+  { id: 'work-006', word: 'el compañero de trabajo', translation: 'the colleague', level: 'A2', example: 'Mis compañeros de trabajo son muy simpáticos.' },
+  { id: 'work-007', word: 'la empresa', translation: 'the company', level: 'A2', example: 'Trabajo en una empresa pequeña.' },
+  { id: 'work-008', word: 'el horario', translation: 'the schedule / timetable', level: 'A2', example: 'Mi horario de trabajo es de nueve a seis.' },
+  { id: 'work-009', word: 'estar en paro', translation: 'to be unemployed', level: 'A2', example: 'Lleva seis meses en paro.' },
+  { id: 'work-010', word: 'el currículum', translation: 'the CV / résumé', level: 'A2', example: 'Envía tu currículum antes del viernes.' },
+
+  // ─── SHOPPING (A2 per DELE) ───────────────────────────────────────────────────
+  { id: 'shop-001', word: 'la talla', translation: 'the size (clothing)', level: 'A2', example: '¿Qué talla llevas? Una mediana.' },
+  { id: 'shop-002', word: 'la oferta', translation: 'the offer / sale', level: 'A2', example: 'Este jersey está de oferta, cuesta solo diez euros.' },
+  { id: 'shop-003', word: 'el descuento', translation: 'the discount', level: 'A2', example: 'Me hacen un descuento del veinte por ciento.' },
+  { id: 'shop-004', word: 'devolver', translation: 'to return (an item)', level: 'A2', example: 'Quiero devolver esta camisa, no me queda bien.' },
+  { id: 'shop-005', word: 'el recibo', translation: 'the receipt', level: 'A2', example: 'Guarda el recibo por si quieres devolver algo.' },
+  { id: 'shop-006', word: 'en efectivo', translation: 'in cash', level: 'A2', example: 'Pago en efectivo, no tengo tarjeta.' },
+  { id: 'shop-007', word: 'con tarjeta', translation: 'by card', level: 'A2', example: '¿Puedo pagar con tarjeta?' },
+  { id: 'shop-008', word: 'la cola', translation: 'the queue', level: 'A2', example: 'Hay mucha cola en la caja.' },
+  { id: 'shop-009', word: 'el supermercado', translation: 'the supermarket', level: 'A1', example: 'Compro la fruta en el supermercado.' },
+  { id: 'shop-010', word: 'la tienda', translation: 'the shop / store', level: 'A1', example: 'Hay una tienda de ropa en el centro.' },
+
+  // ─── A2 VERBS ────────────────────────────────────────────────────────────────
+  { id: 'a2-011', word: 'volver', translation: 'to return / come back', level: 'A2', example: 'Quiero volver a España el próximo verano.' },
+  { id: 'a2-012', word: 'esperar', translation: 'to wait / to hope', level: 'A2', example: 'Tienes que esperar un poco más.' },
+  { id: 'a2-013', word: 'encontrar', translation: 'to find', level: 'A2', example: 'Necesito encontrar un apartamento nuevo.' },
+  { id: 'a2-014', word: 'conocer', translation: 'to know / to meet (a person or place)', level: 'A2', example: 'Me gustaría conocer a tus amigos.' },
+  { id: 'a2-015', word: 'traer', translation: 'to bring', level: 'A2', example: '¿Puedes traer algo de beber a la fiesta?' },
+  { id: 'a2-016', word: 'seguir', translation: 'to continue / to follow', level: 'A2', example: 'Voy a seguir estudiando español el año que viene.' },
+  { id: 'a2-017', word: 'dejar', translation: 'to leave / to let / to stop', level: 'A2', example: 'Voy a dejar de fumar este año.' },
+  { id: 'a2-018', word: 'parecer', translation: 'to seem / to appear', level: 'A2', example: 'El trabajo puede parecer difícil al principio.' },
+  { id: 'a2-019', word: 'empezar', translation: 'to start / to begin', level: 'A2', example: 'La película va a empezar en cinco minutos.' },
+  { id: 'a2-020', word: 'terminar', translation: 'to finish / to end', level: 'A2', example: 'Necesito terminar este informe antes de las seis.' },
+  { id: 'a2-021', word: 'aprender', translation: 'to learn', level: 'A2', example: 'Quiero aprender a cocinar paella.' },
+  { id: 'a2-022', word: 'llamar', translation: 'to call', level: 'A2', example: 'Voy a llamar a mis padres esta tarde.' },
+  { id: 'a2-023', word: 'usar', translation: 'to use', level: 'A2', example: '¿Sabes usar este programa?' },
+  { id: 'a2-024', word: 'preparar', translation: 'to prepare', level: 'A2', example: 'Voy a preparar la cena para todos.' },
+  { id: 'a2-025', word: 'gastar', translation: 'to spend (money)', level: 'A2', example: 'No debes gastar tanto dinero en ropa.' },
+  { id: 'a2-026', word: 'ahorrar', translation: 'to save (money)', level: 'A2', example: 'Es importante ahorrar dinero para el futuro.' },
+  { id: 'a2-027', word: 'pensar', translation: 'to think', level: 'A2', example: 'Tengo que pensar bien antes de decidir.' },
+  { id: 'a2-028', word: 'creer', translation: 'to believe / to think', level: 'A2', example: 'Hay que creer en uno mismo para tener éxito.' },
+  { id: 'a2-029', word: 'sentir', translation: 'to feel / to sense', level: 'A2', example: '¿Puedes sentir el calor del sol?' },
+  { id: 'a2-030', word: 'decidir', translation: 'to decide', level: 'A2', example: 'Tenemos que decidir adónde vamos de vacaciones.' },
+  { id: 'a2-031', word: 'cambiar', translation: 'to change', level: 'A2', example: 'Necesito cambiar de trabajo, estoy muy cansado.' },
+  { id: 'a2-032', word: 'ayudar', translation: 'to help', level: 'A2', example: '¿Puedes ayudar a tu hermano con los deberes?' },
+  { id: 'a2-033', word: 'explicar', translation: 'to explain', level: 'A2', example: '¿Me puedes explicar cómo funciona esto?' },
+  { id: 'a2-034', word: 'quedarse', translation: 'to stay / to remain', level: 'A2', example: 'Voy a quedarme en casa este fin de semana.' },
+  { id: 'a2-035', word: 'permitir', translation: 'to allow / to permit', level: 'A2', example: 'No se permite fumar en este edificio.' },
+  { id: 'a2-036', word: 'probar', translation: 'to try / to taste', level: 'A2', example: 'Debes probar la tortilla española, está riquísima.' },
+  { id: 'a2-037', word: 'compartir', translation: 'to share', level: 'A2', example: 'Me gusta compartir mis experiencias con amigos.' },
+  { id: 'a2-038', word: 'elegir', translation: 'to choose', level: 'A2', example: 'Tienes que elegir entre las dos opciones.' },
+  { id: 'a2-039', word: 'pasar', translation: 'to happen / to pass / to spend (time)', level: 'A2', example: '¿Qué va a pasar si no estudiamos?' },
+  { id: 'a2-040', word: 'ponerse', translation: 'to put on / to become', level: 'A2', example: 'Hay que ponerse el abrigo cuando hace frío.' },
+  { id: 'a2-041', word: 'llegar', translation: 'to arrive', level: 'A2', example: 'El tren va a llegar a las tres.' },
+  { id: 'a2-043', word: 'subir', translation: 'to go up / to get on', level: 'A2', example: 'Hay que subir al autobús número veinte.' },
+  { id: 'a2-044', word: 'bajar', translation: 'to go down / to get off', level: 'A2', example: 'Tengo que bajar en la próxima parada.' },
+
+  // ─── A2 CONNECTORS & EXPRESSIONS ─────────────────────────────────────────────
+  { id: 'a2-046', word: 'sin embargo', translation: 'however / nevertheless', level: 'A2', example: 'Es un trabajo difícil; sin embargo, me encanta.' },
+  { id: 'a2-047', word: 'además', translation: 'furthermore / also / besides', level: 'A2', example: 'Habla inglés y, además, sabe francés.' },
+  { id: 'a2-048', word: 'aunque', translation: 'although / even though', level: 'A2', example: 'Salimos a pasear aunque estaba lloviendo.' },
+  { id: 'a2-049', word: 'mientras', translation: 'while / whereas', level: 'A2', example: 'Escucho música mientras trabajo.' },
+  { id: 'a2-050', word: 'por eso', translation: 'that\'s why / therefore', level: 'A2', example: 'Está lloviendo, por eso me quedo en casa.' },
+  { id: 'a2-051', word: 'todavía', translation: 'still / yet', level: 'A2', example: 'Todavía no he terminado los deberes.' },
+  { id: 'a2-052', word: 'ya', translation: 'already / now', level: 'A2', example: 'Ya he comido, gracias.' },
+  { id: 'a2-053', word: 'de repente', translation: 'suddenly', level: 'A2', example: 'De repente empezó a llover sin avisar.' },
+  { id: 'a2-054', word: 'por fin', translation: 'finally / at last', level: 'A2', example: '¡Por fin terminé el examen!' },
+  { id: 'a2-055', word: 'a lo mejor', translation: 'maybe / perhaps', level: 'A2', example: 'A lo mejor viene Juan esta tarde.' },
+  { id: 'a2-056', word: 'quizás', translation: 'perhaps / maybe', level: 'A2', example: 'Quizás podamos quedar el jueves.' },
+  { id: 'a2-057', word: 'casi', translation: 'almost / nearly', level: 'A2', example: 'Casi pierdo el tren esta mañana.' },
+  { id: 'a2-058', word: 'en mi opinión', translation: 'in my opinion', level: 'A2', example: 'En mi opinión, el cine es mejor que el teatro.' },
+  { id: 'a2-059', word: 'estar de acuerdo', translation: 'to agree', level: 'A2', example: 'No estoy de acuerdo con tu decisión.' },
+  { id: 'a2-060', word: 'tener ganas de', translation: 'to feel like / to look forward to', level: 'A2', example: 'Tengo ganas de verte pronto.' },
+
+  // ─── A2 COMMON NOUNS ─────────────────────────────────────────────────────────
+  { id: 'a2-061', word: 'el problema', translation: 'the problem', level: 'A2', example: 'Tenemos un problema con el ordenador.' },
+  { id: 'a2-062', word: 'la solución', translation: 'the solution', level: 'A2', example: 'La solución es muy sencilla: hablar con él.' },
+  { id: 'a2-063', word: 'la idea', translation: 'the idea', level: 'A2', example: '¡Tengo una idea! Podemos ir al cine esta tarde.' },
+  { id: 'a2-064', word: 'el plan', translation: 'the plan', level: 'A2', example: '¿Cuál es el plan para el fin de semana?' },
+  { id: 'a2-065', word: 'la noticia', translation: 'the news / the piece of news', level: 'A2', example: '¡Tengo una buena noticia! Me han dado el trabajo.' },
+  { id: 'a2-066', word: 'el móvil', translation: 'the mobile phone', level: 'A2', example: 'He olvidado el móvil en casa.' },
+  { id: 'a2-067', word: 'el mensaje', translation: 'the message', level: 'A2', example: 'Te envié un mensaje pero no contestaste.' },
+  { id: 'a2-068', word: 'la contraseña', translation: 'the password', level: 'A2', example: 'He olvidado la contraseña del correo.' },
+  { id: 'a2-069', word: 'el correo electrónico', translation: 'the email', level: 'A2', example: 'Te mando el documento por correo electrónico.' },
+  { id: 'a2-070', word: 'la red social', translation: 'social media / social network', level: 'A2', example: 'Paso demasiado tiempo en las redes sociales.' },
+  { id: 'a2-071', word: 'el ordenador', translation: 'the computer', level: 'A2', example: 'Necesito comprar un ordenador nuevo.' },
+  { id: 'a2-072', word: 'la razón', translation: 'the reason', level: 'A2', example: 'No entiendo la razón de su enfado.' },
+  { id: 'a2-073', word: 'el resultado', translation: 'the result', level: 'A2', example: 'Los resultados del examen salen mañana.' },
+
+  // ─── NATURE & ENVIRONMENT ────────────────────────────────────────────────────
+  { id: 'nat-001', word: 'el campo', translation: 'the countryside', level: 'A2', example: 'Me gusta el campo por su tranquilidad.' },
+  { id: 'nat-002', word: 'el bosque', translation: 'the forest / the wood', level: 'A2', example: 'El bosque está lleno de árboles y animales.' },
+  { id: 'nat-003', word: 'el río', translation: 'the river', level: 'A2', example: 'El río Tajo pasa por Toledo.' },
+  { id: 'nat-004', word: 'el lago', translation: 'the lake', level: 'A2', example: 'Fuimos a nadar al lago en verano.' },
+  { id: 'nat-005', word: 'el mar', translation: 'the sea', level: 'A2', example: 'El mar Mediterráneo es muy cálido en verano.' },
+  { id: 'nat-006', word: 'la montaña', translation: 'the mountain', level: 'A2', example: 'En la montaña hace más frío que en la ciudad.' },
+  { id: 'nat-007', word: 'la playa', translation: 'the beach', level: 'A1', example: 'En verano me gusta ir a la playa con la familia.' },
+  { id: 'nat-008', word: 'la naturaleza', translation: 'nature', level: 'A2', example: 'Me encanta pasear por la naturaleza los fines de semana.' },
+  { id: 'nat-009', word: 'el clima', translation: 'the climate', level: 'A2', example: 'El clima de España varía mucho según la región.' },
+  { id: 'nat-010', word: 'la contaminación', translation: 'pollution', level: 'A2', example: 'La contaminación del aire es un problema grave en las ciudades.' },
+  { id: 'nat-011', word: 'reciclar', translation: 'to recycle', level: 'A2', example: 'Es importante reciclar el papel, el vidrio y el plástico.' },
+  { id: 'nat-012', word: 'el medio ambiente', translation: 'the environment', level: 'A2', example: 'Debemos proteger el medio ambiente para las generaciones futuras.' },
+
+  // ─── EDUCATION ───────────────────────────────────────────────────────────────
+  { id: 'edu-001', word: 'la universidad', translation: 'the university', level: 'A2', example: 'Quiero estudiar medicina en la universidad.' },
+  { id: 'edu-002', word: 'el examen', translation: 'the exam', level: 'A2', example: 'Tengo un examen de matemáticas mañana.' },
+  { id: 'edu-003', word: 'aprobar', translation: 'to pass (an exam)', level: 'A2', example: 'Si estudias mucho, vas a aprobar el examen.' },
+  { id: 'edu-004', word: 'suspender', translation: 'to fail (an exam)', level: 'A2', example: 'Si no estudias, puedes suspender el examen.' },
+  { id: 'edu-005', word: 'las notas', translation: 'the grades / marks', level: 'A2', example: 'Saqué muy buenas notas este trimestre.' },
+  { id: 'edu-006', word: 'la carrera', translation: 'the degree course / career', level: 'A2', example: 'Estudia la carrera de derecho en Madrid.' },
+  { id: 'edu-007', word: 'el título', translation: 'the degree / diploma', level: 'A2', example: 'Recibí el título universitario el año pasado.' },
+  { id: 'edu-008', word: 'la beca', translation: 'the scholarship / grant', level: 'A2', example: 'Solicité una beca para estudiar en el extranjero.' },
+  { id: 'edu-009', word: 'el idioma', translation: 'the language', level: 'A2', example: 'Aprendo un idioma nuevo cada año.' },
+  { id: 'edu-010', word: 'el instituto', translation: 'the secondary school', level: 'A2', example: 'Empecé el instituto a los doce años.' },
+
+  // ─── RELATIONSHIPS & SOCIAL ───────────────────────────────────────────────────
+  { id: 'rel-001', word: 'la amistad', translation: 'friendship', level: 'A2', example: 'La amistad es muy importante en la vida.' },
+  { id: 'rel-002', word: 'el amor', translation: 'love', level: 'A2', example: 'El amor puede cambiar la vida de una persona.' },
+  { id: 'rel-003', word: 'la boda', translation: 'the wedding', level: 'A2', example: 'Voy a la boda de mi hermano el próximo mes.' },
+  { id: 'rel-004', word: 'el cumpleaños', translation: 'the birthday', level: 'A1', example: 'Mi cumpleaños es el quince de mayo.' },
+  { id: 'rel-005', word: 'el regalo', translation: 'the gift / present', level: 'A1', example: 'Le compré un regalo a mi madre.' },
+  { id: 'rel-006', word: 'la fiesta', translation: 'the party / celebration', level: 'A1', example: 'Hacemos una fiesta el sábado, ¿vienes?' },
+  { id: 'rel-007', word: 'presentar', translation: 'to introduce', level: 'A2', example: 'Quiero presentar a mi novio a mis padres.' },
+  { id: 'rel-008', word: 'llevarse bien', translation: 'to get along well', level: 'A2', example: 'Me llevo bien con todos mis compañeros de trabajo.' },
+  { id: 'rel-009', word: 'discutir', translation: 'to argue', level: 'A2', example: 'No me gusta discutir con las personas.' },
+  { id: 'rel-010', word: 'perdonar', translation: 'to forgive', level: 'A2', example: 'Es difícil perdonar a alguien que te hace daño.' },
+  { id: 'rel-011', word: 'echar de menos', translation: 'to miss (someone/something)', level: 'A2', example: 'Echo de menos a mis amigos cuando viajo.' },
+  { id: 'rel-012', word: 'la cita', translation: 'the date / appointment', level: 'A2', example: 'Tengo una cita con un amigo esta tarde.' },
+
+  // ─── PLACES & LEISURE ────────────────────────────────────────────────────────
+  { id: 'pl-001', word: 'el cine', translation: 'the cinema / movies', level: 'A1', example: 'Esta tarde vamos al cine a ver una película.' },
+  { id: 'pl-002', word: 'el teatro', translation: 'the theatre', level: 'A2', example: 'Me encanta ir al teatro a ver obras de comedia.' },
+  { id: 'pl-003', word: 'el museo', translation: 'the museum', level: 'A1', example: 'El museo del Prado es famoso en todo el mundo.' },
+  { id: 'pl-004', word: 'el parque', translation: 'the park', level: 'A1', example: 'Los niños juegan en el parque por las tardes.' },
+  { id: 'pl-005', word: 'el barrio', translation: 'the neighbourhood / district', level: 'A2', example: 'Vivo en un barrio tranquilo cerca del centro.' },
+  { id: 'pl-006', word: 'el banco', translation: 'the bank', level: 'A2', example: 'Necesito ir al banco a sacar dinero.' },
+  { id: 'pl-007', word: 'la librería', translation: 'the bookshop', level: 'A2', example: 'Compré esta novela en la librería del centro.' },
+  { id: 'pl-008', word: 'el mercado', translation: 'the market', level: 'A1', example: 'Compro fruta y verdura en el mercado los sábados.' },
+  { id: 'pl-009', word: 'el periódico', translation: 'the newspaper', level: 'A2', example: 'Leo el periódico cada mañana con el café.' },
+  { id: 'pl-010', word: 'la televisión', translation: 'the television / TV', level: 'A1', example: 'Veo la televisión un par de horas al día.' },
+  { id: 'pl-011', word: 'la radio', translation: 'the radio', level: 'A1', example: 'Escucho la radio mientras conduzco.' },
+  { id: 'pl-012', word: 'la película', translation: 'the film / movie', level: 'A1', example: 'La película que vimos anoche era muy buena.' },
+
+  // ─── DIRECTIONS ──────────────────────────────────────────────────────────────
+  { id: 'dir-001', word: 'el norte', translation: 'north', level: 'A2', example: 'Galicia está en el norte de España.' },
+  { id: 'dir-002', word: 'el sur', translation: 'south', level: 'A2', example: 'En el sur de España hace mucho calor en verano.' },
+  { id: 'dir-003', word: 'el este', translation: 'east', level: 'A2', example: 'Barcelona está en el este de España.' },
+  { id: 'dir-004', word: 'el oeste', translation: 'west', level: 'A2', example: 'Portugal está al oeste de España.' },
+  { id: 'dir-005', word: 'la dirección', translation: 'the address / direction', level: 'A2', example: '¿Me puedes dar la dirección de tu casa?' },
+
+  // ─── FOOD & DRINK ADDITIONS (A2) ─────────────────────────────────────────────
+  { id: 'food-d14', word: 'el postre', translation: 'the dessert', level: 'A2', example: 'De postre voy a tomar un flan.' },
+  { id: 'food-d15', word: 'el primer plato', translation: 'the starter / first course', level: 'A2', example: 'De primer plato tomaré la ensalada.' },
+  { id: 'food-d16', word: 'el segundo plato', translation: 'the main course', level: 'A2', example: 'De segundo plato quiero el pollo asado.' },
+  { id: 'food-d17', word: 'las tapas', translation: 'tapas (small dishes)', level: 'A2', example: 'En España es muy típico salir a tomar tapas.' },
+  { id: 'food-d18', word: 'picante', translation: 'spicy', level: 'A2', example: '¿Es picante este plato? No tolero el picante.' },
+  { id: 'food-d19', word: 'dulce', translation: 'sweet', level: 'A2', example: 'Este vino es muy dulce, me gusta mucho.' },
+  { id: 'food-d20', word: 'salado / salada', translation: 'salty / savoury', level: 'A2', example: 'Este queso está muy salado.' },
+  { id: 'food-d21', word: 'vegetariano / vegetariana', translation: 'vegetarian', level: 'A2', example: 'Soy vegetariana, no como carne ni pescado.' },
+  { id: 'food-d22', word: 'el agua con gas', translation: 'sparkling water', level: 'A2', example: '¿Quieres agua con gas o sin gas?' },
+
+  // ─── HOME ADDITIONS (A2) ─────────────────────────────────────────────────────
+  { id: 'home-019', word: 'el alquiler', translation: 'the rent', level: 'A2', example: 'El alquiler del piso es de ochocientos euros al mes.' },
+  { id: 'home-020', word: 'amueblado / amueblada', translation: 'furnished', level: 'A2', example: 'El piso está amueblado, no necesitas comprar nada.' },
+  { id: 'home-021', word: 'el ascensor', translation: 'the lift / elevator', level: 'A2', example: 'Menos mal que hay ascensor, vivo en el quinto piso.' },
+  { id: 'home-022', word: 'la calefacción', translation: 'the heating', level: 'A2', example: 'En invierno enciendo la calefacción.' },
+  { id: 'home-023', word: 'el garaje', translation: 'the garage', level: 'A2', example: 'El piso tiene un garaje incluido en el precio.' },
+  { id: 'home-024', word: 'el jardín', translation: 'the garden', level: 'A2', example: 'Tenemos un jardín pequeño detrás de la casa.' },
+  { id: 'home-025', word: 'mudarse', translation: 'to move house', level: 'A2', example: 'Vamos a mudarnos a un piso más grande el año que viene.' },
+  { id: 'home-026', word: 'la factura', translation: 'the bill / invoice', level: 'A2', example: 'Tengo que pagar la factura del gas esta semana.' },
+  { id: 'home-027', word: 'el piso', translation: 'the flat / apartment', level: 'A2', example: 'Busco un piso de dos habitaciones en el centro.' },
+
+  // ─── HEALTH ADDITIONS (A2) ───────────────────────────────────────────────────
+  { id: 'health-013', word: 'el dolor', translation: 'the pain / ache', level: 'A2', example: 'Siento un dolor muy fuerte en la espalda.' },
+  { id: 'health-014', word: 'la alergia', translation: 'the allergy', level: 'A2', example: 'Tengo alergia al polen en primavera.' },
+  { id: 'health-015', word: 'la enfermedad', translation: 'the illness / disease', level: 'A2', example: 'La enfermedad le impidió ir a trabajar.' },
+  { id: 'health-016', word: 'curarse', translation: 'to get better / to heal', level: 'A2', example: 'Con este tratamiento vas a curarte pronto.' },
+  { id: 'health-017', word: 'la vacuna', translation: 'the vaccine', level: 'A2', example: 'La vacuna contra la gripe se pone en otoño.' },
+  { id: 'health-018', word: 'el seguro médico', translation: 'health insurance', level: 'A2', example: 'El seguro médico cubre las visitas al especialista.' },
+  { id: 'health-019', word: 'la herida', translation: 'the wound / injury', level: 'A2', example: 'Tiene una herida en la rodilla después de caerse.' },
+
+  // ─── WORK ADDITIONS (A2) ─────────────────────────────────────────────────────
+  { id: 'work-011', word: 'el proyecto', translation: 'the project', level: 'A2', example: 'Estamos trabajando en un proyecto muy importante.' },
+  { id: 'work-012', word: 'el cliente / la clienta', translation: 'the client / customer', level: 'A2', example: 'Mañana tenemos una reunión con un cliente nuevo.' },
+  { id: 'work-013', word: 'el informe', translation: 'the report', level: 'A2', example: 'Tengo que escribir un informe sobre las ventas.' },
+  { id: 'work-014', word: 'el plazo', translation: 'the deadline / period', level: 'A2', example: 'El plazo para entregar el proyecto es el viernes.' },
+  { id: 'work-015', word: 'el ascenso', translation: 'the promotion', level: 'A2', example: 'Me ofrecieron un ascenso en el trabajo.' },
+  { id: 'work-016', word: 'trabajar desde casa', translation: 'to work from home', level: 'A2', example: 'Dos días a la semana trabajo desde casa.' },
+  { id: 'work-018', word: 'el despacho', translation: 'the office (room)', level: 'A2', example: 'El jefe tiene un despacho grande en el tercer piso.' },
+
+  // ─── A2 ADJECTIVES ───────────────────────────────────────────────────────────
+  { id: 'desc-030', word: 'cómodo / cómoda', translation: 'comfortable', level: 'A2', example: 'Este sofá es muy cómodo para ver la televisión.' },
+  { id: 'desc-031', word: 'tranquilo / tranquila', translation: 'calm / peaceful / quiet', level: 'A2', example: 'Vivo en un barrio muy tranquilo.' },
+  { id: 'desc-032', word: 'ruidoso / ruidosa', translation: 'noisy', level: 'A2', example: 'El bar de abajo es muy ruidoso por las noches.' },
+  { id: 'desc-033', word: 'limpio / limpia', translation: 'clean', level: 'A2', example: 'El hotel estaba muy limpio y ordenado.' },
+  { id: 'desc-034', word: 'sucio / sucia', translation: 'dirty', level: 'A2', example: 'La cocina está sucia, hay que limpiarla.' },
+  { id: 'desc-035', word: 'moderno / moderna', translation: 'modern', level: 'A2', example: 'Viven en un piso moderno con todas las comodidades.' },
+  { id: 'desc-036', word: 'antiguo / antigua', translation: 'old / ancient', level: 'A2', example: 'La catedral es un edificio muy antiguo.' },
+  { id: 'desc-037', word: 'útil', translation: 'useful', level: 'A2', example: 'Este diccionario es muy útil para aprender vocabulario.' },
+  { id: 'desc-038', word: 'difícil', translation: 'difficult', level: 'A2', example: 'El examen de ayer fue muy difícil.' },
+  { id: 'desc-039', word: 'fácil', translation: 'easy', level: 'A2', example: 'La primera lección es bastante fácil.' },
+  { id: 'desc-040', word: 'especial', translation: 'special', level: 'A2', example: 'Hoy es un día muy especial para nuestra familia.' },
+  { id: 'desc-041', word: 'diferente', translation: 'different', level: 'A2', example: 'La cultura española es muy diferente a la mía.' },
+  { id: 'desc-042', word: 'parecido / parecida', translation: 'similar / alike', level: 'A2', example: 'Los dos hermanos son muy parecidos.' },
+  { id: 'desc-043', word: 'peligroso / peligrosa', translation: 'dangerous', level: 'A2', example: 'Conducir muy rápido es peligroso.' },
+  { id: 'desc-044', word: 'seguro / segura', translation: 'safe / sure', level: 'A2', example: 'Es un barrio muy seguro para vivir.' },
+
+  // ─── ESSENTIAL VERBS (A1) ────────────────────────────────────────────────────
+  { id: 'ev-016', word: 'dar', translation: 'to give', level: 'A1', example: 'Te voy a dar un regalo por tu cumpleaños.' },
+  { id: 'ev-017', word: 'ver', translation: 'to see / to watch', level: 'A1', example: 'Voy a ver una película esta noche.' },
+  { id: 'ev-018', word: 'decir', translation: 'to say / to tell', level: 'A1', example: '¿Qué quieres decir con eso?' },
+  { id: 'ev-019', word: 'dormir', translation: 'to sleep', level: 'A1', example: 'Necesito dormir ocho horas cada noche.' },
+  { id: 'ev-020', word: 'tomar', translation: 'to take / to have (food or drink)', level: 'A1', example: 'Voy a tomar un café con leche, por favor.' },
+
+  // ─── MORE A2 VERBS ────────────────────────────────────────────────────────────
+  { id: 'a2-074', word: 'deber', translation: 'should / must / to owe', level: 'A2', example: 'Debes estudiar más si quieres aprobar.' },
+  { id: 'a2-075', word: 'recordar', translation: 'to remember', level: 'A2', example: '¿Recuerdas dónde dejé las llaves?' },
+  { id: 'a2-076', word: 'conducir', translation: 'to drive', level: 'A2', example: 'Conduzco al trabajo todos los días.' },
+  { id: 'a2-077', word: 'enviar', translation: 'to send', level: 'A2', example: 'Voy a enviar el documento por correo electrónico.' },
+  { id: 'a2-078', word: 'descansar', translation: 'to rest', level: 'A2', example: 'Después de trabajar tanto, necesito descansar.' },
+  { id: 'a2-079', word: 'visitar', translation: 'to visit', level: 'A2', example: 'Me gustaría visitar la Sagrada Familia algún día.' },
+  { id: 'a2-080', word: 'celebrar', translation: 'to celebrate', level: 'A2', example: 'Vamos a celebrar tu cumpleaños en un restaurante.' },
+  { id: 'a2-081', word: 'invitar', translation: 'to invite', level: 'A2', example: 'Voy a invitar a todos mis amigos a la fiesta.' },
+  { id: 'a2-082', word: 'costar', translation: 'to cost', level: 'A2', example: '¿Cuánto cuesta este abrigo?' },
+  { id: 'a2-083', word: 'preferir', translation: 'to prefer', level: 'A2', example: 'Prefiero el café al té por las mañanas.' },
+  { id: 'a2-084', word: 'vestirse', translation: 'to get dressed', level: 'A2', example: 'Me visto rápido porque llego tarde.' },
+  { id: 'a2-085', word: 'cuidar', translation: 'to take care of / to look after', level: 'A2', example: 'Cuido a mis abuelos los fines de semana.' },
+  { id: 'a2-086', word: 'romper', translation: 'to break', level: 'A2', example: 'Se me ha roto el teléfono, necesito uno nuevo.' },
+
+  // ─── MORE A2 NOUNS ────────────────────────────────────────────────────────────
+  { id: 'a2-087', word: 'la tarjeta', translation: 'the card (credit/debit)', level: 'A2', example: '¿Aceptan tarjeta aquí, o solo efectivo?' },
+  { id: 'a2-088', word: 'la isla', translation: 'the island', level: 'A2', example: 'Las Islas Canarias están en el Atlántico.' },
+  { id: 'a2-089', word: 'la costa', translation: 'the coast', level: 'A2', example: 'Pasamos las vacaciones en la costa mediterránea.' },
+  { id: 'a2-090', word: 'el extranjero', translation: 'abroad / a foreigner', level: 'A2', example: 'Siempre he querido vivir en el extranjero.' },
+  { id: 'a2-091', word: 'la asignatura', translation: 'the school subject', level: 'A2', example: 'Mi asignatura favorita es la historia.' },
+  { id: 'a2-092', word: 'la historia', translation: 'the story / history', level: 'A2', example: 'Me encanta leer historias de aventuras.' },
+  { id: 'a2-093', word: 'la esquina', translation: 'the corner', level: 'A2', example: 'La farmacia está en la esquina de la calle.' },
+  { id: 'a2-094', word: 'enfrente de', translation: 'opposite / in front of', level: 'A2', example: 'La panadería está enfrente del banco.' },
+
+  // ─── MORE A2 ADJECTIVES ───────────────────────────────────────────────────────
+  { id: 'desc-045', word: 'ocupado / ocupada', translation: 'busy', level: 'A2', example: 'Estoy muy ocupada esta semana, no puedo quedar.' },
+  { id: 'desc-046', word: 'libre', translation: 'free / available', level: 'A2', example: '¿Estás libre el sábado por la tarde?' },
+  { id: 'desc-048', word: 'emocionante', translation: 'exciting / thrilling', level: 'A2', example: 'El partido de ayer fue muy emocionante.' },
+  { id: 'desc-049', word: 'agradable', translation: 'pleasant / nice', level: 'A2', example: 'Fue una tarde muy agradable con los amigos.' },
+  { id: 'desc-050', word: 'extraño / extraña', translation: 'strange / odd', level: 'A2', example: 'Qué extraño, no hay nadie en casa.' },
+
+  // ─── SEASONS ─────────────────────────────────────────────────────────────────
+  { id: 'seas-001', word: 'la primavera', translation: 'spring', level: 'A1', example: 'En primavera florecen los árboles y hace buen tiempo.' },
+  { id: 'seas-002', word: 'el verano', translation: 'summer', level: 'A1', example: 'En verano hace mucho calor y vamos a la playa.' },
+  { id: 'seas-003', word: 'el otoño', translation: 'autumn / fall', level: 'A1', example: 'En otoño las hojas de los árboles caen y hace fresco.' },
+  { id: 'seas-004', word: 'el invierno', translation: 'winter', level: 'A1', example: 'En invierno hace frío y a veces nieva.' },
+
+  // ─── GEOGRAPHY ───────────────────────────────────────────────────────────────
+  { id: 'geo-001', word: 'el pueblo', translation: 'the village / small town', level: 'A1', example: 'Mi abuela vive en un pueblo pequeño cerca del mar.' },
+  { id: 'geo-002', word: 'el país', translation: 'the country', level: 'A1', example: 'España es un país con mucha historia y cultura.' },
+  { id: 'geo-003', word: 'el continente', translation: 'the continent', level: 'A2', example: 'Europa es un continente con muchos países diferentes.' },
+
+  // ─── COMPARATIVES ────────────────────────────────────────────────────────────
+  { id: 'comp-001', word: 'mejor', translation: 'better / best', level: 'A2', example: 'Este restaurante es mejor que el de antes.' },
+  { id: 'comp-002', word: 'peor', translation: 'worse / worst', level: 'A2', example: 'Hoy el tiempo está peor que ayer.' },
+  { id: 'comp-003', word: 'mayor', translation: 'older / bigger / greater', level: 'A2', example: 'Mi hermano mayor tiene treinta años.' },
+  { id: 'comp-004', word: 'menor', translation: 'younger / smaller / lesser', level: 'A2', example: 'Mi hermana menor estudia en el instituto.' },
+  { id: 'comp-005', word: 'más ... que', translation: 'more ... than', level: 'A2', example: 'El tren es más rápido que el autobús.' },
+  { id: 'comp-006', word: 'menos ... que', translation: 'less ... than', level: 'A2', example: 'Este piso es menos caro que el otro.' },
+  { id: 'comp-007', word: 'tan ... como', translation: 'as ... as', level: 'A2', example: 'Este libro es tan interesante como el anterior.' },
+
+  // ─── DOCUMENTS & ADMIN ───────────────────────────────────────────────────────
+  { id: 'doc-001', word: 'el D.N.I.', translation: 'national identity card', level: 'A2', example: 'Necesitas el D.N.I. para abrir una cuenta bancaria.' },
+  { id: 'doc-002', word: 'el carné', translation: 'ID card / permit / licence', level: 'A2', example: '¿Tienes carné de conducir?' },
+  { id: 'doc-003', word: 'la fecha de caducidad', translation: 'the expiry date', level: 'A2', example: 'Comprueba la fecha de caducidad antes de comer.' },
+  { id: 'doc-004', word: 'el abono', translation: 'the season ticket / subscription', level: 'A2', example: 'Compré un abono mensual para el metro.' },
+
+  // ─── GREETINGS (additions) ───────────────────────────────────────────────────
+  { id: 'intro-011', word: 'buenos días', translation: 'good morning', level: 'A0', example: 'Buenos días, ¿cómo estás?' },
+  { id: 'intro-012', word: 'buenas tardes', translation: 'good afternoon / evening', level: 'A0', example: 'Buenas tardes, ¿en qué le puedo ayudar?' },
+  { id: 'intro-013', word: 'buenas noches', translation: 'good night', level: 'A0', example: 'Buenas noches, que descanses.' },
+  { id: 'intro-014', word: '¿cómo estás?', translation: 'how are you?', level: 'A0', example: '¿Cómo estás? — Muy bien, gracias.' },
+  { id: 'intro-015', word: 'muy bien, gracias', translation: 'very well, thank you', level: 'A0', example: '¿Qué tal? — Muy bien, gracias, ¿y tú?' },
+  { id: 'intro-016', word: '¡que aproveche!', translation: 'enjoy your meal!', level: 'A1', example: '¡Que aproveche! La paella está riquísima.' },
+  { id: 'intro-017', word: '¡buena suerte!', translation: 'good luck!', level: 'A1', example: '¡Buena suerte en el examen!' },
+  { id: 'intro-018', word: '¡claro que sí!', translation: 'of course!', level: 'A1', example: '¿Puedes ayudarme? — ¡Claro que sí!' },
+
+  // ─── DAILY ROUTINE (additions) ───────────────────────────────────────────────
+  { id: 'day-011', word: 'despertarse', translation: 'to wake up', level: 'A1', example: 'Me despierto a las siete sin despertador.' },
+  { id: 'day-012', word: 'bañarse', translation: 'to have a bath / to bathe', level: 'A1', example: 'Me baño cada noche antes de dormir.' },
+  { id: 'day-013', word: 'afeitarse', translation: 'to shave', level: 'A1', example: 'Mi padre se afeita todas las mañanas.' },
+  { id: 'day-014', word: 'maquillarse', translation: 'to put on make-up', level: 'A1', example: 'Ella se maquilla antes de salir de casa.' },
+  { id: 'day-015', word: 'peinarse', translation: "to comb / do one's hair", level: 'A1', example: 'Después de ducharme me peino delante del espejo.' },
+  { id: 'day-016', word: 'lavarse los dientes', translation: "to brush one's teeth", level: 'A1', example: 'Me lavo los dientes tres veces al día.' },
+  { id: 'day-017', word: 'almorzar', translation: 'to have lunch', level: 'A1', example: 'Almuerzo con mis compañeros a las dos.' },
+  { id: 'day-018', word: 'merendar', translation: 'to have an afternoon snack', level: 'A1', example: 'Los niños meriendan fruta o bocadillo al salir del colegio.' },
+
+  // ─── VERBS (additions) ───────────────────────────────────────────────────────
+  { id: 'verb-016', word: 'bailar', translation: 'to dance', level: 'A1', example: 'Me encanta bailar salsa en las fiestas.' },
+  { id: 'verb-017', word: 'cantar', translation: 'to sing', level: 'A1', example: 'Canta muy bien, debería ser cantante.' },
+  { id: 'verb-018', word: 'tocar', translation: 'to play (an instrument) / to touch', level: 'A1', example: 'Toco la guitarra desde los diez años.' },
+  { id: 'verb-019', word: 'dibujar', translation: 'to draw', level: 'A1', example: 'Le gusta dibujar paisajes en su cuaderno.' },
+  { id: 'verb-020', word: 'estudiar', translation: 'to study', level: 'A1', example: 'Estudio español tres veces a la semana.' },
+  { id: 'verb-021', word: 'comprar', translation: 'to buy', level: 'A1', example: 'Voy a comprar fruta en el mercado.' },
+  { id: 'verb-022', word: 'responder', translation: 'to respond / to answer', level: 'A1', example: 'Por favor, responde a las preguntas del ejercicio.' },
+  { id: 'verb-023', word: 'pasear', translation: 'to go for a walk / to stroll', level: 'A1', example: 'Paseamos por el parque después de comer.' },
+
+  // ─── ESSENTIAL VERBS (additions) ─────────────────────────────────────────────
+  { id: 'ev-021', word: 'soñar', translation: 'to dream', level: 'A2', example: 'Sueño con viajar por todo el mundo.' },
+  { id: 'ev-022', word: 'nacer', translation: 'to be born', level: 'A2', example: 'Nació en Madrid pero vive en Barcelona.' },
+  { id: 'ev-023', word: 'volar', translation: 'to fly', level: 'A1', example: 'El avión vuela a diez mil metros de altura.' },
+  { id: 'ev-024', word: 'contar', translation: 'to tell / to count', level: 'A2', example: 'Mi abuelo siempre me cuenta historias de cuando era joven.' },
+  { id: 'ev-025', word: 'entender', translation: 'to understand', level: 'A1', example: 'No entiendo esta palabra. ¿Me la explicas?' },
+  { id: 'ev-026', word: 'mentir', translation: 'to lie', level: 'A2', example: 'No me gusta mentir, prefiero decir la verdad.' },
+  { id: 'ev-027', word: 'amar', translation: 'to love', level: 'A2', example: 'La quiero mucho — la amo, de hecho.' },
+  { id: 'ev-028', word: 'odiar', translation: 'to hate', level: 'A2', example: 'Odio levantarme temprano los lunes.' },
+  { id: 'ev-029', word: 'coger', translation: 'to take / to grab / to catch', level: 'A2', example: 'Coge el autobús número cinco hasta la plaza.' },
+
+  // ─── A2 VERBS (additions) ────────────────────────────────────────────────────
+  { id: 'a2-095', word: 'votar', translation: 'to vote', level: 'A2', example: 'En las elecciones todos deben votar.' },
+  { id: 'a2-096', word: 'morder', translation: 'to bite', level: 'A2', example: 'Cuidado, el perro muerde si lo asustas.' },
+  { id: 'a2-097', word: 'vender', translation: 'to sell', level: 'A2', example: 'Vende coches de segunda mano en su empresa.' },
+
+  // ─── ANIMALS (additions) ─────────────────────────────────────────────────────
+  { id: 'anim-007', word: 'la oveja', translation: 'the sheep', level: 'A1', example: 'Las ovejas dan lana para hacer jerseis.' },
+  { id: 'anim-008', word: 'la serpiente', translation: 'the snake', level: 'A1', example: 'Hay serpientes en la selva tropical.' },
+  { id: 'anim-009', word: 'el caracol', translation: 'the snail', level: 'A2', example: 'El caracol camina muy lento por el jardín.' },
+  { id: 'anim-010', word: 'la tortuga', translation: 'the tortoise / turtle', level: 'A1', example: 'La tortuga vive muchos años.' },
+  { id: 'anim-011', word: 'el erizo', translation: 'the hedgehog', level: 'A2', example: 'El erizo se enrolla cuando tiene miedo.' },
+  { id: 'anim-012', word: 'el mono', translation: 'the monkey', level: 'A2', example: 'Los monos viven en la selva y trepan a los árboles.' },
+  { id: 'anim-013', word: 'el elefante', translation: 'the elephant', level: 'A2', example: 'El elefante es el animal terrestre más grande.' },
+
+  // ─── DESCRIPTIONS (additions) ────────────────────────────────────────────────
+  { id: 'desc-051', word: 'lento / lenta', translation: 'slow', level: 'A1', example: 'El caracol es un animal muy lento.' },
+  { id: 'desc-052', word: 'rápido / rápida', translation: 'fast / quick', level: 'A1', example: 'El guepardo es el animal más rápido del mundo.' },
+  { id: 'desc-053', word: 'rico / rica', translation: 'rich / tasty', level: 'A2', example: 'Es muy rico, tiene tres casas y varios coches.' },
+  { id: 'desc-054', word: 'pobre', translation: 'poor', level: 'A2', example: 'No tiene dinero, es bastante pobre.' },
+  { id: 'desc-055', word: 'guapo / guapa', translation: 'handsome / pretty', level: 'A1', example: 'Es muy guapo, todas le miran cuando entra.' },
+  { id: 'desc-056', word: 'feo / fea', translation: 'ugly', level: 'A1', example: 'No es feo, pero tampoco es guapo.' },
+  { id: 'desc-057', word: 'bonito / bonita', translation: 'pretty / lovely', level: 'A1', example: '¡Qué bonita falda! ¿Dónde la compraste?' },
+  { id: 'desc-058', word: 'sano / sana', translation: 'healthy', level: 'A2', example: 'Comer frutas y verduras es muy sano.' },
+  { id: 'desc-059', word: 'débil', translation: 'weak', level: 'A2', example: 'Después de la enfermedad se siente muy débil.' },
+  { id: 'desc-060', word: 'tímido / tímida', translation: 'shy', level: 'A2', example: 'Es muy tímida y no le gusta hablar en público.' },
+  { id: 'desc-061', word: 'sencillo / sencilla', translation: 'simple / plain', level: 'A2', example: 'Lleva ropa sencilla pero elegante.' },
+  { id: 'desc-062', word: 'estrecho / estrecha', translation: 'narrow', level: 'A2', example: 'Las calles del casco antiguo son muy estrechas.' },
+  { id: 'desc-063', word: 'ancho / ancha', translation: 'wide / broad', level: 'A2', example: 'La avenida principal es muy ancha.' },
+  { id: 'desc-064', word: 'claro / clara', translation: 'light / bright / clear', level: 'A1', example: 'El salón es muy claro porque tiene muchas ventanas.' },
+  { id: 'desc-065', word: 'oscuro / oscura', translation: 'dark', level: 'A1', example: 'El dormitorio está oscuro, enciende la luz.' },
+  { id: 'desc-066', word: 'caliente', translation: 'hot', level: 'A1', example: 'Ten cuidado, la sopa está muy caliente.' },
+  { id: 'desc-067', word: 'mismo / misma', translation: 'same', level: 'A2', example: 'Vivimos en el mismo barrio.' },
+  { id: 'desc-068', word: 'verdadero / verdadera', translation: 'true / real / genuine', level: 'A2', example: 'Es un verdadero amigo, siempre está cuando lo necesitas.' },
+  { id: 'desc-069', word: 'demasiado / demasiada', translation: 'too much / too many', level: 'A2', example: 'Hay demasiado ruido aquí, no puedo concentrarme.' },
+
+  // ─── FOOD (additions) ────────────────────────────────────────────────────────
+  { id: 'food-v09', word: 'el aguacate', translation: 'avocado', level: 'A2', example: 'Preparo guacamole con aguacate, limón y sal.' },
+  { id: 'food-d23', word: 'la mantequilla', translation: 'butter', level: 'A1', example: 'Unto la tostada con mantequilla y mermelada.' },
+  { id: 'food-d24', word: 'la tostada', translation: 'toast', level: 'A1', example: 'Desayuno una tostada con aceite de oliva.' },
+  { id: 'food-d25', word: 'la mermelada', translation: 'jam', level: 'A1', example: 'Me gusta la mermelada de fresa para desayunar.' },
+  { id: 'food-d26', word: 'la merienda', translation: 'afternoon snack', level: 'A1', example: 'La merienda de los niños es un bocadillo o fruta.' },
+  { id: 'food-d27', word: 'el almuerzo', translation: 'lunch', level: 'A1', example: 'El almuerzo es la comida principal del día en España.' },
+  { id: 'food-d28', word: 'el hielo', translation: 'ice', level: 'A1', example: '¿Quieres el refresco con o sin hielo?' },
+  { id: 'food-d29', word: 'el chocolate', translation: 'chocolate', level: 'A0', example: 'Me encanta el chocolate negro con el café.' },
+
+  // ─── HOME (additions) ────────────────────────────────────────────────────────
+  { id: 'home-028', word: 'el armario', translation: 'the wardrobe / cupboard', level: 'A1', example: 'Guardo la ropa en el armario del dormitorio.' },
+  { id: 'home-029', word: 'la alfombra', translation: 'the rug / carpet', level: 'A1', example: 'Tenemos una alfombra grande en el salón.' },
+  { id: 'home-030', word: 'la papelera', translation: 'the waste bin / wastebasket', level: 'A1', example: 'Tira los papeles en la papelera.' },
+  { id: 'home-031', word: 'el colchón', translation: 'the mattress', level: 'A2', example: 'Necesito un colchón nuevo, el mío es muy viejo.' },
+  { id: 'home-032', word: 'el suelo', translation: 'the floor / ground', level: 'A1', example: 'El suelo de la cocina es de baldosas.' },
+  { id: 'home-033', word: 'el comedor', translation: 'the dining room', level: 'A1', example: 'Comemos juntos en el comedor todos los días.' },
+  { id: 'home-034', word: 'el pasillo', translation: 'the hallway / corridor', level: 'A1', example: 'El baño está al final del pasillo.' },
+
+  // ─── CLOTHING (additions) ────────────────────────────────────────────────────
+  { id: 'cloth-017', word: 'el bolso', translation: 'the handbag / purse', level: 'A1', example: 'Lleva el móvil y las llaves en el bolso.' },
+  { id: 'cloth-018', word: 'el traje', translation: 'the suit / costume', level: 'A1', example: 'Lleva un traje gris para la entrevista de trabajo.' },
+  { id: 'cloth-019', word: 'los pantalones vaqueros', translation: 'jeans', level: 'A1', example: 'Lleva unos pantalones vaqueros y una camiseta.' },
+  { id: 'cloth-020', word: 'las botas', translation: 'the boots', level: 'A1', example: 'En invierno llevo botas de cuero.' },
+  { id: 'cloth-021', word: 'la bufanda', translation: 'the scarf', level: 'A1', example: 'No olvides la bufanda, hace frío.' },
+  { id: 'cloth-022', word: 'el pijama', translation: 'the pyjamas', level: 'A1', example: 'Me pongo el pijama antes de acostarme.' },
+
+  // ─── TRANSPORT (additions) ───────────────────────────────────────────────────
+  { id: 'trans-011', word: 'el tranvía', translation: 'the tram', level: 'A1', example: 'El tranvía pasa cada cinco minutos por esta parada.' },
+  { id: 'trans-012', word: 'la carretera', translation: 'the road', level: 'A2', example: 'La carretera está cortada por obras.' },
+  { id: 'trans-013', word: 'la autopista', translation: 'the motorway / highway', level: 'A2', example: 'Vamos por la autopista para llegar más rápido.' },
+  { id: 'trans-014', word: 'solo ida', translation: 'one-way (ticket)', level: 'A2', example: 'Un billete de solo ida a Valencia, por favor.' },
+  { id: 'trans-015', word: 'ida y vuelta', translation: 'return (ticket)', level: 'A2', example: '¿Quieres el billete de ida y vuelta o solo ida?' },
+  { id: 'trans-016', word: 'a pie', translation: 'on foot', level: 'A1', example: 'La estación está cerca, puedes ir a pie.' },
+  { id: 'trans-017', word: 'el coche', translation: 'the car', level: 'A0', example: 'Voy al trabajo en coche todos los días.' },
+  { id: 'trans-018', word: 'la moto', translation: 'the motorbike', level: 'A1', example: 'Va al trabajo en moto para evitar los atascos.' },
+
+  // ─── BODY PARTS (additions) ──────────────────────────────────────────────────
+  { id: 'body-015', word: 'el dedo', translation: 'the finger / toe', level: 'A1', example: 'Me he cortado el dedo con el cuchillo.' },
+  { id: 'body-016', word: 'los dientes', translation: 'the teeth', level: 'A1', example: 'Hay que lavarse los dientes después de cada comida.' },
+  { id: 'body-017', word: 'la rodilla', translation: 'the knee', level: 'A1', example: 'Me duele la rodilla después de correr.' },
+  { id: 'body-018', word: 'el hombro', translation: 'the shoulder', level: 'A1', example: 'Tengo dolor de hombro por cargar la mochila.' },
+
+  // ─── WORK (additions) ────────────────────────────────────────────────────────
+  { id: 'work-017', word: 'el abogado / la abogada', translation: 'the lawyer', level: 'A2', example: 'Necesito un abogado para revisar el contrato.' },
+  { id: 'work-019', word: 'el periodista / la periodista', translation: 'the journalist', level: 'A2', example: 'La periodista hace una entrevista al alcalde.' },
+  { id: 'work-020', word: 'el enfermero / la enfermera', translation: 'the nurse', level: 'A2', example: 'La enfermera me puso la vacuna.' },
+  { id: 'work-021', word: 'el cocinero / la cocinera', translation: 'the cook / chef', level: 'A2', example: 'El cocinero prepara platos típicos de la región.' },
+
+  // ─── FAMILY (additions) ──────────────────────────────────────────────────────
+  { id: 'fam-016', word: 'el marido', translation: 'the husband', level: 'A1', example: 'Su marido trabaja en una empresa de tecnología.' },
+  { id: 'fam-017', word: 'los sobrinos', translation: 'the nephews and nieces', level: 'A2', example: 'Tengo tres sobrinos y una sobrina.' },
+  { id: 'fam-018', word: 'el bebé', translation: 'the baby', level: 'A0', example: 'El bebé duerme toda la noche.' },
+
+  // ─── FREQUENCY (additions) ───────────────────────────────────────────────────
+  { id: 'freq-007', word: 'una vez', translation: 'once', level: 'A1', example: 'Voy al cine una vez a la semana.' },
+  { id: 'freq-008', word: 'dos veces', translation: 'twice', level: 'A1', example: 'Me ducho dos veces al día en verano.' },
+  { id: 'freq-009', word: 'muchas veces', translation: 'many times / often', level: 'A1', example: 'He visto esa película muchas veces.' },
+  { id: 'freq-010', word: 'todos los días', translation: 'every day', level: 'A1', example: 'Leo el periódico todos los días.' },
+  { id: 'freq-011', word: 'cada semana', translation: 'every week', level: 'A1', example: 'Llamo a mis padres cada semana.' },
+
+  // ─── NATURE (additions) ──────────────────────────────────────────────────────
+  { id: 'nat-013', word: 'el sol', translation: 'the sun', level: 'A0', example: 'El sol sale por el este y se pone por el oeste.' },
+  { id: 'nat-014', word: 'la luna', translation: 'the moon', level: 'A1', example: 'La luna llena ilumina la noche.' },
+  { id: 'nat-015', word: 'la flor', translation: 'the flower', level: 'A1', example: 'Las flores del jardín huelen muy bien en primavera.' },
+  { id: 'nat-016', word: 'el árbol', translation: 'the tree', level: 'A0', example: 'Hay un árbol muy alto delante de mi casa.' },
+  { id: 'nat-017', word: 'la selva', translation: 'the jungle / rainforest', level: 'A2', example: 'La selva amazónica es el pulmón del planeta.' },
+  { id: 'nat-018', word: 'el cielo', translation: 'the sky', level: 'A0', example: 'El cielo está muy azul hoy, no hay nubes.' },
+
+  // ─── HEALTH (additions) ──────────────────────────────────────────────────────
+  { id: 'health-020', word: 'la salud', translation: 'health', level: 'A1', example: 'La salud es lo más importante en la vida.' },
+
+  // ─── EMOTIONS (additions) ────────────────────────────────────────────────────
+  { id: 'emo-011', word: 'orgulloso / orgullosa', translation: 'proud', level: 'A2', example: 'Estoy muy orgullosa de mi hija.' },
+  { id: 'emo-012', word: 'avergonzado / avergonzada', translation: 'ashamed / embarrassed', level: 'A2', example: 'Estoy avergonzado de lo que dije ayer.' },
+
+  // ─── CLASSROOM (additions) ───────────────────────────────────────────────────
+  { id: 'class-011', word: 'la letra', translation: 'the letter (of the alphabet)', level: 'A1', example: 'El español tiene veintisiete letras.' },
+  { id: 'class-012', word: 'la palabra', translation: 'the word', level: 'A1', example: 'Aprendo diez palabras nuevas cada día.' },
+  { id: 'class-013', word: 'la frase', translation: 'the sentence / phrase', level: 'A1', example: 'Escribe una frase con cada palabra nueva.' },
+  { id: 'class-014', word: 'los deberes', translation: 'the homework', level: 'A1', example: 'Tengo muchos deberes esta tarde.' },
+  { id: 'class-015', word: 'el compañero / la compañera de clase', translation: 'the classmate', level: 'A1', example: 'Mi compañera de clase me ayuda con los ejercicios.' },
+
+  // ─── PLACES (additions) ──────────────────────────────────────────────────────
+  { id: 'pl-013', word: 'la biblioteca', translation: 'the library', level: 'A1', example: 'Voy a la biblioteca a estudiar en silencio.' },
+  { id: 'pl-014', word: 'el restaurante', translation: 'the restaurant', level: 'A1', example: 'Quedamos para cenar en un restaurante italiano.' },
+  { id: 'pl-015', word: 'la piscina', translation: 'the swimming pool', level: 'A1', example: 'Voy a la piscina a nadar tres veces por semana.' },
+
+  // ─── TEMPORAL EXPRESSIONS (additions) ────────────────────────────────────────
+  { id: 'temp-013', word: 'pronto', translation: 'soon', level: 'A1', example: 'El médico te verá pronto, espera aquí.' },
+  { id: 'temp-014', word: 'enseguida', translation: 'right away / immediately', level: 'A1', example: 'El camarero viene enseguida con tu pedido.' },
+  { id: 'temp-015', word: 'un rato', translation: 'a while / a moment', level: 'A1', example: 'Espera un rato, ahora te atiendo.' },
+  { id: 'temp-016', word: 'durante', translation: 'during', level: 'A2', example: 'No se puede hablar durante el examen.' },
+
+  // ─── QUESTION WORDS (additions) ──────────────────────────────────────────────
+  { id: 'quest-009', word: '¿adónde?', translation: 'to where? / where to?', level: 'A1', example: '¿Adónde vas este verano?' },
+
+  // ─── LOCATIONS (additions) ───────────────────────────────────────────────────
+  { id: 'loc-013', word: 'la calle', translation: 'the street', level: 'A0', example: 'Vivo en la calle Mayor, número doce.' },
+
+  // ─── WEATHER (additions) ─────────────────────────────────────────────────────
+  { id: 'wea-010', word: 'la tormenta', translation: 'the storm', level: 'A2', example: 'Esta tarde hay una tormenta con lluvia y viento.' },
+
+  // ─── RELATIONSHIPS (additions) ───────────────────────────────────────────────
+  { id: 'rel-013', word: 'la sorpresa', translation: 'the surprise', level: 'A2', example: 'Le organizamos una fiesta sorpresa por su cumpleaños.' },
+
+  // ─── NUMBERS (addition) ──────────────────────────────────────────────────────
+  { id: 'num-000', word: 'cero', translation: 'zero', level: 'A0', example: 'Mi número de teléfono empieza con cero.' },
+
+  // ─── GREETINGS (additions) ───────────────────────────────────────────────────
+  { id: 'intro-019', word: '¿qué tal?', translation: "how's it going?", level: 'A0', example: '¿Qué tal? — Bien, gracias.' },
+  { id: 'intro-020', word: 'lo siento', translation: "I'm sorry", level: 'A0', example: 'Lo siento mucho, no era mi intención.' },
+  { id: 'intro-021', word: 'perdón / perdona', translation: 'excuse me / sorry', level: 'A0', example: 'Perdona, ¿sabes dónde está la estación?' },
+  { id: 'intro-022', word: 'de nada', translation: "you're welcome / not at all", level: 'A0', example: 'Gracias. — De nada.' },
+
+  // ─── PEOPLE (basic) ──────────────────────────────────────────────────────────
+  { id: 'a0-011', word: 'el hombre', translation: 'the man', level: 'A0', example: 'Ese hombre lleva un abrigo azul.' },
+  { id: 'a0-012', word: 'la mujer', translation: 'the woman', level: 'A0', example: 'La mujer del sombrero es mi profesora.' },
+  { id: 'a0-013', word: 'la persona', translation: 'the person', level: 'A0', example: 'Es una persona muy amable y trabajadora.' },
+  { id: 'a1-011', word: 'la gente', translation: 'the people', level: 'A1', example: 'Hay mucha gente en la plaza hoy.' },
+
+  // ─── HOME (additions) ────────────────────────────────────────────────────────
+  { id: 'home-035', word: 'la mesa', translation: 'the table', level: 'A0', example: 'Pon los platos en la mesa, por favor.' },
+  { id: 'home-036', word: 'la silla', translation: 'the chair', level: 'A0', example: 'Siéntate en esa silla.' },
+  { id: 'home-037', word: 'la llave', translation: 'the key', level: 'A1', example: 'He olvidado la llave de casa.' },
+
+  // ─── RESTAURANT / DINING (additions) ─────────────────────────────────────────
+  { id: 'rest-015', word: 'el plato', translation: 'the plate / dish', level: 'A1', example: 'Este plato está sucio, ¿me trae otro?' },
+  { id: 'rest-016', word: 'el vaso', translation: 'the glass', level: 'A1', example: 'Quiero un vaso de agua, por favor.' },
+  { id: 'rest-017', word: 'la botella', translation: 'the bottle', level: 'A1', example: 'Pedimos una botella de vino tinto.' },
+
+  // ─── FOOD (additions) ────────────────────────────────────────────────────────
+  { id: 'food-d30', word: 'la comida', translation: 'the meal / food', level: 'A1', example: 'La comida española es muy variada y sabrosa.' },
+  { id: 'food-d31', word: 'el desayuno', translation: 'breakfast', level: 'A1', example: 'El desayuno típico español es café con leche y tostada.' },
+  { id: 'food-d32', word: 'la cena', translation: 'dinner', level: 'A1', example: 'La cena en España es muy tarde, a las nueve o las diez.' },
+
+  // ─── DESCRIPTIONS (addition) ─────────────────────────────────────────────────
+  { id: 'desc-070', word: 'nuevo / nueva', translation: 'new', level: 'A0', example: 'Tengo un trabajo nuevo y estoy muy contento.' },
+
+  // ─── TIME UNITS ───────────────────────────────────────────────────────────────
+  { id: 'time-012', word: 'el día', translation: 'the day', level: 'A0', example: 'Hay veinticuatro horas en un día.' },
+  { id: 'time-013', word: 'la semana', translation: 'the week', level: 'A0', example: 'La semana tiene siete días.' },
+  { id: 'time-014', word: 'el mes', translation: 'the month', level: 'A0', example: 'El mes de agosto tiene treinta y un días.' },
+  { id: 'time-015', word: 'el año', translation: 'the year', level: 'A0', example: 'El año tiene doce meses.' },
+  { id: 'temp-017', word: 'la fecha', translation: 'the date', level: 'A1', example: '¿Cuál es la fecha de hoy? — Es el quince de marzo.' },
+
+  // ─── SHOPPING (addition) ─────────────────────────────────────────────────────
+  { id: 'shop-011', word: 'el precio', translation: 'the price', level: 'A1', example: '¿Cuál es el precio de este jersey?' },
+
+  // ─── PLACES (additions) ──────────────────────────────────────────────────────
+  { id: 'pl-016', word: 'la plaza', translation: 'the square / plaza', level: 'A1', example: 'Quedamos en la plaza mayor a las seis.' },
+  { id: 'pl-017', word: 'la oficina', translation: 'the office', level: 'A1', example: 'Trabajo en una oficina en el centro de la ciudad.' },
+
+  // ─── WEATHER (addition) ──────────────────────────────────────────────────────
+  { id: 'wea-011', word: 'la lluvia', translation: 'the rain', level: 'A1', example: 'La lluvia de hoy ha refrescado el ambiente.' },
+
+  // ─── COMMUNICATION ───────────────────────────────────────────────────────────
+  { id: 'a1-012', word: 'el teléfono', translation: 'the phone / telephone', level: 'A1', example: '¿Cuál es tu número de teléfono?' },
+
+  // ─── NATIONALITIES ───────────────────────────────────────────────────────────
+  { id: 'nac-001', word: 'español / española', translation: 'Spanish', level: 'A1', example: 'El flamenco es un baile español muy famoso.' },
+  { id: 'nac-002', word: 'inglés / inglesa', translation: 'English / British', level: 'A1', example: 'Mi compañero de trabajo es inglés, de Londres.' },
+  { id: 'nac-003', word: 'francés / francesa', translation: 'French', level: 'A1', example: 'La torre Eiffel es el monumento francés más conocido.' },
+  { id: 'nac-004', word: 'alemán / alemana', translation: 'German', level: 'A1', example: 'El coche alemán es famoso por su calidad.' },
+  { id: 'nac-005', word: 'italiano / italiana', translation: 'Italian', level: 'A1', example: 'La cocina italiana es deliciosa.' },
+  { id: 'nac-006', word: 'americano / americana', translation: 'American', level: 'A1', example: 'Muchas películas americanas son muy populares.' },
+  { id: 'nac-007', word: 'eslovaco / eslovaca', translation: 'Slovak', level: 'A1', example: 'Soy eslovaco, de Bratislava.' },
+  { id: 'nac-008', word: 'chino / china', translation: 'Chinese', level: 'A1', example: 'El restaurante chino del barrio está muy bueno.' },
+  { id: 'nac-009', word: 'portugués / portuguesa', translation: 'Portuguese', level: 'A1', example: 'El fado es música portuguesa muy emotiva.' },
+  { id: 'nac-010', word: 'mexicano / mexicana', translation: 'Mexican', level: 'A1', example: 'La comida mexicana es muy picante y sabrosa.' },
+
+  // ─── ORDINAL NUMBERS ─────────────────────────────────────────────────────────
+  { id: 'ord-001', word: 'primero / primera', translation: 'first', level: 'A1', example: 'Vivo en el primer piso.' },
+  { id: 'ord-002', word: 'segundo / segunda', translation: 'second', level: 'A1', example: 'El baño está en el segundo piso a la derecha.' },
+  { id: 'ord-003', word: 'tercero / tercera', translation: 'third', level: 'A1', example: 'Es la tercera vez que llamo y no contestan.' },
+  { id: 'ord-004', word: 'cuarto / cuarta', translation: 'fourth', level: 'A1', example: 'Mi oficina está en la cuarta planta.' },
+  { id: 'ord-005', word: 'quinto / quinta', translation: 'fifth', level: 'A1', example: 'Llegó el quinto en la carrera.' },
+  { id: 'ord-006', word: 'sexto / sexta', translation: 'sixth', level: 'A2', example: 'Viven en el sexto piso sin ascensor.' },
+  { id: 'ord-007', word: 'séptimo / séptima', translation: 'seventh', level: 'A2', example: 'Es la séptima vez que visito este museo.' },
+  { id: 'ord-008', word: 'octavo / octava', translation: 'eighth', level: 'A2', example: 'Terminé en octavo lugar en la competición.' },
+  { id: 'ord-009', word: 'noveno / novena', translation: 'ninth', level: 'A2', example: 'Es el noveno mes del año.' },
+  { id: 'ord-010', word: 'décimo / décima', translation: 'tenth', level: 'A2', example: 'Llegó en décima posición.' },
+  { id: 'ord-011', word: 'último / última', translation: 'last / final', level: 'A1', example: 'Es la última parada del metro.' },
+
+  // ─── CIVIC & SOCIETY ─────────────────────────────────────────────────────────
+  { id: 'soc-001', word: 'la política', translation: 'politics', level: 'A2', example: 'No me gusta hablar de política en la cena.' },
+  { id: 'soc-002', word: 'el gobierno', translation: 'the government', level: 'A2', example: 'El gobierno anuncia nuevas medidas económicas.' },
+  { id: 'soc-003', word: 'el ciudadano / la ciudadana', translation: 'the citizen', level: 'A2', example: 'Todos los ciudadanos tienen derecho a votar.' },
+  { id: 'soc-004', word: 'los derechos', translation: 'the rights', level: 'A2', example: 'Tenemos derechos y también obligaciones.' },
+  { id: 'soc-005', word: 'la libertad', translation: 'freedom / liberty', level: 'A2', example: 'La libertad de expresión es un derecho fundamental.' },
+  { id: 'soc-006', word: 'la sociedad', translation: 'society', level: 'A2', example: 'La sociedad española ha cambiado mucho en los últimos años.' },
+
+  // ─── PROFESSIONS (additions) ─────────────────────────────────────────────────
+  { id: 'work-022', word: 'el dependiente / la dependienta', translation: 'the shop assistant', level: 'A2', example: 'La dependienta me ayudó a encontrar mi talla.' },
+  { id: 'work-023', word: 'el conductor / la conductora', translation: 'the driver', level: 'A2', example: 'El conductor del autobús conoce todas las paradas.' },
+  { id: 'work-024', word: 'el policía / la policía', translation: 'the police officer', level: 'A2', example: 'El policía nos indicó cómo llegar a la estación.' },
+  { id: 'work-025', word: 'el bombero / la bombera', translation: 'the firefighter', level: 'A2', example: 'Los bomberos apagaron el incendio en veinte minutos.' },
+  { id: 'work-026', word: 'el arquitecto / la arquitecta', translation: 'the architect', level: 'A2', example: 'El arquitecto diseñó un edificio muy moderno.' },
+  { id: 'work-027', word: 'el maestro / la maestra', translation: 'the primary school teacher', level: 'A2', example: 'La maestra explica la lección con mucha paciencia.' },
+
+  // ─── CONNECTORS (additions) ───────────────────────────────────────────────────
+  { id: 'a2-098', word: 'sino', translation: 'but rather / but instead', level: 'A2', example: 'No quiero café, sino té.' },
+  { id: 'a2-099', word: 'tampoco', translation: 'neither / not either', level: 'A2', example: 'Yo no voy y ella tampoco.' },
+  { id: 'a2-100', word: 'ni ... ni', translation: 'neither ... nor', level: 'A2', example: 'No tengo ni tiempo ni dinero para eso.' },
+]

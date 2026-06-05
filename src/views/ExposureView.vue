@@ -2,13 +2,14 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSessionStore } from '../stores/session'
-import { words } from '../data/words'
+import { useLanguageStore } from '../stores/language'
 import SwipeCard from '../components/SwipeCard.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import CancelConfirm from '../components/CancelConfirm.vue'
 
 const router = useRouter()
 const session = useSessionStore()
+const lang = useLanguageStore()
 
 onMounted(() => {
   if (session.phase !== 'exposure') router.replace('/')
@@ -16,12 +17,12 @@ onMounted(() => {
 
 const currentWord = computed(() => {
   const item = session.currentExposureWord()
-  return item ? words.find(w => w.id === item.wordId) ?? null : null
+  return item ? lang.activePair.words.find(w => w.id === item.wordId) ?? null : null
 })
 
 const nextWord = computed(() => {
   const item = session.batch[session.exposureIndex + 1]
-  return item ? words.find(w => w.id === item.wordId) ?? null : null
+  return item ? lang.activePair.words.find(w => w.id === item.wordId) ?? null : null
 })
 
 const canUndo = computed(() => session.exposureIndex > 0)
