@@ -33,6 +33,25 @@ Words live in [`src/data/words.ts`](src/data/words.ts) as a plain TypeScript arr
 
 `example` is a Spanish sentence using the word.
 
+## Icons
+
+Word icons are sourced from [Thiings](https://www.thiings.co/) under their non-commercial license. Icons are stored locally in `public/icons/` and referenced in `src/data/icons.ts`. Icons are 256×256 PNG. When adding new words that need icons:
+
+1. Browse and download the icon PNG from [thiings.co](https://www.thiings.co/)
+2. Resize to 256×256 using `sips` (built-in on macOS):
+   ```bash
+   sips -z 256 256 icon.png --out public/icons/<word-id>.png
+   ```
+3. Add the entry to `src/data/icons.ts`: `'<word-id>': \`${base}icons/<word-id>.png\``
+
+`scripts/download-icons.sh` automates fetching and resizing by slug name — see the script for the mapping pattern.
+
+Always download icons locally — never reference thiings.co URLs directly.
+
 ## Deploy
 
 Pushes to `main` deploy automatically to GitHub Pages via the workflow in `.github/workflows/deploy.yml`. Enable Pages under **Settings → Pages → Source → GitHub Actions** on first use.
+
+## Credits
+
+- Icons: [Thiings](https://www.thiings.co/) (non-commercial license)
