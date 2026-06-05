@@ -8,6 +8,11 @@ export interface Word {
   example: string
 }
 
+// When adding new words, icons must also be added manually:
+// 1. Download icon PNG from https://www.thiings.co/
+// 2. Resize: sips -z 256 256 icon.png --out public/icons/<word-id>.png
+// 3. Add entry to src/data/icons.ts: '<word-id>': `${base}icons/<word-id>.png`
+// See scripts/download-icons.sh for automated fetching by slug name.
 export const words: Word[] = [
 
   // ─── BASICS ──────────────────────────────────────────────────────────────────
@@ -768,4 +773,212 @@ export const words: Word[] = [
   { id: 'desc-048', spanish: 'emocionante', english: 'exciting / thrilling', level: 'A2', example: 'El partido de ayer fue muy emocionante.' },
   { id: 'desc-049', spanish: 'agradable', english: 'pleasant / nice', level: 'A2', example: 'Fue una tarde muy agradable con los amigos.' },
   { id: 'desc-050', spanish: 'extraño / extraña', english: 'strange / odd', level: 'A2', example: 'Qué extraño, no hay nadie en casa.' },
+
+  // ─── SEASONS ─────────────────────────────────────────────────────────────────
+  { id: 'seas-001', spanish: 'la primavera', english: 'spring', level: 'A1', example: 'En primavera florecen los árboles y hace buen tiempo.' },
+  { id: 'seas-002', spanish: 'el verano', english: 'summer', level: 'A1', example: 'En verano hace mucho calor y vamos a la playa.' },
+  { id: 'seas-003', spanish: 'el otoño', english: 'autumn / fall', level: 'A1', example: 'En otoño las hojas de los árboles caen y hace fresco.' },
+  { id: 'seas-004', spanish: 'el invierno', english: 'winter', level: 'A1', example: 'En invierno hace frío y a veces nieva.' },
+
+  // ─── GEOGRAPHY ───────────────────────────────────────────────────────────────
+  { id: 'geo-001', spanish: 'el pueblo', english: 'the village / small town', level: 'A1', example: 'Mi abuela vive en un pueblo pequeño cerca del mar.' },
+  { id: 'geo-002', spanish: 'el país', english: 'the country', level: 'A1', example: 'España es un país con mucha historia y cultura.' },
+  { id: 'geo-003', spanish: 'el continente', english: 'the continent', level: 'A2', example: 'Europa es un continente con muchos países diferentes.' },
+
+  // ─── COMPARATIVES ────────────────────────────────────────────────────────────
+  { id: 'comp-001', spanish: 'mejor', english: 'better / best', level: 'A2', example: 'Este restaurante es mejor que el de antes.' },
+  { id: 'comp-002', spanish: 'peor', english: 'worse / worst', level: 'A2', example: 'Hoy el tiempo está peor que ayer.' },
+  { id: 'comp-003', spanish: 'mayor', english: 'older / bigger / greater', level: 'A2', example: 'Mi hermano mayor tiene treinta años.' },
+  { id: 'comp-004', spanish: 'menor', english: 'younger / smaller / lesser', level: 'A2', example: 'Mi hermana menor estudia en el instituto.' },
+  { id: 'comp-005', spanish: 'más ... que', english: 'more ... than', level: 'A2', example: 'El tren es más rápido que el autobús.' },
+  { id: 'comp-006', spanish: 'menos ... que', english: 'less ... than', level: 'A2', example: 'Este piso es menos caro que el otro.' },
+  { id: 'comp-007', spanish: 'tan ... como', english: 'as ... as', level: 'A2', example: 'Este libro es tan interesante como el anterior.' },
+
+  // ─── DOCUMENTS & ADMIN ───────────────────────────────────────────────────────
+  { id: 'doc-001', spanish: 'el D.N.I.', english: 'national identity card', level: 'A2', example: 'Necesitas el D.N.I. para abrir una cuenta bancaria.' },
+  { id: 'doc-002', spanish: 'el carné', english: 'ID card / permit / licence', level: 'A2', example: '¿Tienes carné de conducir?' },
+  { id: 'doc-003', spanish: 'la fecha de caducidad', english: 'the expiry date', level: 'A2', example: 'Comprueba la fecha de caducidad antes de comer.' },
+  { id: 'doc-004', spanish: 'el abono', english: 'the season ticket / subscription', level: 'A2', example: 'Compré un abono mensual para el metro.' },
+
+  // ─── GREETINGS (additions) ───────────────────────────────────────────────────
+  { id: 'intro-011', spanish: 'buenos días', english: 'good morning', level: 'A0', example: 'Buenos días, ¿cómo estás?' },
+  { id: 'intro-012', spanish: 'buenas tardes', english: 'good afternoon / evening', level: 'A0', example: 'Buenas tardes, ¿en qué le puedo ayudar?' },
+  { id: 'intro-013', spanish: 'buenas noches', english: 'good night', level: 'A0', example: 'Buenas noches, que descanses.' },
+  { id: 'intro-014', spanish: '¿cómo estás?', english: 'how are you?', level: 'A0', example: '¿Cómo estás? — Muy bien, gracias.' },
+  { id: 'intro-015', spanish: 'muy bien, gracias', english: 'very well, thank you', level: 'A0', example: '¿Qué tal? — Muy bien, gracias, ¿y tú?' },
+  { id: 'intro-016', spanish: '¡que aproveche!', english: 'enjoy your meal!', level: 'A1', example: '¡Que aproveche! La paella está riquísima.' },
+  { id: 'intro-017', spanish: '¡buena suerte!', english: 'good luck!', level: 'A1', example: '¡Buena suerte en el examen!' },
+  { id: 'intro-018', spanish: '¡claro que sí!', english: 'of course!', level: 'A1', example: '¿Puedes ayudarme? — ¡Claro que sí!' },
+
+  // ─── DAILY ROUTINE (additions) ───────────────────────────────────────────────
+  { id: 'day-011', spanish: 'despertarse', english: 'to wake up', level: 'A1', example: 'Me despierto a las siete sin despertador.' },
+  { id: 'day-012', spanish: 'bañarse', english: 'to have a bath / to bathe', level: 'A1', example: 'Me baño cada noche antes de dormir.' },
+  { id: 'day-013', spanish: 'afeitarse', english: 'to shave', level: 'A1', example: 'Mi padre se afeita todas las mañanas.' },
+  { id: 'day-014', spanish: 'maquillarse', english: 'to put on make-up', level: 'A1', example: 'Ella se maquilla antes de salir de casa.' },
+  { id: 'day-015', spanish: 'peinarse', english: "to comb / do one's hair", level: 'A1', example: 'Después de ducharme me peino delante del espejo.' },
+  { id: 'day-016', spanish: 'lavarse los dientes', english: "to brush one's teeth", level: 'A1', example: 'Me lavo los dientes tres veces al día.' },
+  { id: 'day-017', spanish: 'almorzar', english: 'to have lunch', level: 'A1', example: 'Almuerzo con mis compañeros a las dos.' },
+  { id: 'day-018', spanish: 'merendar', english: 'to have an afternoon snack', level: 'A1', example: 'Los niños meriendan fruta o bocadillo al salir del colegio.' },
+
+  // ─── VERBS (additions) ───────────────────────────────────────────────────────
+  { id: 'verb-016', spanish: 'bailar', english: 'to dance', level: 'A1', example: 'Me encanta bailar salsa en las fiestas.' },
+  { id: 'verb-017', spanish: 'cantar', english: 'to sing', level: 'A1', example: 'Canta muy bien, debería ser cantante.' },
+  { id: 'verb-018', spanish: 'tocar', english: 'to play (an instrument) / to touch', level: 'A1', example: 'Toco la guitarra desde los diez años.' },
+  { id: 'verb-019', spanish: 'dibujar', english: 'to draw', level: 'A1', example: 'Le gusta dibujar paisajes en su cuaderno.' },
+  { id: 'verb-020', spanish: 'estudiar', english: 'to study', level: 'A1', example: 'Estudio español tres veces a la semana.' },
+  { id: 'verb-021', spanish: 'comprar', english: 'to buy', level: 'A1', example: 'Voy a comprar fruta en el mercado.' },
+  { id: 'verb-022', spanish: 'responder', english: 'to respond / to answer', level: 'A1', example: 'Por favor, responde a las preguntas del ejercicio.' },
+  { id: 'verb-023', spanish: 'pasear', english: 'to go for a walk / to stroll', level: 'A1', example: 'Paseamos por el parque después de comer.' },
+
+  // ─── ESSENTIAL VERBS (additions) ─────────────────────────────────────────────
+  { id: 'ev-021', spanish: 'soñar', english: 'to dream', level: 'A2', example: 'Sueño con viajar por todo el mundo.' },
+  { id: 'ev-022', spanish: 'nacer', english: 'to be born', level: 'A2', example: 'Nació en Madrid pero vive en Barcelona.' },
+  { id: 'ev-023', spanish: 'volar', english: 'to fly', level: 'A1', example: 'El avión vuela a diez mil metros de altura.' },
+  { id: 'ev-024', spanish: 'contar', english: 'to tell / to count', level: 'A2', example: 'Mi abuelo siempre me cuenta historias de cuando era joven.' },
+  { id: 'ev-025', spanish: 'entender', english: 'to understand', level: 'A1', example: 'No entiendo esta palabra. ¿Me la explicas?' },
+  { id: 'ev-026', spanish: 'mentir', english: 'to lie', level: 'A2', example: 'No me gusta mentir, prefiero decir la verdad.' },
+  { id: 'ev-027', spanish: 'amar', english: 'to love', level: 'A2', example: 'La quiero mucho — la amo, de hecho.' },
+  { id: 'ev-028', spanish: 'odiar', english: 'to hate', level: 'A2', example: 'Odio levantarme temprano los lunes.' },
+  { id: 'ev-029', spanish: 'coger', english: 'to take / to grab / to catch', level: 'A2', example: 'Coge el autobús número cinco hasta la plaza.' },
+
+  // ─── A2 VERBS (additions) ────────────────────────────────────────────────────
+  { id: 'a2-095', spanish: 'votar', english: 'to vote', level: 'A2', example: 'En las elecciones todos deben votar.' },
+  { id: 'a2-096', spanish: 'morder', english: 'to bite', level: 'A2', example: 'Cuidado, el perro muerde si lo asustas.' },
+  { id: 'a2-097', spanish: 'vender', english: 'to sell', level: 'A2', example: 'Vende coches de segunda mano en su empresa.' },
+
+  // ─── ANIMALS (additions) ─────────────────────────────────────────────────────
+  { id: 'anim-007', spanish: 'la oveja', english: 'the sheep', level: 'A1', example: 'Las ovejas dan lana para hacer jerseis.' },
+  { id: 'anim-008', spanish: 'la serpiente', english: 'the snake', level: 'A1', example: 'Hay serpientes en la selva tropical.' },
+  { id: 'anim-009', spanish: 'el caracol', english: 'the snail', level: 'A2', example: 'El caracol camina muy lento por el jardín.' },
+  { id: 'anim-010', spanish: 'la tortuga', english: 'the tortoise / turtle', level: 'A1', example: 'La tortuga vive muchos años.' },
+  { id: 'anim-011', spanish: 'el erizo', english: 'the hedgehog', level: 'A2', example: 'El erizo se enrolla cuando tiene miedo.' },
+  { id: 'anim-012', spanish: 'el mono', english: 'the monkey', level: 'A2', example: 'Los monos viven en la selva y trepan a los árboles.' },
+  { id: 'anim-013', spanish: 'el elefante', english: 'the elephant', level: 'A2', example: 'El elefante es el animal terrestre más grande.' },
+
+  // ─── DESCRIPTIONS (additions) ────────────────────────────────────────────────
+  { id: 'desc-051', spanish: 'lento / lenta', english: 'slow', level: 'A1', example: 'El caracol es un animal muy lento.' },
+  { id: 'desc-052', spanish: 'rápido / rápida', english: 'fast / quick', level: 'A1', example: 'El guepardo es el animal más rápido del mundo.' },
+  { id: 'desc-053', spanish: 'rico / rica', english: 'rich / tasty', level: 'A2', example: 'Es muy rico, tiene tres casas y varios coches.' },
+  { id: 'desc-054', spanish: 'pobre', english: 'poor', level: 'A2', example: 'No tiene dinero, es bastante pobre.' },
+  { id: 'desc-055', spanish: 'guapo / guapa', english: 'handsome / pretty', level: 'A1', example: 'Es muy guapo, todas le miran cuando entra.' },
+  { id: 'desc-056', spanish: 'feo / fea', english: 'ugly', level: 'A1', example: 'No es feo, pero tampoco es guapo.' },
+  { id: 'desc-057', spanish: 'bonito / bonita', english: 'pretty / lovely', level: 'A1', example: '¡Qué bonita falda! ¿Dónde la compraste?' },
+  { id: 'desc-058', spanish: 'sano / sana', english: 'healthy', level: 'A2', example: 'Comer frutas y verduras es muy sano.' },
+  { id: 'desc-059', spanish: 'débil', english: 'weak', level: 'A2', example: 'Después de la enfermedad se siente muy débil.' },
+  { id: 'desc-060', spanish: 'tímido / tímida', english: 'shy', level: 'A2', example: 'Es muy tímida y no le gusta hablar en público.' },
+  { id: 'desc-061', spanish: 'sencillo / sencilla', english: 'simple / plain', level: 'A2', example: 'Lleva ropa sencilla pero elegante.' },
+  { id: 'desc-062', spanish: 'estrecho / estrecha', english: 'narrow', level: 'A2', example: 'Las calles del casco antiguo son muy estrechas.' },
+  { id: 'desc-063', spanish: 'ancho / ancha', english: 'wide / broad', level: 'A2', example: 'La avenida principal es muy ancha.' },
+  { id: 'desc-064', spanish: 'claro / clara', english: 'light / bright / clear', level: 'A1', example: 'El salón es muy claro porque tiene muchas ventanas.' },
+  { id: 'desc-065', spanish: 'oscuro / oscura', english: 'dark', level: 'A1', example: 'El dormitorio está oscuro, enciende la luz.' },
+  { id: 'desc-066', spanish: 'caliente', english: 'hot', level: 'A1', example: 'Ten cuidado, la sopa está muy caliente.' },
+  { id: 'desc-067', spanish: 'mismo / misma', english: 'same', level: 'A2', example: 'Vivimos en el mismo barrio.' },
+  { id: 'desc-068', spanish: 'verdadero / verdadera', english: 'true / real / genuine', level: 'A2', example: 'Es un verdadero amigo, siempre está cuando lo necesitas.' },
+  { id: 'desc-069', spanish: 'demasiado / demasiada', english: 'too much / too many', level: 'A2', example: 'Hay demasiado ruido aquí, no puedo concentrarme.' },
+
+  // ─── FOOD (additions) ────────────────────────────────────────────────────────
+  { id: 'food-v09', spanish: 'el aguacate', english: 'avocado', level: 'A2', example: 'Preparo guacamole con aguacate, limón y sal.' },
+  { id: 'food-d23', spanish: 'la mantequilla', english: 'butter', level: 'A1', example: 'Unto la tostada con mantequilla y mermelada.' },
+  { id: 'food-d24', spanish: 'la tostada', english: 'toast', level: 'A1', example: 'Desayuno una tostada con aceite de oliva.' },
+  { id: 'food-d25', spanish: 'la mermelada', english: 'jam', level: 'A1', example: 'Me gusta la mermelada de fresa para desayunar.' },
+  { id: 'food-d26', spanish: 'la merienda', english: 'afternoon snack', level: 'A1', example: 'La merienda de los niños es un bocadillo o fruta.' },
+  { id: 'food-d27', spanish: 'el almuerzo', english: 'lunch', level: 'A1', example: 'El almuerzo es la comida principal del día en España.' },
+  { id: 'food-d28', spanish: 'el hielo', english: 'ice', level: 'A1', example: '¿Quieres el refresco con o sin hielo?' },
+  { id: 'food-d29', spanish: 'el chocolate', english: 'chocolate', level: 'A0', example: 'Me encanta el chocolate negro con el café.' },
+
+  // ─── HOME (additions) ────────────────────────────────────────────────────────
+  { id: 'home-028', spanish: 'el armario', english: 'the wardrobe / cupboard', level: 'A1', example: 'Guardo la ropa en el armario del dormitorio.' },
+  { id: 'home-029', spanish: 'la alfombra', english: 'the rug / carpet', level: 'A1', example: 'Tenemos una alfombra grande en el salón.' },
+  { id: 'home-030', spanish: 'la papelera', english: 'the waste bin / wastebasket', level: 'A1', example: 'Tira los papeles en la papelera.' },
+  { id: 'home-031', spanish: 'el colchón', english: 'the mattress', level: 'A2', example: 'Necesito un colchón nuevo, el mío es muy viejo.' },
+  { id: 'home-032', spanish: 'el suelo', english: 'the floor / ground', level: 'A1', example: 'El suelo de la cocina es de baldosas.' },
+  { id: 'home-033', spanish: 'el comedor', english: 'the dining room', level: 'A1', example: 'Comemos juntos en el comedor todos los días.' },
+  { id: 'home-034', spanish: 'el pasillo', english: 'the hallway / corridor', level: 'A1', example: 'El baño está al final del pasillo.' },
+
+  // ─── CLOTHING (additions) ────────────────────────────────────────────────────
+  { id: 'cloth-017', spanish: 'el bolso', english: 'the handbag / purse', level: 'A1', example: 'Lleva el móvil y las llaves en el bolso.' },
+  { id: 'cloth-018', spanish: 'el traje', english: 'the suit / costume', level: 'A1', example: 'Lleva un traje gris para la entrevista de trabajo.' },
+  { id: 'cloth-019', spanish: 'los pantalones vaqueros', english: 'jeans', level: 'A1', example: 'Lleva unos pantalones vaqueros y una camiseta.' },
+  { id: 'cloth-020', spanish: 'las botas', english: 'the boots', level: 'A1', example: 'En invierno llevo botas de cuero.' },
+  { id: 'cloth-021', spanish: 'la bufanda', english: 'the scarf', level: 'A1', example: 'No olvides la bufanda, hace frío.' },
+  { id: 'cloth-022', spanish: 'el pijama', english: 'the pyjamas', level: 'A1', example: 'Me pongo el pijama antes de acostarme.' },
+
+  // ─── TRANSPORT (additions) ───────────────────────────────────────────────────
+  { id: 'trans-011', spanish: 'el tranvía', english: 'the tram', level: 'A1', example: 'El tranvía pasa cada cinco minutos por esta parada.' },
+  { id: 'trans-012', spanish: 'la carretera', english: 'the road', level: 'A2', example: 'La carretera está cortada por obras.' },
+  { id: 'trans-013', spanish: 'la autopista', english: 'the motorway / highway', level: 'A2', example: 'Vamos por la autopista para llegar más rápido.' },
+  { id: 'trans-014', spanish: 'solo ida', english: 'one-way (ticket)', level: 'A2', example: 'Un billete de solo ida a Valencia, por favor.' },
+  { id: 'trans-015', spanish: 'ida y vuelta', english: 'return (ticket)', level: 'A2', example: '¿Quieres el billete de ida y vuelta o solo ida?' },
+  { id: 'trans-016', spanish: 'a pie', english: 'on foot', level: 'A1', example: 'La estación está cerca, puedes ir a pie.' },
+  { id: 'trans-017', spanish: 'el coche', english: 'the car', level: 'A0', example: 'Voy al trabajo en coche todos los días.' },
+  { id: 'trans-018', spanish: 'la moto', english: 'the motorbike', level: 'A1', example: 'Va al trabajo en moto para evitar los atascos.' },
+
+  // ─── BODY PARTS (additions) ──────────────────────────────────────────────────
+  { id: 'body-015', spanish: 'el dedo', english: 'the finger / toe', level: 'A1', example: 'Me he cortado el dedo con el cuchillo.' },
+  { id: 'body-016', spanish: 'los dientes', english: 'the teeth', level: 'A1', example: 'Hay que lavarse los dientes después de cada comida.' },
+  { id: 'body-017', spanish: 'la rodilla', english: 'the knee', level: 'A1', example: 'Me duele la rodilla después de correr.' },
+  { id: 'body-018', spanish: 'el hombro', english: 'the shoulder', level: 'A1', example: 'Tengo dolor de hombro por cargar la mochila.' },
+
+  // ─── WORK (additions) ────────────────────────────────────────────────────────
+  { id: 'work-017', spanish: 'el abogado / la abogada', english: 'the lawyer', level: 'A2', example: 'Necesito un abogado para revisar el contrato.' },
+  { id: 'work-019', spanish: 'el periodista / la periodista', english: 'the journalist', level: 'A2', example: 'La periodista hace una entrevista al alcalde.' },
+  { id: 'work-020', spanish: 'el enfermero / la enfermera', english: 'the nurse', level: 'A2', example: 'La enfermera me puso la vacuna.' },
+  { id: 'work-021', spanish: 'el cocinero / la cocinera', english: 'the cook / chef', level: 'A2', example: 'El cocinero prepara platos típicos de la región.' },
+
+  // ─── FAMILY (additions) ──────────────────────────────────────────────────────
+  { id: 'fam-016', spanish: 'el marido', english: 'the husband', level: 'A1', example: 'Su marido trabaja en una empresa de tecnología.' },
+  { id: 'fam-017', spanish: 'los sobrinos', english: 'the nephews and nieces', level: 'A2', example: 'Tengo tres sobrinos y una sobrina.' },
+  { id: 'fam-018', spanish: 'el bebé', english: 'the baby', level: 'A0', example: 'El bebé duerme toda la noche.' },
+
+  // ─── FREQUENCY (additions) ───────────────────────────────────────────────────
+  { id: 'freq-007', spanish: 'una vez', english: 'once', level: 'A1', example: 'Voy al cine una vez a la semana.' },
+  { id: 'freq-008', spanish: 'dos veces', english: 'twice', level: 'A1', example: 'Me ducho dos veces al día en verano.' },
+  { id: 'freq-009', spanish: 'muchas veces', english: 'many times / often', level: 'A1', example: 'He visto esa película muchas veces.' },
+  { id: 'freq-010', spanish: 'todos los días', english: 'every day', level: 'A1', example: 'Leo el periódico todos los días.' },
+  { id: 'freq-011', spanish: 'cada semana', english: 'every week', level: 'A1', example: 'Llamo a mis padres cada semana.' },
+
+  // ─── NATURE (additions) ──────────────────────────────────────────────────────
+  { id: 'nat-013', spanish: 'el sol', english: 'the sun', level: 'A0', example: 'El sol sale por el este y se pone por el oeste.' },
+  { id: 'nat-014', spanish: 'la luna', english: 'the moon', level: 'A1', example: 'La luna llena ilumina la noche.' },
+  { id: 'nat-015', spanish: 'la flor', english: 'the flower', level: 'A1', example: 'Las flores del jardín huelen muy bien en primavera.' },
+  { id: 'nat-016', spanish: 'el árbol', english: 'the tree', level: 'A0', example: 'Hay un árbol muy alto delante de mi casa.' },
+  { id: 'nat-017', spanish: 'la selva', english: 'the jungle / rainforest', level: 'A2', example: 'La selva amazónica es el pulmón del planeta.' },
+  { id: 'nat-018', spanish: 'el cielo', english: 'the sky', level: 'A0', example: 'El cielo está muy azul hoy, no hay nubes.' },
+
+  // ─── HEALTH (additions) ──────────────────────────────────────────────────────
+  { id: 'health-020', spanish: 'la salud', english: 'health', level: 'A1', example: 'La salud es lo más importante en la vida.' },
+
+  // ─── EMOTIONS (additions) ────────────────────────────────────────────────────
+  { id: 'emo-011', spanish: 'orgulloso / orgullosa', english: 'proud', level: 'A2', example: 'Estoy muy orgullosa de mi hija.' },
+  { id: 'emo-012', spanish: 'avergonzado / avergonzada', english: 'ashamed / embarrassed', level: 'A2', example: 'Estoy avergonzado de lo que dije ayer.' },
+
+  // ─── CLASSROOM (additions) ───────────────────────────────────────────────────
+  { id: 'class-011', spanish: 'la letra', english: 'the letter (of the alphabet)', level: 'A1', example: 'El español tiene veintisiete letras.' },
+  { id: 'class-012', spanish: 'la palabra', english: 'the word', level: 'A1', example: 'Aprendo diez palabras nuevas cada día.' },
+  { id: 'class-013', spanish: 'la frase', english: 'the sentence / phrase', level: 'A1', example: 'Escribe una frase con cada palabra nueva.' },
+  { id: 'class-014', spanish: 'los deberes', english: 'the homework', level: 'A1', example: 'Tengo muchos deberes esta tarde.' },
+  { id: 'class-015', spanish: 'el compañero / la compañera de clase', english: 'the classmate', level: 'A1', example: 'Mi compañera de clase me ayuda con los ejercicios.' },
+
+  // ─── PLACES (additions) ──────────────────────────────────────────────────────
+  { id: 'pl-013', spanish: 'la biblioteca', english: 'the library', level: 'A1', example: 'Voy a la biblioteca a estudiar en silencio.' },
+  { id: 'pl-014', spanish: 'el restaurante', english: 'the restaurant', level: 'A1', example: 'Quedamos para cenar en un restaurante italiano.' },
+  { id: 'pl-015', spanish: 'la piscina', english: 'the swimming pool', level: 'A1', example: 'Voy a la piscina a nadar tres veces por semana.' },
+
+  // ─── TEMPORAL EXPRESSIONS (additions) ────────────────────────────────────────
+  { id: 'temp-013', spanish: 'pronto', english: 'soon', level: 'A1', example: 'El médico te verá pronto, espera aquí.' },
+  { id: 'temp-014', spanish: 'enseguida', english: 'right away / immediately', level: 'A1', example: 'El camarero viene enseguida con tu pedido.' },
+  { id: 'temp-015', spanish: 'un rato', english: 'a while / a moment', level: 'A1', example: 'Espera un rato, ahora te atiendo.' },
+  { id: 'temp-016', spanish: 'durante', english: 'during', level: 'A2', example: 'No se puede hablar durante el examen.' },
+
+  // ─── QUESTION WORDS (additions) ──────────────────────────────────────────────
+  { id: 'quest-009', spanish: '¿adónde?', english: 'to where? / where to?', level: 'A1', example: '¿Adónde vas este verano?' },
+
+  // ─── LOCATIONS (additions) ───────────────────────────────────────────────────
+  { id: 'loc-013', spanish: 'la calle', english: 'the street', level: 'A0', example: 'Vivo en la calle Mayor, número doce.' },
+
+  // ─── WEATHER (additions) ─────────────────────────────────────────────────────
+  { id: 'wea-010', spanish: 'la tormenta', english: 'the storm', level: 'A2', example: 'Esta tarde hay una tormenta con lluvia y viento.' },
+
+  // ─── RELATIONSHIPS (additions) ───────────────────────────────────────────────
+  { id: 'rel-013', spanish: 'la sorpresa', english: 'the surprise', level: 'A2', example: 'Le organizamos una fiesta sorpresa por su cumpleaños.' },
 ]
