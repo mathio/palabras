@@ -1046,4 +1046,38 @@ export const words: Word[] = [
   { id: 'nac-008', spanish: 'chino / china', english: 'Chinese', level: 'A1', example: 'El restaurante chino del barrio está muy bueno.' },
   { id: 'nac-009', spanish: 'portugués / portuguesa', english: 'Portuguese', level: 'A1', example: 'El fado es música portuguesa muy emotiva.' },
   { id: 'nac-010', spanish: 'mexicano / mexicana', english: 'Mexican', level: 'A1', example: 'La comida mexicana es muy picante y sabrosa.' },
+
+  // ─── ORDINAL NUMBERS ─────────────────────────────────────────────────────────
+  { id: 'ord-001', spanish: 'primero / primera', english: 'first', level: 'A1', example: 'Vivo en el primer piso.' },
+  { id: 'ord-002', spanish: 'segundo / segunda', english: 'second', level: 'A1', example: 'El baño está en el segundo piso a la derecha.' },
+  { id: 'ord-003', spanish: 'tercero / tercera', english: 'third', level: 'A1', example: 'Es la tercera vez que llamo y no contestan.' },
+  { id: 'ord-004', spanish: 'cuarto / cuarta', english: 'fourth', level: 'A1', example: 'Mi oficina está en la cuarta planta.' },
+  { id: 'ord-005', spanish: 'quinto / quinta', english: 'fifth', level: 'A1', example: 'Llegó el quinto en la carrera.' },
+  { id: 'ord-006', spanish: 'sexto / sexta', english: 'sixth', level: 'A2', example: 'Viven en el sexto piso sin ascensor.' },
+  { id: 'ord-007', spanish: 'séptimo / séptima', english: 'seventh', level: 'A2', example: 'Es la séptima vez que visito este museo.' },
+  { id: 'ord-008', spanish: 'octavo / octava', english: 'eighth', level: 'A2', example: 'Terminé en octavo lugar en la competición.' },
+  { id: 'ord-009', spanish: 'noveno / novena', english: 'ninth', level: 'A2', example: 'Es el noveno mes del año.' },
+  { id: 'ord-010', spanish: 'décimo / décima', english: 'tenth', level: 'A2', example: 'Llegó en décima posición.' },
+  { id: 'ord-011', spanish: 'último / última', english: 'last / final', level: 'A1', example: 'Es la última parada del metro.' },
+
+  // ─── CIVIC & SOCIETY ─────────────────────────────────────────────────────────
+  { id: 'soc-001', spanish: 'la política', english: 'politics', level: 'A2', example: 'No me gusta hablar de política en la cena.' },
+  { id: 'soc-002', spanish: 'el gobierno', english: 'the government', level: 'A2', example: 'El gobierno anuncia nuevas medidas económicas.' },
+  { id: 'soc-003', spanish: 'el ciudadano / la ciudadana', english: 'the citizen', level: 'A2', example: 'Todos los ciudadanos tienen derecho a votar.' },
+  { id: 'soc-004', spanish: 'los derechos', english: 'the rights', level: 'A2', example: 'Tenemos derechos y también obligaciones.' },
+  { id: 'soc-005', spanish: 'la libertad', english: 'freedom / liberty', level: 'A2', example: 'La libertad de expresión es un derecho fundamental.' },
+  { id: 'soc-006', spanish: 'la sociedad', english: 'society', level: 'A2', example: 'La sociedad española ha cambiado mucho en los últimos años.' },
+
+  // ─── PROFESSIONS (additions) ─────────────────────────────────────────────────
+  { id: 'work-022', spanish: 'el dependiente / la dependienta', english: 'the shop assistant', level: 'A2', example: 'La dependienta me ayudó a encontrar mi talla.' },
+  { id: 'work-023', spanish: 'el conductor / la conductora', english: 'the driver', level: 'A2', example: 'El conductor del autobús conoce todas las paradas.' },
+  { id: 'work-024', spanish: 'el policía / la policía', english: 'the police officer', level: 'A2', example: 'El policía nos indicó cómo llegar a la estación.' },
+  { id: 'work-025', spanish: 'el bombero / la bombera', english: 'the firefighter', level: 'A2', example: 'Los bomberos apagaron el incendio en veinte minutos.' },
+  { id: 'work-026', spanish: 'el arquitecto / la arquitecta', english: 'the architect', level: 'A2', example: 'El arquitecto diseñó un edificio muy moderno.' },
+  { id: 'work-027', spanish: 'el maestro / la maestra', english: 'the primary school teacher', level: 'A2', example: 'La maestra explica la lección con mucha paciencia.' },
+
+  // ─── CONNECTORS (additions) ───────────────────────────────────────────────────
+  { id: 'a2-098', spanish: 'sino', english: 'but rather / but instead', level: 'A2', example: 'No quiero café, sino té.' },
+  { id: 'a2-099', spanish: 'tampoco', english: 'neither / not either', level: 'A2', example: 'Yo no voy y ella tampoco.' },
+  { id: 'a2-100', spanish: 'ni ... ni', english: 'neither ... nor', level: 'A2', example: 'No tengo ni tiempo ni dinero para eso.' },
 ]
