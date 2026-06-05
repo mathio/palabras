@@ -29,8 +29,6 @@ interface Word {
 }
 ```
 
-Words to be populated later. Seed with ~30 placeholder words across levels to develop against.
-
 ---
 
 ## Data model (localStorage)
@@ -126,6 +124,7 @@ Home screen
 src/
   data/
     words.ts                  # static word list
+    icons.ts                  # word icon map (thiings.co PNGs)
   stores/
     progress.ts               # Pinia: SRS state, localStorage persistence
     session.ts                # Pinia: current session state
@@ -161,75 +160,81 @@ Use `pointer events` directly — no library needed:
 ## Build phases
 
 ### Phase 1 — scaffold + data
-
-- [ ] Vite + Vue 3 + TypeScript project setup
-- [ ] Pinia, Vue Router installed
-- [ ] `words.ts` with ~30 seed words (A0/A1/A2)
-- [ ] Progress store with localStorage persistence
-- [ ] Session store
+- [x] Vite + Vue 3 + TypeScript project setup
+- [x] Pinia, Vue Router installed
+- [x] `words.ts` with seed words (A0/A1/A2)
+- [x] Progress store with localStorage persistence
+- [x] Session store
 
 ### Phase 2 — exposure pass
-
-- [ ] `SwipeCard.vue` with gesture handling
-- [ ] `ExposureView.vue` — card stack, records know/don't-know flags
-- [ ] Progress bar component
+- [x] `SwipeCard.vue` with gesture handling
+- [x] `ExposureView.vue` — card stack, records know/don't-know flags
+- [x] Progress bar component
 
 ### Phase 3 — quiz pass
-
-- [ ] Distractor selection logic (same-level words, no duplicates)
-- [ ] `QuizCard.vue` — tap to answer, immediate feedback
-- [ ] `QuizView.vue` — iterates through all batch words
+- [x] Distractor selection logic (same-level words, no duplicates)
+- [x] `QuizCard.vue` — tap to answer, immediate feedback
+- [x] `QuizView.vue` — iterates through all batch words
 
 ### Phase 4 — results + SRS
-
-- [ ] `ResultsView.vue`
-- [ ] SRS update logic on session complete
-- [ ] Daily batch selection logic
-- [ ] `HomeView.vue` — shows today's word count, start button
+- [x] `ResultsView.vue`
+- [x] SRS update logic on session complete
+- [x] Daily batch selection logic
+- [x] `HomeView.vue` — shows today's word count, start button
 
 ### Phase 5 — polish
-
 - [x] Smooth swipe animations (spring-like snap-back)
 - [x] Transition animations between views
 - [x] Mobile viewport fixes (safe area, no scroll bounce)
 - [x] Empty state (all words learned, nothing due today)
+- [x] iOS PWA cancel button fix, prevent pinch-zoom
 
 ---
 
 ## Shipped (post-plan)
 
-- 50/50 ES→EN and EN→ES quiz directions
-- Category-aware distractor selection (numbers vs numbers, days vs days, etc.)
-- Unlimited sessions per day (batch fills from soonest-due words)
-- 460+ words across 25 topics, audited against DELE A1/A2 reference lists
-- GitHub Actions deploy to GitHub Pages
-- Completed batch counter (localStorage)
+- [x] 50/50 ES→EN and EN→ES quiz directions
+- [x] Category-aware distractor selection (numbers vs numbers, days vs days, etc.)
+- [x] Unlimited sessions per day (batch fills from soonest-due words)
+- [x] **868 words** across 35+ topic categories, cross-referenced against DELE A0/A1/A2 reference lists
+- [x] GitHub Actions deploy to GitHub Pages
+- [x] Completed batch counter (localStorage)
+- [x] Word icons from thiings.co — every word has an illustrated icon (256×256 PNG)
+- [x] `scripts/download-icons.sh` — automated icon fetching and resizing tool
+- [x] Seasons, geography, comparatives, documents, nationalities, ordinals, civic/society categories
+- [x] Daily routine reflexive verbs, professions, greetings, time units, basic people words
+- [x] `words.ts` comment documenting icon-add workflow for future contributors
 
 ---
 
 ## Next steps
 
 ### High impact — learning quality
-- **Audio pronunciation** — tap word to hear it via Web Speech API (no backend needed). Essential for a language app.
-- **PWA / installable** — add `manifest.json` + service worker so the app installs to home screen. Already works offline-capable.
-- **Smarter SRS** — replace 2^streak with SM-2 algorithm (Anki's algorithm). Adds ease factor per word; resurfaces at more optimal intervals.
-- **Contextual quiz** — show a sentence with one word blanked, pick the missing word. Tests understanding in context, not just isolation.
-- **Typing mode for A2** — once a word has been seen N times, switch from multiple choice to free-text input. Much stronger retention.
+- **Audio pronunciation** — tap word to hear it via Web Speech API (no backend needed). Essential for a language app. Especially valuable now the word set covers conversational phrases.
+- **Smarter SRS** — replace 2^streak with SM-2 algorithm (Anki's algorithm). Adds ease factor per word; resurfaces at more optimal intervals. B1+ words will need longer intervals.
+- **Contextual quiz** — show an example sentence with one word blanked, pick the missing word. Tests understanding in context rather than isolated translation.
+- **Typing mode for A2** — once a word has been seen N times, switch from multiple-choice to free-text input. Much stronger retention for higher-level vocab.
+- **Direction weighting** — learn which direction (ES→EN vs EN→ES) each user finds harder; weight the quiz mix accordingly per word.
 
 ### Motivation & progress
-- **Daily streak counter** — days in a row with at least one completed batch.
-- **Per-level progress bars** — "A0: 100% · A1: 43% · A2: 12%" on home screen.
-- **Word mastery list** — browsable view of all words with status: new / learning / learned.
+- **Daily streak counter** — days in a row with at least one completed batch. Show on home screen.
+- **Per-level progress bars** — "A0: 100% · A1: 43% · A2: 12%" on home screen. Now meaningful with 868 words fully categorised.
+- **Word mastery list** — browsable view of all words with status: new / learning / learned. Filterable by category and level.
 - **Session results animation** — confetti or score animation on completion, especially for high scores.
 
 ### UX polish
-- **Undo last swipe** — button or shake gesture to undo an accidental swipe during exposure.
-- **Keyboard shortcuts** — arrow keys to swipe, 1–5 to select quiz answer (desktop use).
+- **Undo last swipe** — button to undo an accidental swipe during exposure.
+- **Keyboard shortcuts** — arrow keys to swipe, 1–4 to select quiz answer (desktop use).
 - **Light mode** — currently dark only.
+- **PWA / installable** — `manifest.json` + service worker so the app installs to home screen and works fully offline.
 
 ### Content
-- **User-added words** — simple form to add custom words/phrases, stored in localStorage.
-- **B1 word list** — next level once A2 is mastered.
+- **User-added words** — simple form to add custom words/phrases stored in localStorage.
+- **B1 word list** — next level once A2 is mastered (~500 more words). Topic areas: subjunctive triggers, imperfect vs preterite contrasts, idiomatic expressions.
+- **Verb conjugation mode** — separate drill for conjugation tables (present, past, future). High-value for Spanish specifically. Could reuse the quiz card UI.
+- **Phrase/sentence cards** — longer multi-word entries (idioms, collocations). `words.ts` already supports phrases; just needs a dedicated batch mode.
 
 ### Technical
-- **Cloud sync** — magic-link auth + backend so progress survives device switches and storage clears.
+- **Cloud sync** — magic-link auth + backend so progress survives device switches and storage clears. LocalStorage-only is fragile long-term.
+- **Export/import progress** — simpler than cloud sync: let user download a JSON backup and restore it. One afternoon of work.
+- **Category filtering on home** — let user choose which categories to focus a session on (e.g. "food only" or "verbs only").
